@@ -1,6 +1,7 @@
 import matplotlib  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
+from matplotlib.patches import Rectangle  # type: ignore
 
 import sys
 from typing import Tuple
@@ -23,6 +24,46 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     return fig, ax
 
 
+####################
+#  Types of plots  #
+####################
+
+
+def lineplot(ax: plt.Axes,
+             xs: List[float],
+             ys: List[float],
+             style: str = "major",
+             linewidth: float = 3.0,
+             linestyle: str = "-",
+             **kwargs):
+    assert type(xs) == list
+    assert type(ys) == list
+    for x in xs:
+        assert type(x) in [int, float]
+
+    for y in ys:
+        assert type(y) in [int, float]
+
+    pass
+    assert len(xs) == len(ys)
+    assert type(linewidth) in [int, float]
+    assert linewidth > 0
+    assert linestyle in ["-", "--", "-.", ":"]
+
+    assert style in ["major", "medium", "minor", "manual"]
+    if style == "major":
+        linewidth = 3
+        linestyle = "-"
+    elif style == "medium":
+        linewidth = 2
+        linestyle = "--"
+    elif style == "minor":
+        linewidth = 1
+        linestyle = ":"
+
+    ax.plot(xs, ys, lw=linewidth, ls=linestyle, **kwargs)
+
+
 #############################
 # Adding elements to a plot #
 #############################
@@ -36,6 +77,7 @@ def title(ax: plt.Axes,
     assert type(title) == str
     assert type(fontsize) in [int, float]
     assert type(pad) in [int, float]
+    assert fontsize > 0
     ax.set_title(title, fontsize=fontsize, pad=pad)
 
 
@@ -46,6 +88,7 @@ def labels(ax: plt.Axes,
            pad: float = 15) -> None:
     ''' Add axes labels to a plot. '''
     assert type(fontsize) in [float, int]
+    assert fontsize > 0
     assert type(pad) in [float, int]
 
     if xlabel is not None:
@@ -55,6 +98,74 @@ def labels(ax: plt.Axes,
     if ylabel is not None:
         assert type(ylabel) == str
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
+
+
+def diagonal(ax: plt.Axes,
+             colour: str = "black",
+             alpha=0.3,
+             linestyle="-",
+             linewidth=2):
+    ''' Add the 45 degrees diagonal to a plot. '''
+    assert type(colour) == str
+    assert type(alpha) in [float, int]
+    assert (alpha >= 0) and (alpha <= 1)
+    assert linestyle in ["-", "--", "-.", ":"]
+    assert type(linewidth) in [float, int]
+    assert linewidth > 0
+
+    minimum = min(ax.get_xlim()[0], ax.get_ylim()[0])
+    maximum = max(ax.get_xlim()[1], ax.get_ylim()[1])
+    ax.plot([minimum, maximum], [minimum, maximum],
+            color=colour,
+            linestyle=linestyle,
+            linewidth=linewidth,
+            alpha=alpha)
+
+
+def rectangle(ax: plt.Axes,
+              x1: float,
+              y1: float,
+              x2: float,
+              y2: float,
+              colour: str = "red",
+              linewidth: float = 3,
+              linestyle: str = "-",
+              fill: bool = False,
+              **kwargs):
+    ''' Add a rectangle to a plot. '''
+    assert type(x1) in [int, float]
+    assert type(y1) in [int, float]
+    assert type(x2) in [int, float]
+    assert type(y2) in [int, float]
+    assert type(colour) == str
+    assert type(linewidth) in [int, float]
+    assert linewidth >= 0
+    assert linestyle in ["-", "--", "-.", ":"]
+    assert type(fill) == bool
+
+    ax.add_patch(
+        Rectangle((x1, y1),
+                  x2 - x1,
+                  y2 - y1,
+                  linewidth=linewidth,
+                  linestyle=linestyle,
+                  edgecolor=colour,
+                  facecolor=colour,
+                  fill=fill,
+                  **kwargs))
+
+
+def star(ax: plt.Axes,
+         x: float,
+         y: float,
+         colour: str = "red",
+         fontsize: float = 50):
+    assert type(x) in [int, float]
+    assert type(y) in [int, float]
+    assert type(fontsize) in [int, float]
+    assert type(colour) == str
+
+    ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
 
 
 #############################
