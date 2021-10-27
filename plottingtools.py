@@ -55,4 +55,44 @@ def labels(ax: plt.Axes,
     if ylabel is not None:
         assert type(ylabel) == str
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
-        
+
+
+#############################
+# Change elements of a plot #
+#############################
+
+
+def despine(ax: plt.Axes, which: List[str] = ['top', 'right']):
+    ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
+    assert type(which) == list
+    for spine in which:
+        assert spine in ['top', 'right', 'left', 'bottom']
+        ax.spines[spine].set_visible(False)
+
+
+def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 20):
+    ''' Change ticklabelsize of an ax object. '''
+    assert type(which) == str
+    assert type(size) in [int, float]
+    ax.tick_params(which, labelsize=size)
+
+
+def limits(ax: plt.Axes,
+           xlimits: Tuple[float, float] = None,
+           ylimits: Tuple[float, float] = None):
+    ''' Set axes limits of ax object. '''
+    if xlimits is not None:
+        assert type(xlimits) in (tuple, list)
+        assert len(xlimits) == 2
+        lo, hi = xlimits
+        assert type(lo) in [int, float]
+        assert type(hi) in [int, float]
+        ax.set_xlim(xlimits)
+
+    if ylimits is not None:
+        assert type(ylimits) in (tuple, list)
+        assert len(ylimits) == 2
+        lo, hi = ylimits
+        assert type(lo) in [int, float]
+        assert type(hi) in [int, float]
+        ax.set_xlim(ylimits)

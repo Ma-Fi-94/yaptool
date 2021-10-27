@@ -45,6 +45,8 @@ def test_title_pathological():
         pt.title(ax, title="title", fontsize="abc")
     with pytest.raises(AssertionError) as exception_info:
         pt.title(ax, title="title", pad="abc")
+    #with pytest.raises(AssertionError) as exception_info:
+    #	pt.title(ax=123, title="title")
 
 
 def test_labels():
@@ -59,8 +61,60 @@ def test_labels_pathological():
     with pytest.raises(AssertionError) as exception_info:
         pt.labels(ax, xlabel="xlabel", ylabel="label", pad="abc")
     with pytest.raises(AssertionError) as exception_info:
-        pt.labels(ax, xlabel="xlabel", ylabel="label", fontsize="abc")  
+        pt.labels(ax, xlabel="xlabel", ylabel="label", fontsize="abc")
     with pytest.raises(AssertionError) as exception_info:
         pt.labels(ax, xlabel="xlabel", ylabel=123)
     with pytest.raises(AssertionError) as exception_info:
         pt.labels(ax, xlabel=123, ylabel="ylabel")
+    #with pytest.raises(AssertionError) as exception_info:
+    #	pt.labels(ax="abc", xlabel="xlabel", ylabel="ylabel")
+
+
+def test_despine():
+    fig, ax = pt.singleplot()
+    pt.despine(ax, ['top', 'left', 'bottom', 'right'])
+
+
+def test_despine_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.despine(ax, which=['bla'])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.despine(ax, which=123)
+    #with pytest.raises(AssertionError) as exception_info:
+    #	pt.despine(ax="abc", which=["left"])
+
+
+def test_ticklabelsize():
+    fig, ax = pt.singleplot()
+    pt.ticklabelsize(ax, size=25)
+
+
+def test_ticklabelsize_pathological():
+    fig, ax = pt.singleplot()
+    #with pytest.raises(AssertionError) as exception_info:
+    #	pt.ticklabelsize(ax, size="abc")
+
+
+def test_limits():
+    fig, ax = pt.singleplot()
+    pt.limits(ax, xlimits=(3, 5), ylimits=None)
+    pt.limits(ax, xlimits=None, ylimits=(4, 6))
+    pt.limits(ax, xlimits=[3, 5], ylimits=None)
+    pt.limits(ax, xlimits=None, ylimits=[4, 6])
+
+
+def test_limits_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=12345, ylimits=None)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=None, ylimits=12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=[12345], ylimits=None)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=None, ylimits=[12345])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=[12345, "abc"], ylimits=None)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax, xlimits=None, ylimits=[12345, "def"])
