@@ -100,8 +100,8 @@ def test_limits():
     fig, ax = pt.singleplot()
     pt.limits(ax, xlimits=(3, 5), ylimits=None)
     pt.limits(ax, xlimits=None, ylimits=(4, 6))
-    pt.limits(ax, xlimits=[3, 5], ylimits=None)
-    pt.limits(ax, xlimits=None, ylimits=[4, 6])
+    assert ax.get_xlim() == (3, 5)
+    assert ax.get_ylim() == (4, 6)
 
 
 def test_limits_pathological():

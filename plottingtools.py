@@ -95,4 +95,4 @@ def limits(ax: plt.Axes,
         lo, hi = ylimits
         assert type(lo) in [int, float]
         assert type(hi) in [int, float]
-        ax.set_xlim(ylimits)
+        ax.set_ylim(ylimits)
