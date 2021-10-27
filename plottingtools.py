@@ -1,66 +1,58 @@
-import matplotlib.pyplot as plt
+import matplotlib  # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
+import matplotlib.figure  # type: ignore
+
 import sys
-
-#  TODO type hints
-
+from typing import Tuple
+from typing import List
 
 ####################
 # Types of layouts #
 ####################
 
-def singleplot(size=(10,7)):
-	''' Make a new 10x7 plot. Size can also be changed. '''
-	try:
-		m, n = size
-		m = int(m)
-		n = int(n)
-	except:
-		print("[X] plottingtools.singleplot() cannot parse parameter size. Returning None.", file=sys.stderr)
-		return None, None
-	
-	fig, ax = plt.subplots(1, 1, figsize=size)
-	return fig, ax
 
+def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+    ''' Make a new 10x7 plot. Size can also be changed. '''
+    assert type(size) in (tuple, list)
+    assert len(size) == 2
+    w, h = size
+    assert type(w) in [int, float]
+    assert type(h) in [int, float]
 
+    fig, ax = plt.subplots(1, 1, figsize=size)
+    return fig, ax
 
-
-# TODO: more defensive programming for all of these below
 
 #############################
 # Adding elements to a plot #
 #############################
 
-def labels(ax, xlabel=None, ylabel=None, fontsize=30, pad=15):
-	''' Add axes labels to a plot. '''
-	if xlabel is not None:
-		ax.set_xlabel(xlabel, fontsize=fontsize, labelpad=pad)
-	if ylabel is not None:
-		ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
+
+def title(ax: plt.Axes,
+          title: str,
+          fontsize: float = 40,
+          pad: float = 20) -> None:
+    ''' Add a title to a plot. '''
+    assert type(title) == str
+    assert type(fontsize) in [int, float]
+    assert type(pad) in [int, float]
+    ax.set_title(title, fontsize=fontsize, pad=pad)
 
 
-def title(ax, title, fontsize=40, pad=20):
-	''' Add a title to a plot. '''
-	ax.set_title(title, fontsize=fontsize, pad=pad)
+def labels(ax: plt.Axes,
+           xlabel: str = None,
+           ylabel: str = None,
+           fontsize: float = 30,
+           pad: float = 15) -> None:
+    ''' Add axes labels to a plot. '''
+    assert type(fontsize) in [float, int]
+    assert type(pad) in [float, int]
 
+    if xlabel is not None:
+        assert type(xlabel) == str
+        ax.set_xlabel(xlabel, fontsize=fontsize, labelpad=pad)
 
-#############################
-# Change elements of a plot #
-#############################
-
-def despine(ax, which=['top', 'right']):
-	''' Remove spines of ax object. Spines can be specified, default is top and right. '''
-	for spine in which:
-		ax.spines[spine].set_visible(False)
-
-
-def limits(ax, xlimits=None, ylimits=None):
-	''' Set axes limits of ax object. '''
-	if xlimits is not None:
-		ax.set_xlim(xlimits)
-	if ylimits is not None:
-		ax.set_ylim(ylimits)
-
-
-def ticklabelsize(ax, which="both", axis="both", size=20):
-	''' Change ticklabelsize of an ax object. '''
-	ax.tick_params(which=which, axis=axis, labelsize=size)
+    if ylabel is not None:
+        assert type(ylabel) == str
+        ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
+        
