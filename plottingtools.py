@@ -1,4 +1,8 @@
 import matplotlib.pyplot as plt
+import sys
+
+#  TODO type hints
+
 
 ####################
 # Types of layouts #
@@ -6,9 +10,15 @@ import matplotlib.pyplot as plt
 
 def singleplot(size=(10,7)):
 	''' Make a new 10x7 plot. Size can also be changed. '''
-    
-    # TODO: check if size is tuple or list or array of 2 integers
-    fig, ax = plt.subplots(1, 1, figsize=size)       
+	try:
+		m, n = size
+		m = int(m)
+		n = int(n)
+	except:
+		print("[X] plottingtools.singleplot() cannot parse parameter size. Returning None.", file=sys.stderr)
+		return None, None
+	
+	fig, ax = plt.subplots(1, 1, figsize=size)
 	return fig, ax
 
 
