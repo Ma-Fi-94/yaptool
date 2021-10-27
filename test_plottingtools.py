@@ -92,8 +92,8 @@ def test_ticklabelsize():
 
 def test_ticklabelsize_pathological():
     fig, ax = pt.singleplot()
-    #with pytest.raises(AssertionError) as exception_info:
-    #	pt.ticklabelsize(ax, size="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.ticklabelsize(ax, size="abc")
 
 
 def test_limits():
