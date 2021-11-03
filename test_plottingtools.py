@@ -210,61 +210,80 @@ def test_star_pathological():
     plt.close()
 
 
-def test_lineplot():
+def test_lines():
     fig, ax = pt.singleplot()
-    pt.lineplot(ax,
-                xs=[1, 2, 3],
-                ys=[2, 3, 4],
-                style="manual",
-                linewidth=4.3,
-                linestyle="-.")
-    pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="major")
-    pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="medium")
-    pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="minor")
+    pt.lines(ax,
+             xs=[1, 2, 3],
+             ys=[2, 3, 4],
+             style="manual",
+             linewidth=4.3,
+             linestyle="-.")
+    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="major")
+    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="medium")
+    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="minor")
     plt.close()
 
 
-def test_lineplot_pathological():
+def test_lines_pathological():
     fig, ax = pt.singleplot()
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax,
-                    xs=[1, "abcde", 3],
-                    ys=[2, 3, 4],
-                    style="manual",
-                    linewidth=4.3,
-                    linestyle="-.")
+        pt.lines(ax,
+                 xs=[1, "abcde", 3],
+                 ys=[2, 3, 4],
+                 style="manual",
+                 linewidth=4.3,
+                 linestyle="-.")
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax,
-                    xs=[1, 2, 3],
-                    ys=[2, "xyz", 4],
-                    style="manual",
-                    linewidth=4.3,
-                    linestyle="-.")
+        pt.lines(ax,
+                 xs=[1, 2, 3],
+                 ys=[2, "xyz", 4],
+                 style="manual",
+                 linewidth=4.3,
+                 linestyle="-.")
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax,
-                    xs=[1, 2, 3],
-                    ys=[2, 3, 4],
-                    style="manual",
-                    linewidth=-4.3,
-                    linestyle="-.")
+        pt.lines(ax,
+                 xs=[1, 2, 3],
+                 ys=[2, 3, 4],
+                 style="manual",
+                 linewidth=-4.3,
+                 linestyle="-.")
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax,
-                    xs=[1, 2, 3],
-                    ys=[2, 3, 4],
-                    style="manual",
-                    linewidth=4.3,
-                    linestyle="abcde")
+        pt.lines(ax,
+                 xs=[1, 2, 3],
+                 ys=[2, 3, 4],
+                 style="manual",
+                 linewidth=4.3,
+                 linestyle="abcde")
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax,
-                    xs=[1, 2, 3],
-                    ys=[2, 3, 4],
-                    style="manual",
-                    linewidth=4.3,
-                    linestyle=123)
+        pt.lines(ax,
+                 xs=[1, 2, 3],
+                 ys=[2, 3, 4],
+                 style="manual",
+                 linewidth=4.3,
+                 linestyle=123)
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4, 5])
+        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4, 5])
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="abc")
+        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="abc")
     with pytest.raises(AssertionError) as exception_info:
-        pt.lineplot(ax, xs=[1, 2, 3], ys=[2, 3, 4], style=123)
+        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style=123)
     plt.close()
+
+
+def test_scatter():
+    fig, ax = pt.singleplot()
+    pt.scatter(ax,
+               xs=[1, 2, 3],
+               ys=[2, 3, 4],
+               style="manual",
+               markersize=4.3,
+               alpha=0.123)
+    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="major")
+    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="medium")
+    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="minor")
+    plt.close()
+
+
+# TBD
+def test_scatter_pathological():
+    pass

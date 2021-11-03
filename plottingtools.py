@@ -29,15 +29,17 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
 ####################
 
 
-def lineplot(ax: plt.Axes,
-             xs: List[float],
-             ys: List[float],
-             style: str = "major",
-             linewidth: float = 3.0,
-             linestyle: str = "-",
-             **kwargs):
+def lines(ax: plt.Axes,
+          xs: List[float],
+          ys: List[float],
+          style: str = "major",
+          linewidth: float = 3.0,
+          linestyle: str = "-",
+          **kwargs):
     assert type(xs) == list
     assert type(ys) == list
+    assert len(xs) == len(ys)
+
     for x in xs:
         assert type(x) in [int, float]
 
@@ -45,7 +47,7 @@ def lineplot(ax: plt.Axes,
         assert type(y) in [int, float]
 
     pass
-    assert len(xs) == len(ys)
+
     assert type(linewidth) in [int, float]
     assert linewidth > 0
     assert linestyle in ["-", "--", "-.", ":"]
@@ -62,6 +64,47 @@ def lineplot(ax: plt.Axes,
         linestyle = ":"
 
     ax.plot(xs, ys, lw=linewidth, ls=linestyle, **kwargs)
+
+
+def scatter(ax: plt.Axes,
+            xs: List[float],
+            ys: List[float],
+            style: str = "major",
+            markersize: float = 50.0,
+            alpha: float = 1.0,
+            **kwargs):
+    assert type(xs) == list
+    assert type(ys) == list
+    assert len(xs) == len(ys)
+
+    for x in xs:
+        assert type(x) in [int, float]
+
+    for y in ys:
+        assert type(y) in [int, float]
+
+    pass
+
+    assert type(markersize) in [int, float]
+    assert markersize > 0
+
+    assert type(alpha) in [int, float]
+    assert alpha > 0
+
+    assert style in ["major", "medium", "minor", "manual"]
+
+    # TODO: check default values here
+    if style == "major":
+        markersize = 50
+        alpha = 1.0
+    elif style == "medium":
+        markersize = 30
+        alpha = 0.5
+    elif style == "minor":
+        markersize = 10
+        alpha = 0.3
+
+    ax.scatter(xs, ys, alpha=alpha, s=markersize, **kwargs)
 
 
 #############################
