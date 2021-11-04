@@ -7,20 +7,11 @@ import sys
 from typing import Tuple
 from typing import List
 
-#################
-# Colour Themes #
-#################
 
 
-def darkmode(foreground="0.85", background="0.15"):
-    ''' Switch to darkmode. Foreground and background colours may also be specified explicitly. '''
-    _set_fgbg(fg=foreground, bg=background)
-
-
-def lightmode(foreground="0", background="1.0"):
-    ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
-    _set_fgbg(fg=foreground, bg=background)
-
+####################
+# Internal helpers #
+####################
 
 def _set_fgbg(fg, bg):
     ''' Internal helper to change fore- and background colours '''
@@ -39,6 +30,38 @@ def _set_fgbg(fg, bg):
         "savefig.facecolor": bg,
         "savefig.edgecolor": bg
     })
+
+def _similarity_matrix(list_of_lists, method="jaccard"):   
+    if method=="jaccard":
+        f = lambda s1, s2: len(set.intersection(s1, s2)) / len(set.union(s1, s2))
+    else:
+        raise NotImplementedError
+
+    results = np.zeros((len(list_of_lists), len(list_of_lists)))
+
+    list_of_sets = list(map(lambda l: set(l), list_of_lists))
+
+    # Some similarity functions are not symmetric
+    # Hence we iterate over all n x n combinations
+    for i, set1 in enumerate(list_of_sets):
+        for j, set2 in enumerate(list_of_sets):
+            results[i, j] = f(set1, set2)
+    return results
+
+#################
+# Colour Themes #
+#################
+
+
+def darkmode(foreground="0.85", background="0.15"):
+    ''' Switch to darkmode. Foreground and background colours may also be specified explicitly. '''
+    _set_fgbg(fg=foreground, bg=background)
+
+
+def lightmode(foreground="0", background="1.0"):
+    ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
+    _set_fgbg(fg=foreground, bg=background)
+
 
 
 ####################
