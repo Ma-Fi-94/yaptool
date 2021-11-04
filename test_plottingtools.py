@@ -9,6 +9,11 @@ import io
 import plottingtools as pt
 
 
+def test_light_and_darkmode():
+    pt.lightmode()
+    pt.darkmode()
+
+
 def test_singleplot():
     fig, ax = pt.singleplot()
     assert type(fig) == matplotlib.figure.Figure
@@ -210,80 +215,30 @@ def test_star_pathological():
     plt.close()
 
 
-def test_lines():
+def test_ax_ticks_and_labels():
     fig, ax = pt.singleplot()
-    pt.lines(ax,
-             xs=[1, 2, 3],
-             ys=[2, 3, 4],
-             style="manual",
-             linewidth=4.3,
-             linestyle="-.")
-    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="major")
-    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="medium")
-    pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="minor")
-    plt.close()
+    pt.ax_ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], labels=None)
+    pt.ax_ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], labels=None)
+    pt.ax_ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], labels=None)
+    pt.ax_ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], labels=None)
 
 
-def test_lines_pathological():
+def test_ax_ticks_and_labels_pathological():
     fig, ax = pt.singleplot()
+
     with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax,
-                 xs=[1, "abcde", 3],
-                 ys=[2, 3, 4],
-                 style="manual",
-                 linewidth=4.3,
-                 linestyle="-.")
+        pt.ax_ticks_and_labels(ax,
+                               which="x",
+                               ticks=[-0.14, 1, 2, "a"],
+                               labels=None)
     with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax,
-                 xs=[1, 2, 3],
-                 ys=[2, "xyz", 4],
-                 style="manual",
-                 linewidth=4.3,
-                 linestyle="-.")
+        pt.ax_ticks_and_labels(ax,
+                               which="y",
+                               ticks=[-0.14, 1, 2, 3.5],
+                               labels=["a"])
     with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax,
-                 xs=[1, 2, 3],
-                 ys=[2, 3, 4],
-                 style="manual",
-                 linewidth=-4.3,
-                 linestyle="-.")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax,
-                 xs=[1, 2, 3],
-                 ys=[2, 3, 4],
-                 style="manual",
-                 linewidth=4.3,
-                 linestyle="abcde")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax,
-                 xs=[1, 2, 3],
-                 ys=[2, 3, 4],
-                 style="manual",
-                 linewidth=4.3,
-                 linestyle=123)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4, 5])
-    with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax, xs=[1, 2, 3], ys=[2, 3, 4], style=123)
+        pt.ax_ticks_and_labels(ax,
+                               which="abc",
+                               ticks=[-0.14, 1, 2, 3.5],
+                               labels=["a", "b", "c"])
     plt.close()
-
-
-def test_scatter():
-    fig, ax = pt.singleplot()
-    pt.scatter(ax,
-               xs=[1, 2, 3],
-               ys=[2, 3, 4],
-               style="manual",
-               markersize=4.3,
-               alpha=0.123)
-    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="major")
-    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="medium")
-    pt.scatter(ax, xs=[1, 2, 3], ys=[2, 3, 4], style="minor")
-    plt.close()
-
-
-# TBD
-def test_scatter_pathological():
-    pass

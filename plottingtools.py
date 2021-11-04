@@ -7,6 +7,40 @@ import sys
 from typing import Tuple
 from typing import List
 
+#################
+# Colour Themes #
+#################
+
+
+def darkmode(foreground="0.85", background="0.15"):
+    ''' Switch to darkmode. Foreground and background colours may also be specified explicitly. '''
+    _set_fgbg(fg=foreground, bg=background)
+
+
+def lightmode(foreground="0", background="1.0"):
+    ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
+    _set_fgbg(fg=foreground, bg=background)
+
+
+def _set_fgbg(fg, bg):
+    ''' Internal helper to change fore- and background colours '''
+    plt.rcParams.update({
+        "lines.color": fg,
+        "patch.edgecolor": fg,
+        "text.color": fg,
+        "axes.facecolor": bg,
+        "axes.edgecolor": fg,
+        "axes.labelcolor": fg,
+        "xtick.color": fg,
+        "ytick.color": fg,
+        "grid.color": fg,
+        "figure.facecolor": bg,
+        "figure.edgecolor": bg,
+        "savefig.facecolor": bg,
+        "savefig.edgecolor": bg
+    })
+
+
 ####################
 # Types of layouts #
 ####################
@@ -22,89 +56,6 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     return fig, ax
-
-
-####################
-#  Types of plots  #
-####################
-
-
-def lines(ax: plt.Axes,
-          xs: List[float],
-          ys: List[float],
-          style: str = "major",
-          linewidth: float = 3.0,
-          linestyle: str = "-",
-          **kwargs):
-    assert type(xs) == list
-    assert type(ys) == list
-    assert len(xs) == len(ys)
-
-    for x in xs:
-        assert type(x) in [int, float]
-
-    for y in ys:
-        assert type(y) in [int, float]
-
-    pass
-
-    assert type(linewidth) in [int, float]
-    assert linewidth > 0
-    assert linestyle in ["-", "--", "-.", ":"]
-
-    assert style in ["major", "medium", "minor", "manual"]
-    if style == "major":
-        linewidth = 3
-        linestyle = "-"
-    elif style == "medium":
-        linewidth = 2
-        linestyle = "--"
-    elif style == "minor":
-        linewidth = 1
-        linestyle = ":"
-
-    ax.plot(xs, ys, lw=linewidth, ls=linestyle, **kwargs)
-
-
-def scatter(ax: plt.Axes,
-            xs: List[float],
-            ys: List[float],
-            style: str = "major",
-            markersize: float = 50.0,
-            alpha: float = 1.0,
-            **kwargs):
-    assert type(xs) == list
-    assert type(ys) == list
-    assert len(xs) == len(ys)
-
-    for x in xs:
-        assert type(x) in [int, float]
-
-    for y in ys:
-        assert type(y) in [int, float]
-
-    pass
-
-    assert type(markersize) in [int, float]
-    assert markersize > 0
-
-    assert type(alpha) in [int, float]
-    assert alpha > 0
-
-    assert style in ["major", "medium", "minor", "manual"]
-
-    # TODO: check default values here
-    if style == "major":
-        markersize = 50
-        alpha = 1.0
-    elif style == "medium":
-        markersize = 30
-        alpha = 0.5
-    elif style == "minor":
-        markersize = 10
-        alpha = 0.3
-
-    ax.scatter(xs, ys, alpha=alpha, s=markersize, **kwargs)
 
 
 #############################
@@ -250,3 +201,26 @@ def limits(ax: plt.Axes,
         assert type(lo) in [int, float]
         assert type(hi) in [int, float]
         ax.set_ylim(ylimits)
+
+
+def ax_ticks_and_labels(ax: plt.Axes,
+                        which: str,
+                        ticks: List[float],
+                        labels=None):
+    assert which in ["x", "y", "xy", "yx"]
+    assert type(ticks) == list
+    for tick in ticks:
+        assert type(tick) in [float, int]
+
+    if labels is None:
+        labels = list(map(lambda x: str(x), ticks))
+    else:
+        assert type(labels) == list
+        assert len(ticks) == len(labels)
+
+    if which == "x" or which == "xy" or which == "yx":
+        ax.set_xticks(ticks)
+        ax.set_xticklabels(labels)
+    if which == "y" or which == "xy" or which == "yx":
+        ax.set_yticks(ticks)
+        ax.set_yticklabels(labels)
