@@ -242,3 +242,6 @@ def test_ax_ticks_and_labels_pathological():
                                ticks=[-0.14, 1, 2, 3.5],
                                labels=["a", "b", "c"])
     plt.close()
+
+def test_similarity_matrix():
+    pass

@@ -2,18 +2,19 @@ import matplotlib  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
-
+import numpy as np
 import sys
+import types
+
 from typing import Tuple
 from typing import List
-
-
 
 ####################
 # Internal helpers #
 ####################
 
-def _set_fgbg(fg, bg):
+
+def _set_fgbg(fg: str, bg: str):
     ''' Internal helper to change fore- and background colours '''
     plt.rcParams.update({
         "lines.color": fg,
@@ -31,9 +32,17 @@ def _set_fgbg(fg, bg):
         "savefig.edgecolor": bg
     })
 
-def _similarity_matrix(list_of_lists, method="jaccard"):   
-    if method=="jaccard":
-        f = lambda s1, s2: len(set.intersection(s1, s2)) / len(set.union(s1, s2))
+
+def _similarity_matrix(list_of_lists: List[List[float]],
+                       method: str = "jaccard"):
+    if type(method) == str:
+        if method == "jaccard":
+            f = lambda s1, s2: len(set.intersection(s1, s2)) / len(
+                set.union(s1, s2))
+        else:
+            raise NotImplementedError
+    elif type(method) is types.LambdaType:
+        f = method
     else:
         raise NotImplementedError
 
@@ -48,6 +57,7 @@ def _similarity_matrix(list_of_lists, method="jaccard"):
             results[i, j] = f(set1, set2)
     return results
 
+
 #################
 # Colour Themes #
 #################
@@ -61,7 +71,6 @@ def darkmode(foreground="0.85", background="0.15"):
 def lightmode(foreground="0", background="1.0"):
     ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
     _set_fgbg(fg=foreground, bg=background)
-
 
 
 ####################
