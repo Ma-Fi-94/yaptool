@@ -2,6 +2,7 @@ import matplotlib  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
+import seaborn as sns  # type: ignore
 import numpy as np
 import sys
 import types
@@ -256,3 +257,14 @@ def ax_ticks_and_labels(ax: plt.Axes,
     if which == "y" or which == "xy" or which == "yx":
         ax.set_yticks(ticks)
         ax.set_yticklabels(labels)
+
+
+#########
+# Plots #
+#########
+
+
+def similarity_heatmap(ax: plt.Axes,
+                       list_of_lists: List[List[float]],
+                       method: str = "jaccard"):
+    sns.heatmap(_similarity_matrix(list_of_lists, method))

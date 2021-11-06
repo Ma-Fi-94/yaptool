@@ -243,5 +243,31 @@ def test_ax_ticks_and_labels_pathological():
                                labels=["a", "b", "c"])
     plt.close()
 
+
 def test_similarity_matrix():
-    pass
+    assert np.array_equal(pt._similarity_matrix([[1, 2, 3, 4], [1, 3]]),
+                          np.array([[1, 0.5], [0.5, 1]]))
+
+    f = lambda x, y: len(set.intersection(x, y)) / len(set.union(x, y))
+    assert np.array_equal(
+        pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method=f),
+        np.array([[1, 0.5], [0.5, 1]]))
+
+
+def test_similarity_matrix_pathological():
+    with pytest.raises(NotImplementedError) as exception_info:
+        assert np.array_equal(
+            pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method="abcdef"),
+            np.array([[1, 0.5], [0.5, 1]]))
+    with pytest.raises(NotImplementedError) as exception_info:
+        assert np.array_equal(
+            pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method=12345),
+            np.array([[1, 0.5], [0.5, 1]]))
+
+
+def test_similarity_heatmap():
+    fig, ax = pt.singleplot()
+    pt.similarity_heatmap(ax=ax,
+                          list_of_lists=[[1, 2, 3], [1]],
+                          method="jaccard")
+    plt.close()
