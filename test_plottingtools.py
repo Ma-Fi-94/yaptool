@@ -284,7 +284,14 @@ def test_rotate_ticklabels():
 
 
 def test_rotate_ticklabels_pathological():
-    pass
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.rotate_ticklabels(ax, which="abcde", rotation=10.5)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.rotate_ticklabels(ax, which="x", rotation="abcde")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.rotate_ticklabels(ax, which=12345, rotation=10.5)
+    plt.close()
 
 
 def test_align_ticklabels():
@@ -293,9 +300,55 @@ def test_align_ticklabels():
     pt.align_ticklabels(ax, which="y", horizontal=None, vertical="top")
     pt.align_ticklabels(ax, which="x", horizontal="right", vertical=None)
     pt.align_ticklabels(ax, which="y", horizontal="left", vertical=None)
-
     plt.close()
 
 
 def test_align_ticklabels_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.align_ticklabels(ax, which="abcde", horizontal=None, vertical="top")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.align_ticklabels(ax, which="x", horizontal="abcde", vertical="top")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.align_ticklabels(ax, which="x", horizontal=None, vertical="abcde")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.align_ticklabels(ax, which="x", horizontal=None, vertical=12345)
+    plt.close()
+
+
+def test_save_png():
     pass
+
+
+def test_save_png_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_png(filename="")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_png(filename=12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_png(filename="filename", dpi=-12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_png(filename="filename", dpi="abcde")
+    plt.close()
+
+
+def test_save_svg():
+    pass
+
+
+def test_save_svg_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_svg(filename="")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_svg(filename=12345)
+    plt.close()
+
+
+def test_heatmap_cbar_kws():
+    assert type(pt.heatmap_cbar_kws()) == dict
+
+
+def test_heatmap_annot_kws():
+    assert type(pt.heatmap_annot_kws()) == dict

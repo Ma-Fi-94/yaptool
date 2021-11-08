@@ -272,9 +272,9 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
 
 def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
     assert type(which) == str
-    assert which in ["x", "y", "xy", "yx", "both"]
+    assert which in ["x", "y"]
 
-    if which == "x" or which == "xy" or which == "yx" or which == "both":
+    if which == "x":
         if horizontal is not None:
             assert type(horizontal) == str
             assert horizontal in ['center', 'right', 'left']
@@ -286,7 +286,7 @@ def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
             ax.set_xticklabels(ax.get_xticklabels(),
                                verticalalignment=vertical)
 
-    if which == "y" or which == "xy" or which == "yx" or which == "both":
+    if which == "y":
         if horizontal is not None:
             assert type(horizontal) == str
             assert horizontal in ['center', 'right', 'left']
@@ -308,3 +308,37 @@ def similarity_heatmap(ax: plt.Axes,
                        list_of_lists: List[List[float]],
                        method: str = "jaccard"):
     sns.heatmap(_similarity_matrix(list_of_lists, method))
+
+
+##################
+# Export figures #
+##################
+
+
+def save_png(filename: str, dpi: int = 300):
+    ''' Save current figure as png file. DPI can be specified. '''
+    assert type(filename) == str
+    assert filename != ""
+    assert type(dpi) in [int, float]
+    assert dpi > 0
+    plt.savefig(filename, dpi=dpi, bbox_inches="tight", format="png")
+
+
+def save_svg(filename: str):
+    ''' Save current figure as svg file. '''
+    assert type(filename) == str
+    assert filename != ""
+    plt.savefig(filename, bbox_inches="tight", format="svg")
+
+
+######################
+# Default parameters #
+######################
+
+
+def heatmap_cbar_kws():
+    return {'fraction': 0.1, 'shrink': 0.4, 'aspect': 7, 'pad': 0.05}
+
+
+def heatmap_annot_kws():
+    return {'fontsize': 20}
