@@ -271,3 +271,31 @@ def test_similarity_heatmap():
                           list_of_lists=[[1, 2, 3], [1]],
                           method="jaccard")
     plt.close()
+
+
+def test_rotate_ticklabels():
+    fig, ax = pt.singleplot()
+    pt.rotate_ticklabels(ax, which="x", rotation=10.5)
+    pt.rotate_ticklabels(ax, which="y", rotation=-10.5)
+    pt.rotate_ticklabels(ax, which="xy", rotation=10.5)
+    pt.rotate_ticklabels(ax, which="yx", rotation=-10.5)
+    pt.rotate_ticklabels(ax, which="both", rotation=-10.5)
+    plt.close()
+
+
+def test_rotate_ticklabels_pathological():
+    pass
+
+
+def test_align_ticklabels():
+    fig, ax = pt.singleplot()
+    pt.align_ticklabels(ax, which="x", horizontal=None, vertical="center")
+    pt.align_ticklabels(ax, which="y", horizontal=None, vertical="top")
+    pt.align_ticklabels(ax, which="x", horizontal="right", vertical=None)
+    pt.align_ticklabels(ax, which="y", horizontal="left", vertical=None)
+
+    plt.close()
+
+
+def test_align_ticklabels_pathological():
+    pass

@@ -259,6 +259,46 @@ def ax_ticks_and_labels(ax: plt.Axes,
         ax.set_yticklabels(labels)
 
 
+def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
+    assert type(which) == str
+    assert which in ["x", "y", "xy", "yx", "both"]
+    assert type(rotation) in [float, int]
+
+    if which == "x" or which == "xy" or which == "yx" or which == "both":
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation)
+    if which == "y" or which == "xy" or which == "yx" or which == "both":
+        ax.set_yticklabels(ax.get_yticklabels(), rotation=rotation)
+
+
+def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
+    assert type(which) == str
+    assert which in ["x", "y", "xy", "yx", "both"]
+
+    if which == "x" or which == "xy" or which == "yx" or which == "both":
+        if horizontal is not None:
+            assert type(horizontal) == str
+            assert horizontal in ['center', 'right', 'left']
+            ax.set_xticklabels(ax.get_xticklabels(),
+                               horizontalalignment=horizontal)
+        if vertical is not None:
+            assert type(vertical) == str
+            assert vertical in ['center', 'top', 'bottom', 'baseline']
+            ax.set_xticklabels(ax.get_xticklabels(),
+                               verticalalignment=vertical)
+
+    if which == "y" or which == "xy" or which == "yx" or which == "both":
+        if horizontal is not None:
+            assert type(horizontal) == str
+            assert horizontal in ['center', 'right', 'left']
+            ax.set_yticklabels(ax.get_yticklabels(),
+                               horizontalalignment=horizontal)
+        if vertical is not None:
+            assert type(vertical) == str
+            assert vertical in ['center', 'top', 'bottom', 'baseline']
+            ax.set_yticklabels(ax.get_yticklabels(),
+                               verticalalignment=vertical)
+
+
 #########
 # Plots #
 #########
