@@ -213,6 +213,82 @@ def star(ax: plt.Axes,
     ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
 
 
+def vlines(ax: plt.Axes,
+           xs: List[float],
+           colour: str = "black",
+           alpha: float = 0.3,
+           linestyle: str = "-",
+           linewidth: float = 2,
+           zorder: float = -100):
+    assert type(xs) == list
+    assert len(xs) > 0
+    for x in xs:
+        assert type(x) in [int, float]
+
+    assert type(colour) == str
+
+    assert type(alpha) in [int, float]
+    assert alpha > 0
+    assert alpha <= 1
+
+    assert type(linestyle) == str
+    assert linestyle in ["-", ":", "--", "-."]
+
+    assert type(linewidth) in [int, float]
+    assert linewidth > 0
+
+    assert type(zorder) in [int, float]
+
+    ymin, ymax = ax.get_ylim()
+    for x in xs:
+        ax.vlines([x],
+                  ymin,
+                  ymax,
+                  color=colour,
+                  alpha=alpha,
+                  linestyle=linestyle,
+                  linewidth=linewidth,
+                  zorder=zorder)
+
+
+def hlines(ax: plt.Axes,
+           ys: List[float],
+           colour: str = "black",
+           alpha: float = 0.3,
+           linestyle: str = "-",
+           linewidth: float = 2,
+           zorder: float = -100):
+    assert type(ys) == list
+    assert len(ys) > 0
+    for y in ys:
+        assert type(y) in [int, float]
+
+    assert type(colour) == str
+
+    assert type(alpha) in [int, float]
+    assert alpha > 0
+    assert alpha <= 1
+
+    assert type(linestyle) == str
+    assert linestyle in ["-", ":", "--", "-."]
+
+    assert type(linewidth) in [int, float]
+    assert linewidth > 0
+
+    assert type(zorder) in [int, float]
+
+    ymin, ymax = ax.get_ylim()
+    for y in ys:
+        ax.vlines([y],
+                  ymin,
+                  ymax,
+                  color=colour,
+                  alpha=alpha,
+                  linestyle=linestyle,
+                  linewidth=linewidth,
+                  zorder=zorder)
+
+
 #############################
 # Change elements of a plot #
 #############################

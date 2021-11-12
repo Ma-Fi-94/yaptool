@@ -376,3 +376,67 @@ def test_multiplot_pathological():
         pt.multiplot(nrows=2, ncols=3, size_xy=(20, "abc"))
     with pytest.raises(AssertionError) as exception_info:
         pt.multiplot(nrows=2, ncols=3, size_xy=("abc", 20))
+
+
+def test_vlines():
+    fig, ax = pt.singleplot()
+    pt.vlines(ax, [1, 2, 3, -5])
+    plt.close()
+
+
+def test_hlines():
+    fig, ax = pt.singleplot()
+    pt.hlines(ax, [1, 2, 3, -5])
+    plt.close()
+
+
+def test_vlines_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, "abc"])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, "abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], linestyle="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], linestyle=1)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], colour=12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], alpha=-0.3)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], alpha="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], linewidth=-12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], linewidth="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.vlines(ax, [1, 2, 3], zorder="abc")
+
+
+def test_hlines_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, "abc"])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, "abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], linestyle="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], linestyle=1)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], colour=12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], alpha=-0.3)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], alpha="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], linewidth=-12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], linewidth="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.hlines(ax, [1, 2, 3], zorder="abc")
