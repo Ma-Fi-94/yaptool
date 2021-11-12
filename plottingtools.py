@@ -91,6 +91,24 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     return fig, ax
 
 
+def multiplot(
+        nrows: int, ncols: int,
+        size_xy: Tuple[float,
+                       float]) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+    assert type(nrows) == int
+    assert type(ncols) == int
+    assert nrows > 0
+    assert ncols > 0
+    l, h = size_xy
+    assert type(l) in [float, int]
+    assert type(h) in [float, int]
+    assert l > 0
+    assert h > 0
+
+    fig, ax = plt.subplots(nrows, ncols, figsize=(h, l))
+    return fig, ax
+
+
 #############################
 # Adding elements to a plot #
 #############################

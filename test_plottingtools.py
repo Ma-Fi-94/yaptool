@@ -352,3 +352,27 @@ def test_heatmap_cbar_kws():
 
 def test_heatmap_annot_kws():
     assert type(pt.heatmap_annot_kws()) == dict
+
+
+def test_multiplot():
+    fig, ax = pt.multiplot(nrows=3, ncols=2, size_xy=(20, 12))
+    plt.close()
+
+
+def test_multiplot_pathological():
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=-2, ncols=5, size_xy=(20, 20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows="abc", ncols=5, size_xy=(20, 20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=5, ncols=-2, size_xy=(20, 20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=5, ncols="abc", size_xy=(20, 20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=2, ncols=3, size_xy=(-20, 20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=2, ncols=3, size_xy=(20, -20))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=2, ncols=3, size_xy=(20, "abc"))
+    with pytest.raises(AssertionError) as exception_info:
+        pt.multiplot(nrows=2, ncols=3, size_xy=("abc", 20))
