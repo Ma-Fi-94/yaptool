@@ -213,16 +213,20 @@ def star(ax: plt.Axes,
     ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
 
 
-def vlines(ax: plt.Axes,
-           xs: List[float],
-           colour: str = "black",
-           alpha: float = 0.3,
-           linestyle: str = "-",
-           linewidth: float = 2,
-           zorder: float = -100):
-    assert type(xs) == list
-    assert len(xs) > 0
-    for x in xs:
+def lines(ax: plt.Axes,
+          which: str,
+          pos: List[float],
+          colour: str = "black",
+          alpha: float = 0.3,
+          linestyle: str = "-",
+          linewidth: float = 2,
+          zorder: float = -100):
+    assert type(which) == str
+    assert which in ["x", "y"]
+
+    assert type(pos) == list
+    assert len(pos) > 0
+    for x in pos:
         assert type(x) in [int, float]
 
     assert type(colour) == str
@@ -239,54 +243,28 @@ def vlines(ax: plt.Axes,
 
     assert type(zorder) in [int, float]
 
-    ymin, ymax = ax.get_ylim()
-    for x in xs:
-        ax.vlines([x],
-                  ymin,
-                  ymax,
-                  color=colour,
-                  alpha=alpha,
-                  linestyle=linestyle,
-                  linewidth=linewidth,
-                  zorder=zorder)
-
-
-def hlines(ax: plt.Axes,
-           ys: List[float],
-           colour: str = "black",
-           alpha: float = 0.3,
-           linestyle: str = "-",
-           linewidth: float = 2,
-           zorder: float = -100):
-    assert type(ys) == list
-    assert len(ys) > 0
-    for y in ys:
-        assert type(y) in [int, float]
-
-    assert type(colour) == str
-
-    assert type(alpha) in [int, float]
-    assert alpha > 0
-    assert alpha <= 1
-
-    assert type(linestyle) == str
-    assert linestyle in ["-", ":", "--", "-."]
-
-    assert type(linewidth) in [int, float]
-    assert linewidth > 0
-
-    assert type(zorder) in [int, float]
-
-    ymin, ymax = ax.get_ylim()
-    for y in ys:
-        ax.vlines([y],
-                  ymin,
-                  ymax,
-                  color=colour,
-                  alpha=alpha,
-                  linestyle=linestyle,
-                  linewidth=linewidth,
-                  zorder=zorder)
+    if which == "x":
+        ymin, ymax = ax.get_ylim()
+        for x in pos:
+            ax.vlines([x],
+                      ymin,
+                      ymax,
+                      color=colour,
+                      alpha=alpha,
+                      linestyle=linestyle,
+                      linewidth=linewidth,
+                      zorder=zorder)
+    elif which == "y":
+        xmin, xmax = ax.get_xlim()
+        for y in pos:
+            ax.hlines([y],
+                      xmin,
+                      xmax,
+                      color=colour,
+                      alpha=alpha,
+                      linestyle=linestyle,
+                      linewidth=linewidth,
+                      zorder=zorder)
 
 
 #############################
@@ -330,10 +308,10 @@ def limits(ax: plt.Axes,
         ax.set_ylim(ylimits)
 
 
-def ax_ticks_and_labels(ax: plt.Axes,
-                        which: str,
-                        ticks: List[float],
-                        labels=None):
+def ticks_and_labels(ax: plt.Axes,
+                     which: str,
+                     ticks: List[float],
+                     labels=None):
     assert which in ["x", "y", "xy", "yx"]
     assert type(ticks) == list
     for tick in ticks:
@@ -402,6 +380,24 @@ def similarity_heatmap(ax: plt.Axes,
                        list_of_lists: List[List[float]],
                        method: str = "jaccard"):
     sns.heatmap(_similarity_matrix(list_of_lists, method))
+
+
+def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
+    assert type(data) == np.ndarray
+
+    assert type(mask) == str
+    assert mask in ["lower", "upper", "lowerdiag", "upperdiag"]
+
+    if mask == "upperdiag":
+        mask_array = np.triu(data, k=0)
+    elif mask == "upper":
+        mask_array = np.triu(data, k=1)
+    elif mask == "lowerdiag":
+        mask_array = np.tril(data, k=0)
+    elif mask == "lower":
+        mask_array = np.tril(data, k=-1)
+
+    sns.heatmap(data, ax=ax, mask=mask_array)
 
 
 ##################

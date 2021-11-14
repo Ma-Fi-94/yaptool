@@ -215,32 +215,32 @@ def test_star_pathological():
     plt.close()
 
 
-def test_ax_ticks_and_labels():
+def test_ticks_and_labels():
     fig, ax = pt.singleplot()
-    pt.ax_ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], labels=None)
-    pt.ax_ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], labels=None)
-    pt.ax_ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], labels=None)
-    pt.ax_ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], labels=None)
+    pt.ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], labels=None)
+    pt.ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], labels=None)
+    pt.ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], labels=None)
+    pt.ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], labels=None)
 
 
-def test_ax_ticks_and_labels_pathological():
+def test_ticks_and_labels_pathological():
     fig, ax = pt.singleplot()
 
     with pytest.raises(AssertionError) as exception_info:
-        pt.ax_ticks_and_labels(ax,
-                               which="x",
-                               ticks=[-0.14, 1, 2, "a"],
-                               labels=None)
+        pt.ticks_and_labels(ax,
+                            which="x",
+                            ticks=[-0.14, 1, 2, "a"],
+                            labels=None)
     with pytest.raises(AssertionError) as exception_info:
-        pt.ax_ticks_and_labels(ax,
-                               which="y",
-                               ticks=[-0.14, 1, 2, 3.5],
-                               labels=["a"])
+        pt.ticks_and_labels(ax,
+                            which="y",
+                            ticks=[-0.14, 1, 2, 3.5],
+                            labels=["a"])
     with pytest.raises(AssertionError) as exception_info:
-        pt.ax_ticks_and_labels(ax,
-                               which="abc",
-                               ticks=[-0.14, 1, 2, 3.5],
-                               labels=["a", "b", "c"])
+        pt.ticks_and_labels(ax,
+                            which="abc",
+                            ticks=[-0.14, 1, 2, 3.5],
+                            labels=["a", "b", "c"])
     plt.close()
 
 
@@ -378,65 +378,55 @@ def test_multiplot_pathological():
         pt.multiplot(nrows=2, ncols=3, size_xy=("abc", 20))
 
 
-def test_vlines():
+def test_lines():
     fig, ax = pt.singleplot()
-    pt.vlines(ax, [1, 2, 3, -5])
+    pt.lines(ax, which="x", pos=[1, 2, 3, -5])
+    pt.lines(ax, which="y", pos=[1, 2, 3, -5])
     plt.close()
 
 
-def test_hlines():
+def test_lines_pathological():
     fig, ax = pt.singleplot()
-    pt.hlines(ax, [1, 2, 3, -5])
+
+    with pytest.raises(AssertionError) as exception_info:
+        pt.lines(ax, which=1234, pos=[])
+
+    with pytest.raises(AssertionError) as exception_info:
+        pt.lines(ax, which="abcde", pos=[])
+
+    for which in ["x", "y"]:
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[])
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, "abc"])
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos="abc")
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], linestyle="abc")
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], linestyle=1)
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], colour=12345)
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], alpha=-0.3)
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], alpha="abc")
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], linewidth=-12345)
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], linewidth="abc")
+        with pytest.raises(AssertionError) as exception_info:
+            pt.lines(ax, which=which, pos=[1, 2, 3], zorder="abc")
+
+
+def test_masked_heatmap():
+    fig, ax = pt.singleplot()
+    data = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    pt.masked_heatmap(ax=ax, data=data, mask="upperdiag")
+    pt.masked_heatmap(ax=ax, data=data, mask="upper")
+    pt.masked_heatmap(ax=ax, data=data, mask="lowerdiag")
+    pt.masked_heatmap(ax=ax, data=data, mask="lower")
     plt.close()
 
-
-def test_vlines_pathological():
-    fig, ax = pt.singleplot()
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [])
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, "abc"])
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, "abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], linestyle="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], linestyle=1)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], colour=12345)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], alpha=-0.3)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], alpha="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], linewidth=-12345)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], linewidth="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.vlines(ax, [1, 2, 3], zorder="abc")
-
-
-def test_hlines_pathological():
-    fig, ax = pt.singleplot()
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [])
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, "abc"])
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, "abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], linestyle="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], linestyle=1)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], colour=12345)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], alpha=-0.3)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], alpha="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], linewidth=-12345)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], linewidth="abc")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.hlines(ax, [1, 2, 3], zorder="abc")
+def test_masked_heatmap_pathological():
+    pass
