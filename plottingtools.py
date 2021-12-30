@@ -295,16 +295,16 @@ def limits(ax: plt.Axes,
         assert type(xlimits) in (tuple, list)
         assert len(xlimits) == 2
         lo, hi = xlimits
-        assert type(lo) in [int, float]
-        assert type(hi) in [int, float]
+        #assert type(lo) in [int, float, np.float64] TBD
+        #assert type(hi) in [int, float, np.float64]
         ax.set_xlim(xlimits)
 
     if ylimits is not None:
         assert type(ylimits) in (tuple, list)
         assert len(ylimits) == 2
         lo, hi = ylimits
-        assert type(lo) in [int, float]
-        assert type(hi) in [int, float]
+        #assert type(lo) in [int, float, np.float64]
+        #assert type(hi) in [int, float, np.float64]
         ax.set_ylim(ylimits)
 
 
@@ -432,3 +432,48 @@ def heatmap_cbar_kws():
 
 def heatmap_annot_kws():
     return {'fontsize': 20}
+
+
+
+
+##########################
+# Some ideas, TBD nicely #
+##########################
+
+def majorline(ax, x, y, linewidth=3, linestyle="-", **kwargs):
+	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
+
+def midiline(ax, x, y, linewidth=2, linestyle="--", **kwargs):
+	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
+	
+def minorline(ax, x, y, linewidth=1, linestyle=":", **kwargs):
+	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
+
+def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
+	''' Add a legend to a plot. '''
+	l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
+	try:
+		for lh in l.legendHandles: 
+			lh._legmarker.set_alpha(1)
+	except:
+		pass
+	try:
+		for lh in l.legendHandles: 
+			lh.set_alpha(1)
+	except:
+		pass
+
+
+def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
+	ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
+
+def oligoscatter_errorbar(ax, x, y, xerr=None, yerr=None, marker="o", alpha=1, **kwargs):
+	ax.errorbar(x, y, xerr=xerr, yerr=yerr, marker=marker, alpha=alpha, **kwargs)
+
+def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
+	ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
+
+def polyscatter_errorbar(ax, x, y, xerr=None, yerr=None, marker="o", alpha=1, **kwargs):
+	ax.errorbar(x, y, xerr=xerr, yerr=yerr, marker=marker, alpha=alpha, **kwargs)
+
+
