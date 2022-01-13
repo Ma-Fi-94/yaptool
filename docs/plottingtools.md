@@ -2,36 +2,40 @@
 
 ## General Aesthetics
 
-### <u>lightmode()</u>
-**Switch to light theme.**
+### **plottingtools.lightmode()**
+- Description
 
-Required parameters
+    - Switch to light theme.
 
-- None.
+- Required parameters
+
+    - None.
     
-Optional parameters
+- Optional parameters
 
-- *foreground* The foreground colour. Default: "0", i.e. pure black.
-- *background* The background colour. Default: "1.0", i.e. pure white.
+    - *foreground* The foreground colour. Default: "0", i.e. pure black.
+    - *background* The background colour. Default: "1.0", i.e. pure white.
     
 
-### darkmode()
-**Switch to darktheme.**
+### **plottingtools.darkmode()**
+- Description
 
-Required parameters
+    - Switch to darktheme.
 
-- None.
+- Required parameters
+
+    - None.
     
-Optional parameters
+- Optional parameters
 
-- *foreground* The foreground colour. Default: "0.85", i.e. light grey.
-- *background* The background colour. Default: "0.15", i.e. dark grey.
+    - *foreground* The foreground colour. Default: "0.85", i.e. light grey.
+    - *background* The background colour. Default: "0.15", i.e. dark grey.
 
 ## Making a new Figure
 
-### singleplot()
+### **plottingtools.singleplot()**
 
-### multiplot()
+### **plottingtools.multiplot()**
 
 
 ## Adding elements to an existing plot
