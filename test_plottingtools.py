@@ -256,13 +256,9 @@ def test_similarity_matrix():
 
 def test_similarity_matrix_pathological():
     with pytest.raises(NotImplementedError) as exception_info:
-        assert np.array_equal(
-            pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method="abcdef"),
-            np.array([[1, 0.5], [0.5, 1]]))
+        x = pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method="abcdef")
     with pytest.raises(NotImplementedError) as exception_info:
-        assert np.array_equal(
-            pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method=12345),
-            np.array([[1, 0.5], [0.5, 1]]))
+        x = pt._similarity_matrix([[1, 2, 3, 4], [1, 3]], method=12345)
 
 
 def test_similarity_heatmap():
@@ -316,7 +312,7 @@ def test_align_ticklabels_pathological():
     plt.close()
 
 
-def test_save_png():
+def test_save_png():  #TBD
     pass
 
 
@@ -333,7 +329,7 @@ def test_save_png_pathological():
     plt.close()
 
 
-def test_save_svg():
+def test_save_svg():  #TBD
     pass
 
 
@@ -343,6 +339,19 @@ def test_save_svg_pathological():
         pt.save_svg(filename="")
     with pytest.raises(AssertionError) as exception_info:
         pt.save_svg(filename=12345)
+    plt.close()
+
+
+def test_save_pdf():  #TBD
+    pass
+
+
+def test_save_pdf_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_pdf(filename="")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.save_pdf(filename=12345)
     plt.close()
 
 
@@ -428,5 +437,23 @@ def test_masked_heatmap():
     pt.masked_heatmap(ax=ax, data=data, mask="lower")
     plt.close()
 
-def test_masked_heatmap_pathological():
+
+def test_masked_heatmap_pathological():  #TBD
     pass
+
+
+def test_correlation_matrix():
+    res = pt._correlation_matrix([[1, 2, 3], [4, 5, 6]])
+    assert np.all(np.abs(res) - 1 < 1e-6)
+    res = pt._correlation_matrix([[1, 2, 3], [6, 5, 6]])
+    assert np.abs(res[0][1]) < 1e-6
+    assert np.abs(res[1][0]) < 1e-6
+    assert np.abs(res[0][0] - 1) < 1e-6
+    assert np.abs(res[1][1] - 1) < 1e-6
+
+
+def test_correlation_matrix_pathological():
+    with pytest.raises(NotImplementedError) as exception_info:
+        x = pt._correlation_matrix([[1, 2, 3, 4], [1, 3]], method="abcdef")
+    with pytest.raises(NotImplementedError) as exception_info:
+        x = pt._correlation_matrix([[1, 2, 3, 4], [1, 3]], method=12345)

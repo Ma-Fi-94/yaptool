@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
 import seaborn as sns  # type: ignore
+from scipy import stats  # type: ignore
 import numpy as np
 import sys
 import types
@@ -56,6 +57,29 @@ def _similarity_matrix(list_of_lists: List[List[float]],
     for i, set1 in enumerate(list_of_sets):
         for j, set2 in enumerate(list_of_sets):
             results[i, j] = f(set1, set2)
+    return results
+
+
+def _correlation_matrix(list_of_lists: List[List[float]],
+                        method: str = "pearson"):
+    if type(method) == str:
+        if method == "pearson":
+            f = lambda a, b: stats.pearsonr(a, b)[0]
+        elif method == "spearman":
+            f = lambda a, b: stats.spearmanr(a, b)[0]
+        elif method == "kendall":
+            f = lambda a, b: stats.spearmanr(a, b)[0]
+        else:
+            raise NotImplementedError
+    elif type(method) is types.LambdaType:
+        f = method
+    else:
+        raise NotImplementedError
+
+    results = np.zeros((len(list_of_lists), len(list_of_lists)))
+    for i, vec1 in enumerate(list_of_lists):
+        for j, vec2 in enumerate(list_of_lists):
+            results[i, j] = f(vec1, vec2)
     return results
 
 
@@ -295,16 +319,16 @@ def limits(ax: plt.Axes,
         assert type(xlimits) in (tuple, list)
         assert len(xlimits) == 2
         lo, hi = xlimits
-        #assert type(lo) in [int, float, np.float64] TBD
-        #assert type(hi) in [int, float, np.float64]
+        assert type(lo) in [int, float]
+        assert type(hi) in [int, float]
         ax.set_xlim(xlimits)
 
     if ylimits is not None:
         assert type(ylimits) in (tuple, list)
         assert len(ylimits) == 2
         lo, hi = ylimits
-        #assert type(lo) in [int, float, np.float64]
-        #assert type(hi) in [int, float, np.float64]
+        assert type(lo) in [int, float, np.float64]
+        assert type(hi) in [int, float, np.float64]
         ax.set_ylim(ylimits)
 
 
@@ -382,6 +406,12 @@ def similarity_heatmap(ax: plt.Axes,
     sns.heatmap(_similarity_matrix(list_of_lists, method))
 
 
+def correlations_heatmap(ax: plt.Axes,
+                         list_of_lists: List[List[float]],
+                         method: str = "pearson"):
+    sns.heatmap(_correlation_matrix(list_of_lists, method))
+
+
 def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
     assert type(data) == np.ndarray
 
@@ -421,6 +451,13 @@ def save_svg(filename: str):
     plt.savefig(filename, bbox_inches="tight", format="svg")
 
 
+def save_pdf(filename: str):
+    ''' Save current figure as pdf file. '''
+    assert type(filename) == str
+    assert filename != ""
+    plt.savefig(filename, bbox_inches="tight", format="pdf")
+
+
 ######################
 # Default parameters #
 ######################
@@ -434,46 +471,75 @@ def heatmap_annot_kws():
     return {'fontsize': 20}
 
 
-
-
 ##########################
 # Some ideas, TBD nicely #
 ##########################
 
+
 def majorline(ax, x, y, linewidth=3, linestyle="-", **kwargs):
-	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
+    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
+
 
 def midiline(ax, x, y, linewidth=2, linestyle="--", **kwargs):
-	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
-	
+    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
+
+
 def minorline(ax, x, y, linewidth=1, linestyle=":", **kwargs):
-	ax.plot(x, y, lw=linewidth, ls=linestyle, ** kwargs)
+    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
+
 
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
-	''' Add a legend to a plot. '''
-	l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
-	try:
-		for lh in l.legendHandles: 
-			lh._legmarker.set_alpha(1)
-	except:
-		pass
-	try:
-		for lh in l.legendHandles: 
-			lh.set_alpha(1)
-	except:
-		pass
+    ''' Add a legend to a plot. '''
+    l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
+    try:
+        for lh in l.legendHandles:
+            lh._legmarker.set_alpha(1)
+    except:
+        pass
+    try:
+        for lh in l.legendHandles:
+            lh.set_alpha(1)
+    except:
+        pass
 
 
 def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
-	ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
+    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
 
-def oligoscatter_errorbar(ax, x, y, xerr=None, yerr=None, marker="o", alpha=1, **kwargs):
-	ax.errorbar(x, y, xerr=xerr, yerr=yerr, marker=marker, alpha=alpha, **kwargs)
+
+def oligoscatter_errorbar(ax,
+                          x,
+                          y,
+                          xerr=None,
+                          yerr=None,
+                          marker="o",
+                          alpha=1,
+                          **kwargs):
+    ax.errorbar(x,
+                y,
+                xerr=xerr,
+                yerr=yerr,
+                marker=marker,
+                alpha=alpha,
+                **kwargs)
+
 
 def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
-	ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
-
-def polyscatter_errorbar(ax, x, y, xerr=None, yerr=None, marker="o", alpha=1, **kwargs):
-	ax.errorbar(x, y, xerr=xerr, yerr=yerr, marker=marker, alpha=alpha, **kwargs)
+    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
 
 
+def polyscatter_errorbar(ax,
+                         x,
+                         y,
+                         xerr=None,
+                         yerr=None,
+                         marker="o",
+                         alpha=1,
+                         **kwargs):
+    ax.errorbar(x,
+                y,
+                xerr=xerr,
+                yerr=yerr,
+                marker=marker,
+                alpha=alpha,
+                **kwargs)
