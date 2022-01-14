@@ -75,12 +75,7 @@
 
 
 ## Adding elements to an existing plot
-
-
-
-
-
-
+### **plottingtools.title(ax, title, [fontsize = 40, pad = 20])**
 
 - Description
 
@@ -95,6 +90,99 @@
     - **
 
 - Return
-    -
+    - None.
+
+### **plottingtools.labels(ax, xlabel, ylabel, [fontsize = 30, pad = 15])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.diagonal(ax, [colour = "black", alpha = 0.3, linestyle = "-", linewidth = 2])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.rectangle(ax, x1, y1, x2, y2, [colour = "red", linewidth = 3, linestyle = "-", fill = False])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.star(ax, x, y, [colour = "red", fontsize = 50])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.lines(ax, which, pos, [colour = "black", alpha = 0.3, linestyle = "-", linewidth = 2, zorder = -100])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+
+
+
+
+
+
+
 
 
