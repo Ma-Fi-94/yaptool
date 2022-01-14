@@ -1,6 +1,6 @@
 # Publc Methods of "plottingtools", grouped by Topic
 
-## General Aesthetics
+## Changing the colour theme
 
 ### **plottingtools.lightmode([foreground = "0", background = "1.0"])**
 - Description
