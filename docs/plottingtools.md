@@ -49,7 +49,7 @@
     
 - Optional parameters
 
-    - *size* 2-Tuple of numbers, containing the figure's width and height
+    - *size* 2-Tuple of numbers, containing the figure's width and height. Default: (10, 7)
 
 - Return
     - 2-tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
