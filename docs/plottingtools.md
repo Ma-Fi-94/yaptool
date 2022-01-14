@@ -36,6 +36,10 @@
 - Return
     - None
 
+
+<div style="page-break-after: always;"></div>
+
+
 ## Making a new Figure
 
 ### **plottingtools.singleplot([size = (10, 7)])**
@@ -71,6 +75,8 @@
 
 - Return
     - Tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
+
+<div style="page-break-after: always;"></div>
 
 ## Kinds of Plots unique to plottingtools
 
@@ -125,6 +131,8 @@
 
 - Return
     - None.
+
+<div style="page-break-after: always;"></div>
 
 ## Adding elements to an existing plot
 ### **plottingtools.title(ax, title, [fontsize = 40, pad = 20])**
@@ -228,6 +236,8 @@
 
 - Return
     - None.
+
+<div style="page-break-after: always;"></div>
 
 ## Changing elements of a plot
 
@@ -333,6 +343,8 @@
 - Return
     - None.
 
+<div style="page-break-after: always;"></div>
+
 ## Saving the current figure to a file
 ### **plottingtools.save_png(filename, [dpi = 300])**
 
@@ -386,7 +398,10 @@
 - Return
     - None.
 
+<div style="page-break-after: always;"></div>
+
 ## Collections of default parameters for matplotlib plots
 T.B.D.
 
 
+ 
