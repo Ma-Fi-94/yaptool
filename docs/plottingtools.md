@@ -72,7 +72,59 @@
 - Return
     - Tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
 
+## Kinds of Plots unique to plottingtools
 
+### **plottingtools.similarity_heatmap(ax, list_of_lists, method)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.correlations_heatmap(ax, list_of_lists, method)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+
+### **plottingtools.masked_heatmap(ax, data, mask, \*\*kwargs)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
 
 ## Adding elements to an existing plot
 ### **plottingtools.title(ax, title, [fontsize = 40, pad = 20])**
@@ -177,12 +229,164 @@
 - Return
     - None.
 
+## Changing elements of a plot
+
+### **plottingtools.despine(ax, [which = ['top', 'right']])**
+
+- Description
+
+    - Remove spines of a matplotlib.pyplot.Axes plot.
+
+- Required parameters
+
+    - *ax* The matplotlib.pyplot.Axes object to remove spines from.
+    
+- Optional parameters
+
+    - *which* Array of strings specifying which spines to remove. Possible choices are "top", "right", "left", "bottom". Defaults to ["top", "right"].
+
+- Return
+    - None.
+
+### **plottingtools.ticklabelsize(ax, [which = "both", size = 20])**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.limits(ax, xlimits, ylimits)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.ticks_and_labels(ax, which, ticks, label)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.rotate_ticklabels(ax, which, rotation)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+### **plottingtools.align_ticklabels(ax, which, horizontal, vertical)**
+
+- Description
+
+    - 
+
+- Required parameters
+
+    - 
+    
+- Optional parameters
+
+    - **
+
+- Return
+    - None.
+
+## Saving the current figure to a file
+### **plottingtools.save_png(filename, [dpi = 300])**
+
+- Description
+
+    - Save the current plot as PNG file.
+
+- Required parameters
+
+    - *filename* string with the file name to export to.
+    
+- Optional parameters
+
+    - *dpi* The resolution, in dpi. Default: 300
+
+- Return
+    - None.
+
+### **plottingtools.save_svg(filename)**
+
+- Description
+
+    - Save the current plot as SVG file.
+
+- Required parameters
+
+    - *filename* string with the file name to export to.
+    
+- Optional parameters
+
+    - None
+
+- Return
+    - None.
 
 
+### **plottingtools.save_pdf(filename)**
 
+- Description
 
+    - Save the current plot as PDF file.
 
+- Required parameters
 
+    - *filename* string with the file name to export to.
+    
+- Optional parameters
 
+    - None.
+
+- Return
+    - None.
+
+## Collections of default parameters for matplotlib plots
+T.B.D.
 
 
