@@ -394,7 +394,7 @@ This is the documentation to a library of plotting functions which I have been d
 - Return
     - None.
 
-### **plottingtools.ticks_and_labels(ax, which, ticks, label)**
+### **plottingtools.ticks_and_labels(ax, which, ticks, labels)**
 
 - Description
 
