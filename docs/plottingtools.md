@@ -159,7 +159,7 @@ This is the documentation to a library of plotting functions which I have been d
 
 <div style="page-break-after: always;"></div>
 
-## Plots unique to plottingtools (documentation of this section is WIP)
+## Plots unique to plottingtools
 
 ### **plottingtools.similarity_heatmap(ax, list_of_lists, method)**
 
@@ -234,20 +234,22 @@ This is the documentation to a library of plotting functions which I have been d
 
 <div style="page-break-after: always;"></div>
 
-## Adding elements to an existing plot (documentation of this section is WIP)
+## Adding elements to an existing plot
 ### **plottingtools.title(ax, title, [fontsize = 40, pad = 20])**
 
 - Description
 
-    - 
+    - Adds or changes a title to/of an existing matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *title* String containing the title.
     
 - Optional parameters
 
-    - **
+    - *fontsize* The font size of the title. Deafults to 40.
+    - *pad* The padding between the title and the actual plot. Defaults to 20.
 
 - Return
     - None.
@@ -256,15 +258,18 @@ This is the documentation to a library of plotting functions which I have been d
 
 - Description
 
-    - 
+    - Adds ior changes the x and y axis labels of an matplotlib.pyplot.Axes object. To only change one of the labels, pass None to the respective other parameter.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *xlabel* String containing the new x-axis label, or None to leave the x-axis label unchanged.
+    - *ylabel* String containing the new y-axis label, or None to leave the y-axis label unchanged.
     
 - Optional parameters
 
-    - **
+    - *fontsize* The font size of the labels. Defaults to 30.
+    - *pad* The padding between the axis labels and the axes. Defaults to 15.
 
 - Return
     - None.
@@ -273,15 +278,18 @@ This is the documentation to a library of plotting functions which I have been d
 
 - Description
 
-    - 
+    - Add a 1:1 diagonal to an existing matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
     
 - Optional parameters
 
-    - **
+    - *colour* A string specifying the colour of the diagonal. Defaults to "black".
+    - *alpha* Numerical value between 0 and 1, specifying the transparency of the diagonal. Defaults to 0.3.
+    - *linestyle* String specifying the line style of the diagonal. Defaults to "-", i.e. a continuous line.
+    - *linewidth* Numerical value specifying the width of the diagonal. Defaults to 2.
 
 - Return
     - None.
@@ -290,15 +298,21 @@ This is the documentation to a library of plotting functions which I have been d
 
 - Description
 
-    - 
+    - Add a rectangle to an existing matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
-    
+    - *x1* x-coordinate of the lower-left point of the rectangle.
+    - *y1* y-coordinate of the lower-left point of the rectangle.
+    - *x2* x-coordinate of the upper-right point of the rectangle.
+    - *y2* y-coordinate of the upper-right point of the rectangle.
+
 - Optional parameters
 
-    - **
+    - *colour* String specifying the colour of the rectangle's border. Defaults to red.
+    - *linewidth* Numerical value specifying the width of the rectangle's border. Defaults to 3.
+    - *linestyle* String specifying the line style of the rectangle. Defaults to "-", i.e. a continuous line.
+    - *fill* Boolean specifying whether to fill the rectangle. Defaults to False, i.e. no filling.
 
 - Return
     - None.
@@ -307,35 +321,24 @@ This is the documentation to a library of plotting functions which I have been d
 
 - Description
 
-    - 
+    - Add an asterisk to an existing matplotlib.pyplot.Axes object, e.g. as a marker of statistical significance or to denote special points of interest.
 
 - Required parameters
 
-    - 
+    - *x* x-coordinate of the asterisk.
+    - *y* y-coordinate of the asterisk.
     
 - Optional parameters
 
-    - **
+    - *colour* String specifying the colour of the asterisk. Defaults to red.
+    - *fontsize* Numerical value specifying the font size of the star. Defaults to 50.
 
 - Return
     - None.
 
 ### **plottingtools.lines(ax, which, pos, [colour = "black", alpha = 0.3, linestyle = "-", linewidth = 2, zorder = -100])**
 
-- Description
-
-    - 
-
-- Required parameters
-
-    - 
-    
-- Optional parameters
-
-    - **
-
-- Return
-    - None.
+- Function will be reworked soon. Don't use for now.
 
 <div style="page-break-after: always;"></div>
 
