@@ -2,6 +2,7 @@ import matplotlib  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
+from matplotlib import rc # type: ignore
 import seaborn as sns  # type: ignore
 from scipy import stats  # type: ignore
 import numpy as np
@@ -83,9 +84,9 @@ def _correlation_matrix(list_of_lists: List[List[float]],
     return results
 
 
-#################
-# Colour Themes #
-#################
+######################
+# General Aesthetics #
+######################
 
 
 def darkmode(foreground="0.85", background="0.15"):
@@ -97,6 +98,15 @@ def lightmode(foreground="0", background="1.0"):
     ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
     _set_fgbg(fg=foreground, bg=background)
 
+def texon():
+	''' Switch on TeX-rendering of texts. '''
+	rc('text', usetex=True)
+	params= {'text.latex.preamble' : [r'\usepackage{amsmath}']}
+	plt.rcParams.update(params)
+
+def texoff():
+	''' Switch off TeX-rendering of texts. '''
+	rc('text', usetex=False)
 
 ####################
 # Types of layouts #
