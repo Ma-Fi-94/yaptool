@@ -42,5 +42,8 @@ pt.save_svg("Test.svg")
 This yields the following figure:
 ![](https://github.com/Ma-Fi-94/plottingtools/blob/main/docs/Test.svg)
 
+## Overview over Features
+T.B.D.
+
 ## Is there a documentation?
-Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs/plottingtools.pdf. Feel free to check it out to learn about a bunch of other cool features I have already implemented ;).
+Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs/plottingtools.pdf.
