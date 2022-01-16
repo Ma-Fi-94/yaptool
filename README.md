@@ -46,13 +46,15 @@ This yields the following figure:
 - Light- and dark mode
 - TeX support
 - Make single- and multi plot figures with one line of code
-- Easily beautify matplotlib plots using convenience functions with sensible, aesthetically pleasing default choices:
-  - Despine plots, change tick positions and labels, change ticklabel size, change axis limits, change tick label rotation, change tick label alignment -- with one single line of code each
-  - Add (or change) title, axis labels, rectangles, lines, etc. with one single line of code each
+- Standard plots
+  -  WIP
 - Adds some new kinds of useful plots:
   -   Heatmap of similarities of a list of sets
   -   Heatmap of correlations of a list of equal-length vector
   -   Maskes heatmaps (e.g. only show the upper or lower part of a heatmap)
+- Easily beautify matplotlib plots using convenience functions with sensible, aesthetically pleasing default choices:
+  - Despine plots, change tick positions and labels, change ticklabel size, change axis limits, change tick label rotation, change tick label alignment -- with one single line of code each
+  - Add (or change) title, axis labels, rectangles, lines, etc. with one single line of code each
 - Export current figure to PNG, SVG or PDF with one single line of code
 
 ## Is there a documentation?
