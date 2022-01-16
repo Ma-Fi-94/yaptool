@@ -47,9 +47,9 @@ This yields the following figure:
 - TeX support
 - Make single- and multi plot figures with one line of code
 - Adds some new kinds of plots:
--   Heatmap of similarities of a list of sets
--   Heatmap of correlations of a list of equal-length vector
--   Maskes heatmaps (e.g. only show the upper or lower part of a heatmap)
+  -   Heatmap of similarities of a list of sets
+  -   Heatmap of correlations of a list of equal-length vector
+  -   Maskes heatmaps (e.g. only show the upper or lower part of a heatmap)
 - Despine plots, change tick positions and labels, ticklabel size, axis limits, tick label rotation, and tick label alignment with one single line of code each
 - Add title, axis labels, rectangles, lines, etc. with one single line of code each
 - Export current figure to PNG, SVG or PDF with one single line of code
