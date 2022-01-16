@@ -13,6 +13,9 @@ This is the documentation to a library of plotting functions which I have been d
 - plottingtools.singleplot()
 - plottingtools.multiplot()
 
+### Standard Plots
+- WIP
+
 ### Plots unique to plottingtools
 - plottingtools.similarity_heatmap()
 - plottingtools.correlations_heatmap()
@@ -156,6 +159,12 @@ This is the documentation to a library of plotting functions which I have been d
 
 - Return
     - Tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
+
+<div style="page-break-after: always;"></div>
+
+## Standard plots
+
+WIP
 
 <div style="page-break-after: always;"></div>
 
@@ -342,7 +351,7 @@ This is the documentation to a library of plotting functions which I have been d
 
 <div style="page-break-after: always;"></div>
 
-## Changing elements of an existing plot (documentation of this section is WIP)
+## Changing elements of an existing plot
 ### **plottingtools.despine(ax, [which = ['top', 'right']])**
 
 - Description
@@ -358,91 +367,108 @@ This is the documentation to a library of plotting functions which I have been d
     - *which* Array of strings specifying which spines to remove. Possible choices are "top", "right", "left", "bottom". Defaults to ["top", "right"].
 
 - Return
+
     - None.
 
 ### **plottingtools.ticklabelsize(ax, [which = "both", size = 20])**
 
 - Description
 
-    - 
+    - Change the size of the tick labels of a matplotlib.pyplot.Axes plot.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
     
 - Optional parameters
 
-    - **
+    - *which* String which denotes the axis of which the tick label size will be changed. Can be "x", "y", or "both" (default).
+    - *size* Numerical value with the new font size of the tick labels
 
 - Return
+    
     - None.
 
 ### **plottingtools.limits(ax, xlimits, ylimits)**
 
 - Description
 
-    - 
+    - Change the x- and y-axis limits of a matplotlib.pyplot.Axes plot.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
     
 - Optional parameters
 
-    - **
+    - *xlimits* Tuple or list of two numerical values, denoting lower and upper limit of the x-axis. Can also be None, in which case the limits of the x-axis remain unchanged.
+    - *ylimits* Tuple or list of two numerical values, denoting lower and upper limit of the y-axis. Can also be None, in which case the limits of the y-axis remain unchanged.
 
 - Return
+
     - None.
 
 ### **plottingtools.ticks_and_labels(ax, which, ticks, labels)**
 
 - Description
 
-    - 
+    - Set tick positions and labels of an axis of a matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *which* String which denotes the axis of which the tick positions and labesl will be changed. Can be "x", or "y".
+    - *ticks* List of numerical values specifying the tick positions.
+    - *labels* List of strings containing the labels associated with the *ticks*.
+
     
 - Optional parameters
 
-    - **
+    - None.
 
 - Return
+
     - None.
 
 ### **plottingtools.rotate_ticklabels(ax, which, rotation)**
 
 - Description
 
-    - 
+    - Set the rotation of the tick labels of an axis of a matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
-    
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *which* String which denotes the axis of which the tick labels will be rotated. Can be "x", or "y".
+    - *rotation* Numerical value specifying the new angle of the tick labels.
+
 - Optional parameters
 
-    - **
+    - None.
 
 - Return
+
     - None.
 
 ### **plottingtools.align_ticklabels(ax, which, horizontal, vertical)**
 
 - Description
 
-    - 
+    - Set the aligement of the tick labels of an axis of a matplotlib.pyplot.Axes object.
 
 - Required parameters
 
-    - 
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *which* String which denotes the axis of which the tick labels will be aligned. Can be "x", or "y".
+    - *horizontal* String specifying the kind of horizontal alignment. Can be "center", "right", or "left".
+    - *vertical* String specifying the kind of horizontal alignment. Can be "center", "top", "bottom", or "baseline".
     
 - Optional parameters
 
-    - **
+    - None.
 
 - Return
+
     - None.
 
 <div style="page-break-after: always;"></div>
