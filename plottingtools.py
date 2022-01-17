@@ -2,7 +2,7 @@ import matplotlib  # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
-from matplotlib import rc # type: ignore
+from matplotlib import rc  # type: ignore
 import seaborn as sns  # type: ignore
 from scipy import stats  # type: ignore
 import numpy as np
@@ -98,15 +98,18 @@ def lightmode(foreground="0", background="1.0"):
     ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
     _set_fgbg(fg=foreground, bg=background)
 
+
 def texon():
-	''' Switch on TeX-rendering of texts. '''
-	rc('text', usetex=True)
-	params= {'text.latex.preamble' : [r'\usepackage{amsmath}']}
-	plt.rcParams.update(params)
+    ''' Switch on TeX-rendering of texts. '''
+    rc('text', usetex=True)
+    params = {'text.latex.preamble': [r'\usepackage{amsmath}']}
+    plt.rcParams.update(params)
+
 
 def texoff():
-	''' Switch off TeX-rendering of texts. '''
-	rc('text', usetex=False)
+    ''' Switch off TeX-rendering of texts. '''
+    rc('text', usetex=False)
+
 
 ####################
 # Types of layouts #
@@ -115,11 +118,12 @@ def texoff():
 
 def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     ''' Make a new 10x7 plot. Size can also be changed. '''
-    assert type(size) in (tuple, list)
-    assert len(size) == 2
-    w, h = size
-    assert type(w) in [int, float]
-    assert type(h) in [int, float]
+    try:
+        w, h = size
+        w = float(w)
+        h = float(h)
+    except:
+        raise AssertionError
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     return fig, ax
@@ -133,9 +137,13 @@ def multiplot(
     assert type(ncols) == int
     assert nrows > 0
     assert ncols > 0
-    l, h = size_xy
-    assert type(l) in [float, int]
-    assert type(h) in [float, int]
+
+    try:
+        l, h = size_xy
+        l = float(l)
+        h = float(h)
+    except:
+        raise AssertionError
     assert l > 0
     assert h > 0
 
@@ -153,10 +161,14 @@ def title(ax: plt.Axes,
           fontsize: float = 40,
           pad: float = 20) -> None:
     ''' Add a title to a plot. '''
-    assert type(title) == str
-    assert type(fontsize) in [int, float]
-    assert type(pad) in [int, float]
+    try:
+        title = str(title)
+        fontsize = float(fontsize)
+        pad = float(pad)
+    except:
+        raise AssertionError
     assert fontsize > 0
+    assert pad > 0
     ax.set_title(title, fontsize=fontsize, pad=pad)
 
 
@@ -166,16 +178,25 @@ def labels(ax: plt.Axes,
            fontsize: float = 30,
            pad: float = 15) -> None:
     ''' Add axes labels to a plot. '''
-    assert type(fontsize) in [float, int]
+    try:
+        fontsize = float(fontsize)
+        pad = float(pad)
+    except:
+        raise AssertionError
     assert fontsize > 0
-    assert type(pad) in [float, int]
 
     if xlabel is not None:
-        assert type(xlabel) == str
+        try:
+            xlabel = str(xlabel)
+        except:
+            raise AssertionError
         ax.set_xlabel(xlabel, fontsize=fontsize, labelpad=pad)
 
     if ylabel is not None:
-        assert type(ylabel) == str
+        try:
+            ylabel = str(ylabel)
+        except:
+            raise AssertionError
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
 
 
@@ -185,11 +206,15 @@ def diagonal(ax: plt.Axes,
              linestyle="-",
              linewidth=2):
     ''' Add the 45 degrees diagonal to a plot. '''
-    assert type(colour) == str
-    assert type(alpha) in [float, int]
+    try:
+        colour = str(colour)
+        alpha = float(alpha)
+        linewidth = float(linewidth)
+    except:
+        raise AssertionError
+
     assert (alpha >= 0) and (alpha <= 1)
     assert linestyle in ["-", "--", "-.", ":"]
-    assert type(linewidth) in [float, int]
     assert linewidth > 0
 
     minimum = min(ax.get_xlim()[0], ax.get_ylim()[0])
@@ -209,15 +234,17 @@ def rectangle(ax: plt.Axes,
               colour: str = "red",
               linewidth: float = 3,
               linestyle: str = "-",
-              fill: bool = False,
-              **kwargs):
+              fill: bool = False):
     ''' Add a rectangle to a plot. '''
-    assert type(x1) in [int, float]
-    assert type(y1) in [int, float]
-    assert type(x2) in [int, float]
-    assert type(y2) in [int, float]
-    assert type(colour) == str
-    assert type(linewidth) in [int, float]
+    try:
+        x1 = float(x1)
+        y1 = float(y1)
+        x2 = float(x2)
+        y2 = float(y2)
+        colour = str(colour)
+        linewidth = float(linewidth)
+    except:
+        raise AssertionError
     assert linewidth >= 0
     assert linestyle in ["-", "--", "-.", ":"]
     assert type(fill) == bool
@@ -230,8 +257,10 @@ def rectangle(ax: plt.Axes,
                   linestyle=linestyle,
                   edgecolor=colour,
                   facecolor=colour,
-                  fill=fill,
-                  **kwargs))
+                  fill=fill))
+
+
+### issue #32 fixed until this line ### FIXME
 
 
 def star(ax: plt.Axes,
@@ -444,21 +473,24 @@ def save_png(filename: str, dpi: int = 300):
     assert filename != ""
     assert type(dpi) in [int, float]
     assert dpi > 0
-    plt.savefig(filename, dpi=dpi, bbox_inches="tight", format="png")  # pragma: no cover
+    plt.savefig(filename, dpi=dpi, bbox_inches="tight",
+                format="png")  # pragma: no cover
 
 
 def save_svg(filename: str):
     ''' Save current figure as svg file. '''
     assert type(filename) == str
     assert filename != ""
-    plt.savefig(filename, bbox_inches="tight", format="svg")  # pragma: no cover
+    plt.savefig(filename, bbox_inches="tight",
+                format="svg")  # pragma: no cover
 
 
 def save_pdf(filename: str):
     ''' Save current figure as pdf file. '''
     assert type(filename) == str
     assert filename != ""
-    plt.savefig(filename, bbox_inches="tight", format="pdf")  # pragma: no cover
+    plt.savefig(filename, bbox_inches="tight",
+                format="pdf")  # pragma: no cover
 
 
 ######################
