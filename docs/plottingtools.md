@@ -261,6 +261,7 @@ WIP
     - *pad* The padding between the title and the actual plot. Defaults to 20.
 
 - Return
+
     - None.
 
 ### **plottingtools.labels(ax, xlabel, ylabel, [fontsize = 30, pad = 15])**
@@ -281,6 +282,7 @@ WIP
     - *pad* The padding between the axis labels and the axes. Defaults to 15.
 
 - Return
+
     - None.
 
 ### **plottingtools.diagonal(ax, [colour = "black", alpha = 0.3, linestyle = "-", linewidth = 2])**
@@ -301,7 +303,8 @@ WIP
     - *linewidth* Numerical value specifying the width of the diagonal. Defaults to 2.
 
 - Return
-    - None.
+ 
+     - None.
 
 ### **plottingtools.rectangle(ax, x1, y1, x2, y2, [colour = "red", linewidth = 3, linestyle = "-", fill = False])**
 
@@ -311,6 +314,7 @@ WIP
 
 - Required parameters
 
+    - *ax* The matplotlib.pyplot.Axes object.
     - *x1* x-coordinate of the lower-left point of the rectangle.
     - *y1* y-coordinate of the lower-left point of the rectangle.
     - *x2* x-coordinate of the upper-right point of the rectangle.
@@ -324,6 +328,7 @@ WIP
     - *fill* Boolean specifying whether to fill the rectangle. Defaults to False, i.e. no filling.
 
 - Return
+
     - None.
 
 ### **plottingtools.star(ax, x, y, [colour = "red", fontsize = 50])**
@@ -334,6 +339,7 @@ WIP
 
 - Required parameters
 
+    - *ax* The matplotlib.pyplot.Axes object.
     - *x* x-coordinate of the asterisk.
     - *y* y-coordinate of the asterisk.
     
@@ -343,11 +349,32 @@ WIP
     - *fontsize* Numerical value specifying the font size of the star. Defaults to 50.
 
 - Return
+
     - None.
 
 ### **plottingtools.lines(ax, which, pos, [colour = "black", alpha = 0.3, linestyle = "-", linewidth = 2, zorder = -100])**
 
-- Function will be reworked soon. Don't use for now.
+- Description
+
+    - Add horizontal or vertical lines to an existing matplotlib.pyplot.Axes object.
+
+- Required parameters
+
+    - *ax* The matplotlib.pyplot.Axes object.
+    - *which* String specifying whether vertical ("x")  or horizontal ("y") lines will be drawn.
+    - *pos* List of numerical values specifying the positions of the lines.
+    
+- Optional parameters
+    - *colour* String specifying the line colour. Defaults to "black"
+    - *alpha* Numerical value specifying the transparency of the lines. Defaults to 0.3.
+    - *linestyle* String specifying the style of the lines. Defaults to "-", i.e. a continuous line.
+    - *linewidth* Numerical value specifying the width of the lines. Defaults to 2.
+    - *zorder* Numerical value specifying the z-position of the lines. Defaults to -100, i.e. very far behind.
+
+- Return
+
+    - None.
+
 
 <div style="page-break-after: always;"></div>
 
