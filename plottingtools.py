@@ -444,21 +444,21 @@ def save_png(filename: str, dpi: int = 300):
     assert filename != ""
     assert type(dpi) in [int, float]
     assert dpi > 0
-    plt.savefig(filename, dpi=dpi, bbox_inches="tight", format="png")
+    plt.savefig(filename, dpi=dpi, bbox_inches="tight", format="png")  # pragma: no cover
 
 
 def save_svg(filename: str):
     ''' Save current figure as svg file. '''
     assert type(filename) == str
     assert filename != ""
-    plt.savefig(filename, bbox_inches="tight", format="svg")
+    plt.savefig(filename, bbox_inches="tight", format="svg")  # pragma: no cover
 
 
 def save_pdf(filename: str):
     ''' Save current figure as pdf file. '''
     assert type(filename) == str
     assert filename != ""
-    plt.savefig(filename, bbox_inches="tight", format="pdf")
+    plt.savefig(filename, bbox_inches="tight", format="pdf")  # pragma: no cover
 
 
 ######################
