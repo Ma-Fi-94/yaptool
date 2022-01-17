@@ -255,7 +255,6 @@ def lines(ax: plt.Axes,
           linestyle: str = "-",
           linewidth: float = 2,
           zorder: float = -100):
-    assert type(which) == str
     assert which in ["x", "y"]
 
     assert type(pos) == list
@@ -316,7 +315,7 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']):
 
 def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 20):
     ''' Change ticklabelsize of an ax object. '''
-    assert type(which) == str
+    assert which in ["x", "y", "both"]
     assert type(size) in [int, float]
     ax.tick_params(which, labelsize=size)
 
@@ -366,7 +365,6 @@ def ticks_and_labels(ax: plt.Axes,
 
 
 def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
-    assert type(which) == str
     assert which in ["x", "y", "xy", "yx", "both"]
     assert type(rotation) in [float, int]
 
@@ -377,29 +375,24 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
 
 
 def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
-    assert type(which) == str
     assert which in ["x", "y"]
 
     if which == "x":
         if horizontal is not None:
-            assert type(horizontal) == str
             assert horizontal in ['center', 'right', 'left']
             ax.set_xticklabels(ax.get_xticklabels(),
                                horizontalalignment=horizontal)
         if vertical is not None:
-            assert type(vertical) == str
             assert vertical in ['center', 'top', 'bottom', 'baseline']
             ax.set_xticklabels(ax.get_xticklabels(),
                                verticalalignment=vertical)
 
     if which == "y":
         if horizontal is not None:
-            assert type(horizontal) == str
             assert horizontal in ['center', 'right', 'left']
             ax.set_yticklabels(ax.get_yticklabels(),
                                horizontalalignment=horizontal)
         if vertical is not None:
-            assert type(vertical) == str
             assert vertical in ['center', 'top', 'bottom', 'baseline']
             ax.set_yticklabels(ax.get_yticklabels(),
                                verticalalignment=vertical)
