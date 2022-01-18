@@ -102,7 +102,7 @@ def lightmode(foreground="0", background="1.0"):
 def texon():
     ''' Switch on TeX-rendering of texts. '''
     rc('text', usetex=True)
-    params = {'text.latex.preamble': [r'\usepackage{amsmath}']}
+    params = {'text.latex.preamble': r'\usepackage{amsmath}'}
     plt.rcParams.update(params)
 
 
@@ -169,6 +169,8 @@ def title(ax: plt.Axes,
         raise AssertionError
     assert fontsize > 0
     assert pad > 0
+    assert hasattr(ax, 'plot')
+
     ax.set_title(title, fontsize=fontsize, pad=pad)
 
 
@@ -184,6 +186,7 @@ def labels(ax: plt.Axes,
     except:
         raise AssertionError
     assert fontsize > 0
+    assert hasattr(ax, 'plot')
 
     if xlabel is not None:
         try:
@@ -216,6 +219,7 @@ def diagonal(ax: plt.Axes,
     assert (alpha >= 0) and (alpha <= 1)
     assert linestyle in ["-", "--", "-.", ":"]
     assert linewidth > 0
+    assert hasattr(ax, 'plot')
 
     minimum = min(ax.get_xlim()[0], ax.get_ylim()[0])
     maximum = max(ax.get_xlim()[1], ax.get_ylim()[1])
@@ -248,6 +252,7 @@ def rectangle(ax: plt.Axes,
     assert linewidth >= 0
     assert linestyle in ["-", "--", "-.", ":"]
     assert type(fill) == bool
+    assert hasattr(ax, 'plot')
 
     ax.add_patch(
         Rectangle((x1, y1),
@@ -260,18 +265,21 @@ def rectangle(ax: plt.Axes,
                   fill=fill))
 
 
-### issue #32 fixed until this line ### FIXME
-
-
 def star(ax: plt.Axes,
          x: float,
          y: float,
          colour: str = "red",
          fontsize: float = 50):
-    assert type(x) in [int, float]
-    assert type(y) in [int, float]
-    assert type(fontsize) in [int, float]
-    assert type(colour) == str
+    try:
+        x = float(x)
+        y = float(y)
+        fontsize = float(fontsize)
+        colour = str(colour)
+    except:
+        raise AssertionError
+
+    assert fontsize > 0
+    assert hasattr(ax, 'plot')
 
     ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
 
@@ -284,26 +292,22 @@ def lines(ax: plt.Axes,
           linestyle: str = "-",
           linewidth: float = 2,
           zorder: float = -100):
+    try:
+        colour = str(colour)
+        alpha = float(alpha)
+        linewidth = float(linewidth)
+        zorder = int(zorder)
+        pos = [float(p) for p in pos]
+    except:
+        raise AssertionError
+
     assert which in ["x", "y"]
-
-    assert type(pos) == list
-    assert len(pos) > 0
-    for x in pos:
-        assert type(x) in [int, float]
-
-    assert type(colour) == str
-
-    assert type(alpha) in [int, float]
+    assert linestyle in ["-", ":", "--", "-."]
     assert alpha > 0
     assert alpha <= 1
-
-    assert type(linestyle) == str
-    assert linestyle in ["-", ":", "--", "-."]
-
-    assert type(linewidth) in [int, float]
     assert linewidth > 0
-
-    assert type(zorder) in [int, float]
+    assert len(pos) > 0
+    assert hasattr(ax, 'plot')
 
     if which == "x":
         ymin, ymax = ax.get_ylim()
@@ -336,53 +340,81 @@ def lines(ax: plt.Axes,
 
 def despine(ax: plt.Axes, which: List[str] = ['top', 'right']):
     ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
-    assert type(which) == list
+    try:
+        which = list(which)
+    except:
+        raise AssertionError
+
+    assert hasattr(ax, 'plot')
+
     for spine in which:
         assert spine in ['top', 'right', 'left', 'bottom']
+
+    for spine in which:
         ax.spines[spine].set_visible(False)
 
 
 def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 20):
     ''' Change ticklabelsize of an ax object. '''
+    try:
+        size = float(size)
+    except:
+        raise AssertionError
+
     assert which in ["x", "y", "both"]
-    assert type(size) in [int, float]
+    assert hasattr(ax, 'plot')
+
     ax.tick_params(which, labelsize=size)
 
 
 def limits(ax: plt.Axes,
            xlimits: Tuple[float, float] = None,
            ylimits: Tuple[float, float] = None):
+    assert hasattr(ax, 'plot')
     ''' Set axes limits of ax object. '''
     if xlimits is not None:
-        assert type(xlimits) in (tuple, list)
-        assert len(xlimits) == 2
-        lo, hi = xlimits
-        assert type(lo) in [int, float]
-        assert type(hi) in [int, float]
+        try:
+            lo, hi = xlimits
+            lo = float(lo)
+            hi = float(hi)
+        except:
+            raise AssertionError
+
         ax.set_xlim(xlimits)
 
     if ylimits is not None:
-        assert type(ylimits) in (tuple, list)
-        assert len(ylimits) == 2
-        lo, hi = ylimits
-        assert type(lo) in [int, float, np.float64]
-        assert type(hi) in [int, float, np.float64]
+        try:
+            lo, hi = ylimits
+            lo = float(lo)
+            hi = float(hi)
+        except:
+            raise AssertionError
+
         ax.set_ylim(ylimits)
 
 
+############################################################################
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
                      labels=None):
+    try:
+        ticks = list(ticks)
+        ticks = [float(t) for t in ticks]
+    except:
+        raise AssertionError
+
     assert which in ["x", "y", "xy", "yx"]
-    assert type(ticks) == list
-    for tick in ticks:
-        assert type(tick) in [float, int]
+    assert hasattr(ax, 'plot')
 
     if labels is None:
         labels = list(map(lambda x: str(x), ticks))
     else:
-        assert type(labels) == list
+        try:
+            labels = list(labels)
+        except:
+            raise AssertionError
+
         assert len(ticks) == len(labels)
 
     if which == "x" or which == "xy" or which == "yx":
@@ -395,7 +427,11 @@ def ticks_and_labels(ax: plt.Axes,
 
 def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
     assert which in ["x", "y", "xy", "yx", "both"]
-    assert type(rotation) in [float, int]
+    assert hasattr(ax, 'plot')
+    try:
+        rotation = float(rotation)
+    except:
+        raise AssertionError
 
     if which == "x" or which == "xy" or which == "yx" or which == "both":
         ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation)
@@ -405,6 +441,7 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
 
 def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
     assert which in ["x", "y"]
+    assert hasattr(ax, 'plot')
 
     if which == "x":
         if horizontal is not None:
@@ -435,20 +472,25 @@ def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
 def similarity_heatmap(ax: plt.Axes,
                        list_of_lists: List[List[float]],
                        method: str = "jaccard"):
+    assert hasattr(ax, 'plot')
     sns.heatmap(_similarity_matrix(list_of_lists, method))
 
 
 def correlations_heatmap(ax: plt.Axes,
                          list_of_lists: List[List[float]],
                          method: str = "pearson"):
+    assert hasattr(ax, 'plot')
     sns.heatmap(_correlation_matrix(list_of_lists, method))
 
 
 def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
-    assert type(data) == np.ndarray
+    try:
+        data = np.array(data)
+    except:
+        raise AssertionError
 
-    assert type(mask) == str
     assert mask in ["lower", "upper", "lowerdiag", "upperdiag"]
+    assert hasattr(ax, 'plot')
 
     if mask == "upperdiag":
         mask_array = np.triu(data, k=0)
@@ -467,11 +509,15 @@ def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
 ##################
 
 
-def save_png(filename: str, dpi: int = 300):
+def save_png(filename: str, dpi: float = 300):
     ''' Save current figure as png file. DPI can be specified. '''
-    assert type(filename) == str
+    try:
+        filename = str(filename)
+        dpi = float(dpi)
+    except:
+        raise AssertionError
+
     assert filename != ""
-    assert type(dpi) in [int, float]
     assert dpi > 0
     plt.savefig(filename, dpi=dpi, bbox_inches="tight",
                 format="png")  # pragma: no cover
@@ -479,7 +525,11 @@ def save_png(filename: str, dpi: int = 300):
 
 def save_svg(filename: str):
     ''' Save current figure as svg file. '''
-    assert type(filename) == str
+    try:
+        filename = str(filename)
+    except:
+        raise AssertionError
+
     assert filename != ""
     plt.savefig(filename, bbox_inches="tight",
                 format="svg")  # pragma: no cover
@@ -487,8 +537,13 @@ def save_svg(filename: str):
 
 def save_pdf(filename: str):
     ''' Save current figure as pdf file. '''
-    assert type(filename) == str
+    try:
+        filename = str(filename)
+    except:
+        raise AssertionError
+
     assert filename != ""
+
     plt.savefig(filename, bbox_inches="tight",
                 format="pdf")  # pragma: no cover
 

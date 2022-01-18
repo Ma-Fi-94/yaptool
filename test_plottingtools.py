@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 import numpy as np
+from scipy import stats  # type: ignore
 
 import pytest
 import sys
@@ -13,7 +14,7 @@ import plottingtools as pt
 ######################
 
 
-def tex_on_off():
+def test_tex_on_off():
     pt.texon()
     pt.texoff()
 
@@ -94,8 +95,8 @@ def test_title_pathological():
         pt.title(ax, title="title", fontsize=-54321)
     with pytest.raises(AssertionError) as exception_info:
         pt.title(ax, title="title", pad="abc")
-    #with pytest.raises(AssertionError) as exception_info:
-    #	pt.title(ax=123, title="title")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.title(ax=123, title="title")
     plt.close()
 
 
@@ -115,8 +116,8 @@ def test_labels_pathological():
         pt.labels(ax, xlabel="xlabel", ylabel="label", fontsize="abc")
     with pytest.raises(AssertionError) as exception_info:
         pt.labels(ax, xlabel="xlabel", ylabel="label", fontsize=-5)
-    #with pytest.raises(AssertionError) as exception_info:
-    #	pt.labels(ax="abc", xlabel="xlabel", ylabel="ylabel")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.labels(ax="abc", xlabel="xlabel", ylabel="ylabel")
     plt.close()
 
 
@@ -138,6 +139,8 @@ def test_diagonal_pathological():
         pt.diagonal(ax, linestyle=1234)
     with pytest.raises(AssertionError) as exception_info:
         pt.diagonal(ax, linewidth=-1234)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.diagonal(ax="abc", linewidth=1)
     plt.close()
 
 
@@ -170,6 +173,8 @@ def test_rectangle_pathological():
         pt.rectangle(ax, x1=1, x2=2, y1=1, y2=2, linestyle=-1234)
     with pytest.raises(AssertionError) as exception_info:
         pt.rectangle(ax, x1=1, x2=2, y1=1, y2=2, fill="abcde")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.rectangle(ax=123, x1=1, x2=2, y1=1, y2=2)
     plt.close()
 
 
@@ -186,7 +191,7 @@ def test_star_pathological():
     with pytest.raises(AssertionError) as exception_info:
         pt.star(ax, x=1, y="abc")
     with pytest.raises(AssertionError) as exception_info:
-        pt.star(ax, x=1, y=2, colour=-123)
+        pt.star(ax=123, x=1, y=2)
     plt.close()
 
 
@@ -201,10 +206,11 @@ def test_lines_pathological():
     fig, ax = pt.singleplot()
 
     with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax, which=1234, pos=[])
-
+        pt.lines(ax, which=1234, pos=[7, 8, 9])
     with pytest.raises(AssertionError) as exception_info:
-        pt.lines(ax, which="abcde", pos=[])
+        pt.lines(ax, which="abcde", pos=[7, 8, 9])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.lines(ax=123, which="x", pos=[1, 2, 3])
 
     for which in ["x", "y"]:
         with pytest.raises(AssertionError) as exception_info:
@@ -217,8 +223,6 @@ def test_lines_pathological():
             pt.lines(ax, which=which, pos=[1, 2, 3], linestyle="abc")
         with pytest.raises(AssertionError) as exception_info:
             pt.lines(ax, which=which, pos=[1, 2, 3], linestyle=1)
-        with pytest.raises(AssertionError) as exception_info:
-            pt.lines(ax, which=which, pos=[1, 2, 3], colour=12345)
         with pytest.raises(AssertionError) as exception_info:
             pt.lines(ax, which=which, pos=[1, 2, 3], alpha=-0.3)
         with pytest.raises(AssertionError) as exception_info:
@@ -248,8 +252,8 @@ def test_despine_pathological():
         pt.despine(ax, which=['bla'])
     with pytest.raises(AssertionError) as exception_info:
         pt.despine(ax, which=123)
-    #with pytest.raises(AssertionError) as exception_info:
-    #	pt.despine(ax="abc", which=["left"])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.despine(ax="abc", which=["left"])
     plt.close()
 
 
@@ -263,6 +267,8 @@ def test_ticklabelsize_pathological():
     fig, ax = pt.singleplot()
     with pytest.raises(AssertionError) as exception_info:
         pt.ticklabelsize(ax, size="abc")
+    with pytest.raises(AssertionError) as exception_info:
+        pt.ticklabelsize(ax=123, size=10)
     plt.close()
 
 
@@ -289,6 +295,8 @@ def test_limits_pathological():
         pt.limits(ax, xlimits=[12345, "abc"], ylimits=None)
     with pytest.raises(AssertionError) as exception_info:
         pt.limits(ax, xlimits=None, ylimits=[12345, "def"])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.limits(ax=123, xlimits=None, ylimits=[1, 2])
     plt.close()
 
 
@@ -318,9 +326,15 @@ def test_ticks_and_labels_pathological():
                             which="abc",
                             ticks=[-0.14, 1, 2, 3.5],
                             labels=["a", "b", "c"])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.ticks_and_labels(ax=123,
+                            which="x",
+                            ticks=[-0.14, 1, 2, 3.5],
+                            labels=["a", "b", "c"])
     plt.close()
 
 
+@pytest.mark.filterwarnings('ignore::UserWarning')
 def test_rotate_ticklabels():
     fig, ax = pt.singleplot()
     pt.rotate_ticklabels(ax, which="x", rotation=10.5)
@@ -339,9 +353,12 @@ def test_rotate_ticklabels_pathological():
         pt.rotate_ticklabels(ax, which="x", rotation="abcde")
     with pytest.raises(AssertionError) as exception_info:
         pt.rotate_ticklabels(ax, which=12345, rotation=10.5)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.rotate_ticklabels(ax=123, which="x", rotation=10.5)
     plt.close()
 
 
+@pytest.mark.filterwarnings('ignore::UserWarning')
 def test_align_ticklabels():
     fig, ax = pt.singleplot()
     pt.align_ticklabels(ax, which="x", horizontal=None, vertical="center")
@@ -361,6 +378,11 @@ def test_align_ticklabels_pathological():
         pt.align_ticklabels(ax, which="x", horizontal=None, vertical="abcde")
     with pytest.raises(AssertionError) as exception_info:
         pt.align_ticklabels(ax, which="x", horizontal=None, vertical=12345)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.align_ticklabels(ax=123,
+                            which="x",
+                            horizontal=None,
+                            vertical="center")
     plt.close()
 
 
@@ -411,6 +433,17 @@ def test_masked_heatmap_pathological():  #TBD
 def test_correlation_matrix():
     res = pt._correlation_matrix([[1, 2, 3], [4, 5, 6]])
     assert np.all(np.abs(res) - 1 < 1e-6)
+
+    res = pt._correlation_matrix([[1, 2, 3], [4, 5, 6]], method="spearman")
+    assert np.all(np.abs(res) - 1 < 1e-6)
+
+    res = pt._correlation_matrix([[1, 2, 3], [4, 5, 6]], method="kendall")
+    assert np.all(np.abs(res) - 1 < 1e-6)
+
+    res = pt._correlation_matrix([[1, 2, 3], [4, 5, 6]],
+                                 method=lambda a, b: stats.pearsonr(a, b)[0])
+    assert np.all(np.abs(res) - 1 < 1e-6)
+
     res = pt._correlation_matrix([[1, 2, 3], [6, 5, 6]])
     assert np.abs(res[0][1]) < 1e-6
     assert np.abs(res[1][0]) < 1e-6
@@ -435,8 +468,6 @@ def test_save_png_pathological():
     with pytest.raises(AssertionError) as exception_info:
         pt.save_png(filename="")
     with pytest.raises(AssertionError) as exception_info:
-        pt.save_png(filename=12345)
-    with pytest.raises(AssertionError) as exception_info:
         pt.save_png(filename="filename", dpi=-12345)
     with pytest.raises(AssertionError) as exception_info:
         pt.save_png(filename="filename", dpi="abcde")
@@ -447,8 +478,6 @@ def test_save_svg_pathological():
     fig, ax = pt.singleplot()
     with pytest.raises(AssertionError) as exception_info:
         pt.save_svg(filename="")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.save_svg(filename=12345)
     plt.close()
 
 
@@ -456,8 +485,6 @@ def test_save_pdf_pathological():
     fig, ax = pt.singleplot()
     with pytest.raises(AssertionError) as exception_info:
         pt.save_pdf(filename="")
-    with pytest.raises(AssertionError) as exception_info:
-        pt.save_pdf(filename=12345)
     plt.close()
 
 
