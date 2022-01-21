@@ -301,7 +301,7 @@ def lines(ax: plt.Axes,
     except:
         raise AssertionError
 
-    assert which in ["x", "y"]
+    assert which in ["x", "y", "v", "h"]
     assert linestyle in ["-", ":", "--", "-."]
     assert alpha > 0
     assert alpha <= 1
@@ -309,7 +309,7 @@ def lines(ax: plt.Axes,
     assert len(pos) > 0
     assert hasattr(ax, 'plot')
 
-    if which == "x":
+    if which == "x" or which == "v":
         ymin, ymax = ax.get_ylim()
         for x in pos:
             ax.vlines([x],
@@ -320,7 +320,7 @@ def lines(ax: plt.Axes,
                       linestyle=linestyle,
                       linewidth=linewidth,
                       zorder=zorder)
-    elif which == "y":
+    elif which == "y" or which == "h":
         xmin, xmax = ax.get_xlim()
         for y in pos:
             ax.hlines([y],
