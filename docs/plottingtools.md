@@ -422,7 +422,7 @@ WIP
 - Required parameters
 
     - *ax* The matplotlib.pyplot.Axes object.
-    - *which* String specifying whether vertical ("x")  or horizontal ("y") lines will be drawn.
+    - *which* String specifying whether vertical ("v" or "x")  or horizontal ("h" or "y") lines will be drawn.
     - *pos* List of numerical values specifying the positions of the lines.
     
 - Optional parameters
