@@ -203,7 +203,7 @@ This yields the following figure:
 - Return
     - 2-tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
 
-### **plottingtools.multiplot(nrows, ncols, size)**
+### **plottingtools.multiplot(nrows, ncols, size_xy, [wspace, hspace])**
 - Description
 
     - Returns a figure with nrows by ncols subplots
@@ -216,7 +216,8 @@ This yields the following figure:
     
 - Optional parameters
 
-    - None.
+    - *wspace* Numerical value indicating the width of the padding between subplots, as a fraction of the average Axes width. Alternatively leave at None to not change the default.
+    - *hspace* Numerical value indicating the height of the padding between subplots, as a fraction of the average Axes height. Alternatively leave at None to not change the default.
 
 - Return
     - Tuple (matplotlib.figure.Figure, matplotlib.pyplot.Axes)
