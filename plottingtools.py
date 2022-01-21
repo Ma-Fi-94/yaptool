@@ -133,7 +133,7 @@ def multiplot(
         nrows: int, ncols: int,
         size_xy: Tuple[float,
                        float],
-        wspace: float = None, hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+        wspace: float = None, vspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
