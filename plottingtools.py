@@ -132,7 +132,8 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
 def multiplot(
         nrows: int, ncols: int,
         size_xy: Tuple[float,
-                       float]) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+                       float],
+        wspace: float = None, hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -142,12 +143,20 @@ def multiplot(
         l, h = size_xy
         l = float(l)
         h = float(h)
+        if hspace is not None:
+            hspace = float(hspace)
+        if wspace is not None:
+            wspace = float(wspace)
     except:
         raise AssertionError
     assert l > 0
     assert h > 0
 
     fig, ax = plt.subplots(nrows, ncols, figsize=(h, l))
+    if hspace is not None:
+        plt.subplots_adjust(hspace=hspace)
+    if wspace is not None:
+        plt.subplots_adjust(wspace=wspace)
     return fig, ax
 
 
