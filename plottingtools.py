@@ -133,7 +133,7 @@ def multiplot(
         nrows: int, ncols: int,
         size_xy: Tuple[float,
                        float],
-        wspace: float = None, vspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+        wspace: float = None, hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -493,10 +493,10 @@ def correlations_heatmap(ax: plt.Axes,
 
 
 def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
-    try:
-        data = np.array(data)
-    except:
-        raise AssertionError
+    #try:
+    #    data = np.array(data)
+    #except:
+    #    raise AssertionError
 
     assert mask in ["lower", "upper", "lowerdiag", "upperdiag"]
     assert hasattr(ax, 'plot')
