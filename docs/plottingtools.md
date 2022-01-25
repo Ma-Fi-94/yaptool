@@ -87,6 +87,8 @@ This yields the following figure:
 - plottingtools.rectangle()
 - plottingtools.star()
 - plottingtools.lines()
+- plottingtools.grid()
+- plottingtools.legend()
 
 ### Changing elements of an existing plot
 - plottingtools.despine()
@@ -431,7 +433,48 @@ WIP
     - *alpha* Numerical value specifying the transparency of the lines. Defaults to 0.3.
     - *linestyle* String specifying the style of the lines. Defaults to "-", i.e. a continuous line.
     - *linewidth* Numerical value specifying the width of the lines. Defaults to 2.
+    - *zorder* Numerical value specifying the z-position of the grid lines. Defaults to -100, i.e. very far behind.
+
+- Return
+
+    - None.
+
+### **plottingtools.grid(ax, [which = "major", colour = "black", alpha = 0.1, linestyle = "-", linewidth = 2, zorder = -100])**
+
+- Description
+
+    - Add a grid to an existing matplotlib.pyplot.Axes object.
+
+- Required parameters
+
+    - *ax* The matplotlib.pyplot.Axes object.
+    
+- Optional parameters
+    - *which* String specifying for which ticks ("major", "minor") grid lines will be drawn. Defaults to "major".
+    - *colour* String specifying the line colour. Defaults to "black"
+    - *alpha* Numerical value specifying the transparency of the lines. Defaults to 0.1.
+    - *linestyle* String specifying the style of the lines. Defaults to "-", i.e. a continuous line.
+    - *linewidth* Numerical value specifying the width of the lines. Defaults to 2.
     - *zorder* Numerical value specifying the z-position of the lines. Defaults to -100, i.e. very far behind.
+
+- Return
+
+    - None.
+
+### **plottingtools.legend(ax, [loc = "best", fontsize = 25, frame = False, \*\*kwargs])**
+
+- Description
+
+    - Add a legend to an existing matplotlib.pyplot.Axes object.
+
+- Required parameters
+
+    - *ax* The matplotlib.pyplot.Axes object.
+    
+- Optional parameters
+    - *loc* Legend location. Possible are all matplotlib-type location specifiers. Defaults to "best".
+    - *fontsize* Number specifying the font size. Defaults to 25.
+    - *frame* Boolean specficying whether to draw a frame around the legend. Defaults to False.
 
 - Return
 
