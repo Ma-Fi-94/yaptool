@@ -16,6 +16,7 @@ from typing import List
 # Internal helpers #
 ####################
 
+LINESTYLES = ["-", "--", "-.", ":"]
 
 def _set_fgbg(fg: str, bg: str):
     ''' Internal helper to change fore- and background colours '''
@@ -226,7 +227,7 @@ def diagonal(ax: plt.Axes,
         raise AssertionError
 
     assert (alpha >= 0) and (alpha <= 1)
-    assert linestyle in ["-", "--", "-.", ":"]
+    assert linestyle in LINESTYLES
     assert linewidth > 0
     assert hasattr(ax, 'plot')
 
@@ -259,7 +260,7 @@ def rectangle(ax: plt.Axes,
     except:
         raise AssertionError
     assert linewidth >= 0
-    assert linestyle in ["-", "--", "-.", ":"]
+    assert linestyle in LINESTYLES
     assert type(fill) == bool
     assert hasattr(ax, 'plot')
 
@@ -311,7 +312,7 @@ def lines(ax: plt.Axes,
         raise AssertionError
 
     assert which in ["x", "y", "v", "h"]
-    assert linestyle in ["-", ":", "--", "-."]
+    assert linestyle in LINESTYLES
     assert alpha > 0
     assert alpha <= 1
     assert linewidth > 0
@@ -354,7 +355,7 @@ def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float
         raise AssertionError
     
     assert alpha > 0
-    assert linestyle in ["-", "-.", ":", "--"]
+    assert linestyle in LINESTYLES
     assert linewidth > 0
     
 	ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha)
