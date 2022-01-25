@@ -341,7 +341,24 @@ def lines(ax: plt.Axes,
                       linewidth=linewidth,
                       zorder=zorder)
 
+def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float = 0.1, linestyle: str = "-", linewidth: float = 2):
+	''' Add grid lines to a plot. '''
 
+    try:
+        which = str(which)
+        colour = str(colour)
+        alpha = float(alpha)
+        linestyle = str(linestyle)
+        linewidth = float(linewidth)
+    except:
+        raise AssertionError
+    
+    assert alpha > 0
+    assert linestyle in ["-", "-.", ":", "--"]
+    assert linewidth > 0
+    
+	ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha)
+    
 #############################
 # Change elements of a plot #
 #############################
