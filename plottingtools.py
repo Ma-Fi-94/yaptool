@@ -361,7 +361,31 @@ def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float
     assert linewidth > 0
     
     ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha, zorder=zorder)
+
+def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
+    ''' Add a legend to a plot. '''
+
+    try:
+	fontsize = float(fontsize)
+	frame = bool(frame)
+    except:
+	raise AssertionError
     
+    assert loc in [1,2,3,4,5,6,7,8,"best","upper right", "upper left", "lower left", "lower right", "right", "center left", "center right", "lower center", "upper center", "center"]
+    l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
+
+    try:
+	for lh in l.legendHandles: 
+	    lh._legmarker.set_alpha(1)
+    except:
+	pass
+
+    try:
+	for lh in l.legendHandles: 
+	    lh.set_alpha(1)
+    except:
+	pass
+
 #############################
 # Change elements of a plot #
 #############################
