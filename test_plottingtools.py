@@ -234,13 +234,16 @@ def test_lines_pathological():
         with pytest.raises(AssertionError) as exception_info:
             pt.lines(ax, which=which, pos=[1, 2, 3], zorder="abc")
 
-def test_lines():
+
+def test_grid():
     fig, ax = pt.singleplot()
     pt.grid(ax)
     plt.close()
 
-def test_lines_pathological():
-    pass # TBD
+
+def test_grid_pathological():
+    pass  # TBD
+
 
 #############################
 # Change elements of a plot #

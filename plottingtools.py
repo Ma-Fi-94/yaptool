@@ -18,6 +18,7 @@ from typing import List
 
 LINESTYLES = ["-", "--", "-.", ":"]
 
+
 def _set_fgbg(fg: str, bg: str):
     ''' Internal helper to change fore- and background colours '''
     plt.rcParams.update({
@@ -131,10 +132,11 @@ def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
 
 
 def multiplot(
-        nrows: int, ncols: int,
-        size_xy: Tuple[float,
-                       float],
-        wspace: float = None, hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+        nrows: int,
+        ncols: int,
+        size_xy: Tuple[float, float],
+        wspace: float = None,
+        hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -342,7 +344,14 @@ def lines(ax: plt.Axes,
                       linewidth=linewidth,
                       zorder=zorder)
 
-def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float = 0.1, linestyle: str = "-", linewidth: float = 2, zorder: float = -100):
+
+def grid(ax: plt.Axes,
+         which: str = "major",
+         colour: str = "black",
+         alpha: float = 0.1,
+         linestyle: str = "-",
+         linewidth: float = 2,
+         zorder: float = -100):
     ''' Add grid lines to a plot. '''
     try:
         which = str(which)
@@ -359,7 +368,13 @@ def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float
     assert linestyle in LINESTYLES
     assert linewidth > 0
 
-    ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha, zorder=zorder)
+    ax.grid(which=which,
+            color=colour,
+            linestyle=linestyle,
+            linewidth=linewidth,
+            alpha=alpha,
+            zorder=zorder)
+
 
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
     ''' Add a legend to a plot. '''
@@ -369,21 +384,26 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
         frame = bool(frame)
     except:
         raise AssertionError
-    
-    assert loc in [1,2,3,4,5,6,7,8,"best","upper right", "upper left", "lower left", "lower right", "right", "center left", "center right", "lower center", "upper center", "center"]
+
+    assert loc in [
+        1, 2, 3, 4, 5, 6, 7, 8, "best", "upper right", "upper left",
+        "lower left", "lower right", "right", "center left", "center right",
+        "lower center", "upper center", "center"
+    ]
     l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
     try:
-        for lh in l.legendHandles: 
+        for lh in l.legendHandles:
             lh._legmarker.set_alpha(1)
     except:
-            pass
+        pass
 
     try:
-        for lh in l.legendHandles: 
+        for lh in l.legendHandles:
             lh.set_alpha(1)
     except:
-	pass
+        pass
+
 
 #############################
 # Change elements of a plot #
@@ -628,21 +648,6 @@ def midiline(ax, x, y, linewidth=2, linestyle="--", **kwargs):
 
 def minorline(ax, x, y, linewidth=1, linestyle=":", **kwargs):
     ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
-
-
-def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
-    ''' Add a legend to a plot. '''
-    l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
-    try:
-        for lh in l.legendHandles:
-            lh._legmarker.set_alpha(1)
-    except:
-        pass
-    try:
-        for lh in l.legendHandles:
-            lh.set_alpha(1)
-    except:
-        pass
 
 
 def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
