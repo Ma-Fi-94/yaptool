@@ -346,11 +346,11 @@ def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float
 	''' Add grid lines to a plot. '''
 
     try:
-        which = str(which)
-        colour = str(colour)
-        alpha = float(alpha)
-        linestyle = str(linestyle)
-        linewidth = float(linewidth)
+	which = str(which)
+	colour = str(colour)
+	alpha = float(alpha)
+	linestyle = str(linestyle)
+	linewidth = float(linewidth)
 	zorder = float(zorder)
     except:
         raise AssertionError
