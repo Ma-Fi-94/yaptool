@@ -343,23 +343,23 @@ def lines(ax: plt.Axes,
                       zorder=zorder)
 
 def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float = 0.1, linestyle: str = "-", linewidth: float = 2, zorder: float = -100):
-	''' Add grid lines to a plot. '''
-	try:
-		which = str(which)
-		colour = str(colour)
-		alpha = float(alpha)
-		linestyle = str(linestyle)
-		linewidth = float(linewidth)
-		zorder = float(zorder)
-	except:
-		raise AssertionError
+    ''' Add grid lines to a plot. '''
+    try:
+        which = str(which)
+        colour = str(colour)
+        alpha = float(alpha)
+        linestyle = str(linestyle)
+        linewidth = float(linewidth)
+        zorder = float(zorder)
+    except:
+        raise AssertionError
 
-	assert which in ["major", "minor"]
-	assert alpha > 0
-	assert linestyle in LINESTYLES
-	assert linewidth > 0
+    assert which in ["major", "minor"]
+    assert alpha > 0
+    assert linestyle in LINESTYLES
+    assert linewidth > 0
 
-	ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha, zorder=zorder)
+    ax.grid(which=which, color=colour, linestyle=linestyle, linewidth=linewidth, alpha=alpha, zorder=zorder)
 
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
     ''' Add a legend to a plot. '''
