@@ -344,7 +344,6 @@ def lines(ax: plt.Axes,
 
 def grid(ax: plt.Axes, which: str = "major", colour: str = "black", alpha: float = 0.1, linestyle: str = "-", linewidth: float = 2, zorder: float = -100):
 	''' Add grid lines to a plot. '''
-
     try:
 	which = str(which)
 	colour = str(colour)
