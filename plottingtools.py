@@ -155,7 +155,7 @@ def multiplot(
     assert l > 0
     assert h > 0
 
-    fig, ax = plt.subplots(nrows, ncols, figsize=(h, l))
+    fig, ax = plt.subplots(nrows, ncols, figsize=(l, h))
     if hspace is not None:
         plt.subplots_adjust(hspace=hspace)
     if wspace is not None:
