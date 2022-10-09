@@ -46,8 +46,6 @@ This yields the following figure:
 - Light- and dark mode
 - TeX support
 - Make single- and multi plot figures with one line of code
-- Standard plots
-  -  WIP
 - Adds some new kinds of useful plots:
   -   Heatmap of similarities of a list of sets
   -   Heatmap of correlations of a list of equal-length vector
@@ -58,4 +56,4 @@ This yields the following figure:
 - Export current figure to PNG, SVG or PDF with one single line of code
 
 ## Is there a documentation?
-Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs/plottingtools.pdf.
+Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs .
