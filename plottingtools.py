@@ -36,81 +36,67 @@ def _set_fgbg(fg: str, bg: str):
         "savefig.edgecolor": bg
     })
 
-
-def _similarity_matrix(list_of_lists: List[List[float]],
-                       method: str = "jaccard"):
-    if type(method) == str:
-        if method == "jaccard":
-            f = lambda s1, s2: len(set.intersection(s1, s2)) / len(
-                set.union(s1, s2))
-        else:
-            raise NotImplementedError
-    elif type(method) is types.LambdaType:
-        f = method
-    else:
-        raise NotImplementedError
-
-    results = np.zeros((len(list_of_lists), len(list_of_lists)))
-
-    list_of_sets = list(map(lambda l: set(l), list_of_lists))
-
-    # Some similarity functions are not symmetric
-    # Hence we iterate over all n x n combinations
-    for i, set1 in enumerate(list_of_sets):
-        for j, set2 in enumerate(list_of_sets):
-            results[i, j] = f(set1, set2)
-    return results
-
-
-def _correlation_matrix(list_of_lists: List[List[float]],
-                        method: str = "pearson"):
-    if type(method) == str:
-        if method == "pearson":
-            f = lambda a, b: stats.pearsonr(a, b)[0]
-        elif method == "spearman":
-            f = lambda a, b: stats.spearmanr(a, b)[0]
-        elif method == "kendall":
-            f = lambda a, b: stats.spearmanr(a, b)[0]
-        else:
-            raise NotImplementedError
-    elif type(method) is types.LambdaType:
-        f = method
-    else:
-        raise NotImplementedError
-
-    results = np.zeros((len(list_of_lists), len(list_of_lists)))
-    for i, vec1 in enumerate(list_of_lists):
-        for j, vec2 in enumerate(list_of_lists):
-            results[i, j] = f(vec1, vec2)
-    return results
-
-
 ######################
 # General Aesthetics #
 ######################
 
+""" Generak aesthetics """
 
 def darkmode(foreground: Optional[str] = "0.85",
              background: Optional[str] = "0.15") -> None:
-    ''' Switch to darkmode. Foreground and background colours may also be specified explicitly. '''
+    """Switches to dark mode. Foreground and background colours may also be specified explicitly.
+    
+    Args:
+        foreground:
+            An optional string, specifying the foreground colour, following matplotlib's colour syntax. Defaults to "0.85", i.e. light grey.
+        background:
+            An optional string, specifying the background colour, following matplotlib's colour syntax. Defaults to "0.15", i.e. dark grey.
+    
+    Returns:
+        None
+    """
     _set_fgbg(fg=foreground, bg=background)
 
 
 def lightmode(foreground: Optional[str] = "0",
               background: Optional[str] = "1.0") -> None:
-    ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
+    """Switches to light mode. Foreground and background colours may also be specified explicitly.
+    
+    Args:
+        foreground:
+            An optional string, specifying the foreground colour, following matplotlib's colour syntax. Defaults to "0", i.e. black.
+        background:
+            An optional string, specifying the background colour, following matplotlib's colour syntax. Defaults to "1.0", i.e. white.
+    
+    Returns:
+        None
+    """
     _set_fgbg(fg=foreground, bg=background)
 
 
 def texon() -> None:
-    ''' Switch on TeX-rendering of texts. '''
+    """Switches on TeX-rendering of texts.
+    
+    Args:
+        None
+    
+    Returns:
+        None
+    """
     rc('text', usetex=True)
     params = {'text.latex.preamble': r'\usepackage{amsmath}'}
     plt.rcParams.update(params)
 
 
 def texoff() -> None:
-    ''' Switch off TeX-rendering of texts. '''
+    """Switches off TeX-rendering of texts.
+    
+    Args:
+        None
+    
+    Returns:
+        None
+    """
     rc('text', usetex=False)
 
 
@@ -120,7 +106,18 @@ def texoff() -> None:
 
 
 def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
-    ''' Make a new 10x7 plot. Size can also be changed. '''
+    """Generates a new single-plot figure. The figure size may be defined explicitly.
+    
+    Args:
+        (w,h):
+            An optional tuple of floats, containing the desired figure width and heigth in inches. Defaults to 10x7 inches.
+    
+    Returns:
+        fig:
+            A matplotlib.figure.Figure instance
+        ax:
+            A pyplot.Axes instance
+    """
     try:
         w, h = size
         w = float(w)
@@ -347,38 +344,6 @@ def lines(ax: plt.Axes,
                       linewidth=linewidth,
                       zorder=zorder)
 
-
-def grid(ax: plt.Axes,
-         which: str = "major",
-         colour: str = "black",
-         alpha: float = 0.1,
-         linestyle: str = "-",
-         linewidth: float = 2,
-         zorder: float = -100) -> None:
-    ''' Add grid lines to a plot. '''
-    try:
-        which = str(which)
-        colour = str(colour)
-        alpha = float(alpha)
-        linestyle = str(linestyle)
-        linewidth = float(linewidth)
-        zorder = float(zorder)
-    except:
-        raise AssertionError
-
-    assert which in ["major", "minor"]
-    assert alpha > 0
-    assert linestyle in LINESTYLES
-    assert linewidth > 0
-
-    ax.grid(which=which,
-            color=colour,
-            linestyle=linestyle,
-            linewidth=linewidth,
-            alpha=alpha,
-            zorder=zorder)
-
-
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
     ''' Add a legend to a plot. '''
 
@@ -468,7 +433,6 @@ def limits(ax: plt.Axes,
         ax.set_ylim(ylimits)
 
 
-############################################################################
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
@@ -542,49 +506,6 @@ def align_ticklabels(ax: plt.Axes,
             assert vertical in ['center', 'top', 'bottom', 'baseline']
             ax.set_yticklabels(ax.get_yticklabels(),
                                verticalalignment=vertical)
-
-
-#########
-# Plots #
-#########
-
-
-def similarity_heatmap(ax: plt.Axes,
-                       list_of_lists: List[List[float]],
-                       method: str = "jaccard") -> None:
-    assert hasattr(ax, 'plot')
-    sns.heatmap(_similarity_matrix(list_of_lists, method))
-
-
-def correlations_heatmap(ax: plt.Axes,
-                         list_of_lists: List[List[float]],
-                         method: str = "pearson") -> None:
-    assert hasattr(ax, 'plot')
-    sns.heatmap(_correlation_matrix(list_of_lists, method))
-
-
-def masked_heatmap(ax: plt.Axes,
-                   data: np.ndarray,
-                   mask: str,
-                   **kwargs) -> None:
-    #try:
-    #    data = np.array(data)
-    #except:
-    #    raise AssertionError
-
-    assert mask in ["lower", "upper", "lowerdiag", "upperdiag"]
-    assert hasattr(ax, 'plot')
-
-    if mask == "upperdiag":
-        mask_array = np.triu(data, k=0)
-    elif mask == "upper":
-        mask_array = np.triu(data, k=1)
-    elif mask == "lowerdiag":
-        mask_array = np.tril(data, k=0)
-    elif mask == "lower":
-        mask_array = np.tril(data, k=-1)
-
-    sns.heatmap(data, ax=ax, mask=mask_array)
 
 
 ##################
