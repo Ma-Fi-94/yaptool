@@ -3,10 +3,6 @@ import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
 from matplotlib import rc  # type: ignore
-import seaborn as sns  # type: ignore
-from scipy import stats  # type: ignore
-import numpy as np
-import sys
 import types
 
 from typing import Tuple, List, Optional
@@ -40,7 +36,7 @@ def _set_fgbg(fg: str, bg: str):
 # General Aesthetics #
 ######################
 
-""" Generak aesthetics """
+""" General aesthetics """
 
 def darkmode(foreground: Optional[str] = "0.85",
              background: Optional[str] = "0.15") -> None:
@@ -128,6 +124,7 @@ def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotli
     fig, ax = plt.subplots(1, 1, figsize=size)
     return fig, ax
 
+######################################## annotations properly done until this line #########################
 
 def multiplot(
         nrows: int,
