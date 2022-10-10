@@ -109,8 +109,8 @@ def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotli
     """Generates a new single-plot figure. The figure size may be defined explicitly.
     
     Args:
-        (w,h):
-            An optional tuple of floats, containing the desired figure width and heigth in inches. Defaults to 10x7 inches.
+        size:
+            An optional tuple of two floats, containing the desired figure width and heigth in inches. Defaults to 10x7 inches.
     
     Returns:
         fig:
