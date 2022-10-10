@@ -9,8 +9,7 @@ import numpy as np
 import sys
 import types
 
-from typing import Tuple
-from typing import List
+from typing import Tuple, List, Optional
 
 ####################
 # Internal helpers #
@@ -91,24 +90,26 @@ def _correlation_matrix(list_of_lists: List[List[float]],
 ######################
 
 
-def darkmode(foreground="0.85", background="0.15"):
+def darkmode(foreground: Optional[str] = "0.85",
+             background: Optional[str] = "0.15") -> None:
     ''' Switch to darkmode. Foreground and background colours may also be specified explicitly. '''
     _set_fgbg(fg=foreground, bg=background)
 
 
-def lightmode(foreground="0", background="1.0"):
+def lightmode(foreground: Optional[str] = "0",
+              background: Optional[str] = "1.0") -> None:
     ''' Switch to lightmode. Foreground and background colours may also be specified explicitly. '''
     _set_fgbg(fg=foreground, bg=background)
 
 
-def texon():
+def texon() -> None:
     ''' Switch on TeX-rendering of texts. '''
     rc('text', usetex=True)
     params = {'text.latex.preamble': r'\usepackage{amsmath}'}
     plt.rcParams.update(params)
 
 
-def texoff():
+def texoff() -> None:
     ''' Switch off TeX-rendering of texts. '''
     rc('text', usetex=False)
 
@@ -118,7 +119,7 @@ def texoff():
 ####################
 
 
-def singleplot(size=(10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     ''' Make a new 10x7 plot. Size can also be changed. '''
     try:
         w, h = size
@@ -135,8 +136,9 @@ def multiplot(
         nrows: int,
         ncols: int,
         size_xy: Tuple[float, float],
-        wspace: float = None,
-        hspace: float = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+        wspace: Optional[float] = None,
+        hspace: Optional[float] = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+    ''' Make a new figure consisting of nrows X ncols plots. Overall figure size (x times y) needs to be specified, and horizontal and vertical distance between subplots can be provided if desired (default to zero). '''
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -170,8 +172,8 @@ def multiplot(
 
 def title(ax: plt.Axes,
           title: str,
-          fontsize: float = 40,
-          pad: float = 20) -> None:
+          fontsize: Optional[float] = 30,
+          pad: Optional[float] = 20) -> None:
     ''' Add a title to a plot. '''
     try:
         title = str(title)
@@ -187,10 +189,10 @@ def title(ax: plt.Axes,
 
 
 def labels(ax: plt.Axes,
-           xlabel: str = None,
-           ylabel: str = None,
-           fontsize: float = 30,
-           pad: float = 15) -> None:
+           xlabel: Optional[str] = None,
+           ylabel: Optional[str] = None,
+           fontsize: Optional[float] = 30,
+           pad: Optional[float] = 15) -> None:
     ''' Add axes labels to a plot. '''
     try:
         fontsize = float(fontsize)
@@ -217,9 +219,9 @@ def labels(ax: plt.Axes,
 
 def diagonal(ax: plt.Axes,
              colour: str = "black",
-             alpha=0.3,
-             linestyle="-",
-             linewidth=2):
+             alpha: Optional[float] = 0.3,
+             linestyle: Optional[str] = "-",
+             linewidth: Optional[float] = 2) -> None:
     ''' Add the 45 degrees diagonal to a plot. '''
     try:
         colour = str(colour)
@@ -247,10 +249,10 @@ def rectangle(ax: plt.Axes,
               y1: float,
               x2: float,
               y2: float,
-              colour: str = "red",
-              linewidth: float = 3,
-              linestyle: str = "-",
-              fill: bool = False):
+              colour: Optional[str] = "red",
+              linewidth: Optional[float] = 3,
+              linestyle: Optional[str] = "-",
+              fill: Optional[bool] = False) -> None:
     ''' Add a rectangle to a plot. '''
     try:
         x1 = float(x1)
@@ -280,8 +282,9 @@ def rectangle(ax: plt.Axes,
 def star(ax: plt.Axes,
          x: float,
          y: float,
-         colour: str = "red",
-         fontsize: float = 50):
+         colour: Optional[str] = "red",
+         fontsize: Optional[float] = 50) -> None:
+    ''' Add an asterisk to a plot. '''
     try:
         x = float(x)
         y = float(y)
@@ -303,7 +306,7 @@ def lines(ax: plt.Axes,
           alpha: float = 0.3,
           linestyle: str = "-",
           linewidth: float = 2,
-          zorder: float = -100):
+          zorder: float = -100) -> None:
     try:
         colour = str(colour)
         alpha = float(alpha)
@@ -351,7 +354,7 @@ def grid(ax: plt.Axes,
          alpha: float = 0.1,
          linestyle: str = "-",
          linewidth: float = 2,
-         zorder: float = -100):
+         zorder: float = -100) -> None:
     ''' Add grid lines to a plot. '''
     try:
         which = str(which)
@@ -376,7 +379,7 @@ def grid(ax: plt.Axes,
             zorder=zorder)
 
 
-def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
+def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
     ''' Add a legend to a plot. '''
 
     try:
@@ -410,7 +413,7 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs):
 #############################
 
 
-def despine(ax: plt.Axes, which: List[str] = ['top', 'right']):
+def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
     ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
     try:
         which = list(which)
@@ -426,7 +429,7 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']):
         ax.spines[spine].set_visible(False)
 
 
-def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 20):
+def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
     ''' Change ticklabelsize of an ax object. '''
     try:
         size = float(size)
@@ -441,7 +444,7 @@ def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 20):
 
 def limits(ax: plt.Axes,
            xlimits: Tuple[float, float] = None,
-           ylimits: Tuple[float, float] = None):
+           ylimits: Tuple[float, float] = None) -> None:
     assert hasattr(ax, 'plot')
     ''' Set axes limits of ax object. '''
     if xlimits is not None:
@@ -469,7 +472,7 @@ def limits(ax: plt.Axes,
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
-                     labels=None):
+                     labels=None) -> None:
     try:
         ticks = list(ticks)
         ticks = [float(t) for t in ticks]
@@ -497,7 +500,9 @@ def ticks_and_labels(ax: plt.Axes,
         ax.set_yticklabels(labels)
 
 
-def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
+def rotate_ticklabels(ax: plt.Axes,
+                      which: str,
+                      rotation: float) -> None:
     assert which in ["x", "y", "xy", "yx", "both"]
     assert hasattr(ax, 'plot')
     try:
@@ -511,7 +516,10 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float):
         ax.set_yticklabels(ax.get_yticklabels(), rotation=rotation)
 
 
-def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
+def align_ticklabels(ax: plt.Axes,
+                     which: str,
+                     horizontal: str,
+                     vertical: str) -> None:
     assert which in ["x", "y"]
     assert hasattr(ax, 'plot')
 
@@ -543,19 +551,22 @@ def align_ticklabels(ax: plt.Axes, which: str, horizontal: str, vertical: str):
 
 def similarity_heatmap(ax: plt.Axes,
                        list_of_lists: List[List[float]],
-                       method: str = "jaccard"):
+                       method: str = "jaccard") -> None:
     assert hasattr(ax, 'plot')
     sns.heatmap(_similarity_matrix(list_of_lists, method))
 
 
 def correlations_heatmap(ax: plt.Axes,
                          list_of_lists: List[List[float]],
-                         method: str = "pearson"):
+                         method: str = "pearson") -> None:
     assert hasattr(ax, 'plot')
     sns.heatmap(_correlation_matrix(list_of_lists, method))
 
 
-def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
+def masked_heatmap(ax: plt.Axes,
+                   data: np.ndarray,
+                   mask: str,
+                   **kwargs) -> None:
     #try:
     #    data = np.array(data)
     #except:
@@ -581,7 +592,8 @@ def masked_heatmap(ax: plt.Axes, data: np.ndarray, mask: str, **kwargs):
 ##################
 
 
-def save_png(filename: str, dpi: float = 300):
+def save_png(filename: str,
+             dpi: float = 300) -> None:
     ''' Save current figure as png file. DPI can be specified. '''
     try:
         filename = str(filename)
@@ -595,7 +607,7 @@ def save_png(filename: str, dpi: float = 300):
                 format="png")  # pragma: no cover
 
 
-def save_svg(filename: str):
+def save_svg(filename: str) -> None:
     ''' Save current figure as svg file. '''
     try:
         filename = str(filename)
@@ -607,7 +619,7 @@ def save_svg(filename: str):
                 format="svg")  # pragma: no cover
 
 
-def save_pdf(filename: str):
+def save_pdf(filename: str) -> None:
     ''' Save current figure as pdf file. '''
     try:
         filename = str(filename)
