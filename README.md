@@ -52,4 +52,4 @@ This yields the following figure:
 - Export current figure to PNG, SVG or PDF with one single line of code
 
 ## Is there a documentation?
-Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs .
+Yes! Although it is currently being written, and thus still a bit WIP-y. You can find it here: https://github.com/Ma-Fi-94/plottingtools/blob/main/docs . To generate the docs yourself, use `pdoc plottingtools.py -d google -o ./docs`
