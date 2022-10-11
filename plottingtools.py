@@ -124,7 +124,6 @@ def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotli
     fig, ax = plt.subplots(1, 1, figsize=size)
     return fig, ax
 
-######################################## annotations properly done until this line #########################
 
 def multiplot(
         nrows: int,
@@ -132,7 +131,23 @@ def multiplot(
         size_xy: Tuple[float, float],
         wspace: Optional[float] = None,
         hspace: Optional[float] = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
-    ''' Make a new figure consisting of nrows X ncols plots. Overall figure size (x times y) needs to be specified, and horizontal and vertical distance between subplots can be provided if desired (default to zero). '''
+    """Generates a new figure consisting of nrows rows and ncols columns of plots with overall figure size size_xy. Horizontal and vertical distance between plots may be defined explicitly.
+    
+    Args:
+        size:
+            An tuple of two floats, containing the desired figure width and heigth in inches.
+        wspace:
+            An optional float, specifying the horizontal distance between columns. Defaults to zero.
+        hspace:
+            An optional float, specifying the vertical distance between rows. Defaults to zero.
+    
+    Returns:
+        fig:
+            A matplotlib.figure.Figure instance
+        ax:
+            An array of pyplot.Axes instances
+    """    
+    
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -164,11 +179,27 @@ def multiplot(
 #############################
 
 
+
 def title(ax: plt.Axes,
           title: str,
           fontsize: Optional[float] = 30,
           pad: Optional[float] = 20) -> None:
-    ''' Add a title to a plot. '''
+    """Adds a title to an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        title:
+            A string containing the title to add.
+        fontsize:
+            An optional float, specifying the font size of the title. Defaults to 30.
+        pad:
+            An optional float, specifying the padding between title and figure. Defaults to 20.
+    
+    Returns:
+        None
+    """    
+    
     try:
         title = str(title)
         fontsize = float(fontsize)
@@ -187,7 +218,24 @@ def labels(ax: plt.Axes,
            ylabel: Optional[str] = None,
            fontsize: Optional[float] = 30,
            pad: Optional[float] = 15) -> None:
-    ''' Add axes labels to a plot. '''
+    """Adds axes labels  to an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        xlabel:
+            An optional string containing the label to be added to the x-axis of the plot.
+        ylabel:
+            An optional string containing the label to be added to the y-axis of the plot.
+        fontsize:
+            An optional float, specifying the font size of the labels. Defaults to 30.
+        pad:
+            An optional float, specifying the padding between labels and figure. Defaults to 15.
+    
+    Returns:
+        None
+    """
+    
     try:
         fontsize = float(fontsize)
         pad = float(pad)
@@ -209,6 +257,8 @@ def labels(ax: plt.Axes,
         except:
             raise AssertionError
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
+
+######################################## annotations properly done until this line #########################
 
 
 def diagonal(ax: plt.Axes,
