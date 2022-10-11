@@ -218,7 +218,7 @@ def labels(ax: plt.Axes,
            ylabel: Optional[str] = None,
            fontsize: Optional[float] = 30,
            pad: Optional[float] = 15) -> None:
-    """Adds axes labels  to an existing plot.
+    """Adds axes labels to an existing plot.
     
     Args:
         ax:
@@ -258,15 +258,29 @@ def labels(ax: plt.Axes,
             raise AssertionError
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
 
-######################################## annotations properly done until this line #########################
-
-
 def diagonal(ax: plt.Axes,
-             colour: str = "black",
+             colour: Optional[str] = "black",
              alpha: Optional[float] = 0.3,
              linestyle: Optional[str] = "-",
              linewidth: Optional[float] = 2) -> None:
-    ''' Add the 45 degrees diagonal to a plot. '''
+    """Adds the 45 degrees diagonal to an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        colour:
+            An optional string containing the colour of the diagonal to be added. Defaults to "black".
+        alpha:
+            An optional float containing the alpha (opacity) of the diagonal to be added. Defaults to 0.3.
+        linestyle:
+            An optional string, specifying the line style of the diagonal to be added, Defaults to "-", i.e. a continuous line.
+        linewidth:
+            An optional float, specifying the width (in px) of the diagonal to be added. Defaults to 2.
+    
+    Returns:
+        None
+    """
+
     try:
         colour = str(colour)
         alpha = float(alpha)
@@ -286,6 +300,8 @@ def diagonal(ax: plt.Axes,
             linestyle=linestyle,
             linewidth=linewidth,
             alpha=alpha)
+
+######################################## annotations properly done until this line #########################
 
 
 def rectangle(ax: plt.Axes,
