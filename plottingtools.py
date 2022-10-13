@@ -342,25 +342,6 @@ def rectangle(ax: plt.Axes,
 
 ######################################## annotations properly done until this line #########################
 
-def star(ax: plt.Axes,
-         x: float,
-         y: float,
-         colour: Optional[str] = "red",
-         fontsize: Optional[float] = 50) -> None:
-    ''' Add an asterisk to a plot. '''
-    try:
-        x = float(x)
-        y = float(y)
-        fontsize = float(fontsize)
-        colour = str(colour)
-    except:
-        raise AssertionError
-
-    assert fontsize > 0
-    assert hasattr(ax, 'plot')
-
-    ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
-
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
     ''' Add a legend to a plot. '''
 
@@ -452,7 +433,6 @@ def limits(ax: plt.Axes,
             raise AssertionError
 
         ax.set_ylim(ylimits)
-
 
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
@@ -603,37 +583,3 @@ def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
 
 def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
     ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
-
-def oligoscatter_errorbar(ax,
-                          x,
-                          y,
-                          xerr=None,
-                          yerr=None,
-                          marker="o",
-                          alpha=1,
-                          **kwargs):
-    ax.errorbar(x,
-                y,
-                xerr=xerr,
-                yerr=yerr,
-                marker=marker,
-                alpha=alpha,
-                **kwargs)
-
-
-
-def polyscatter_errorbar(ax,
-                         x,
-                         y,
-                         xerr=None,
-                         yerr=None,
-                         marker="o",
-                         alpha=1,
-                         **kwargs):
-    ax.errorbar(x,
-                y,
-                xerr=xerr,
-                yerr=yerr,
-                marker=marker,
-                alpha=alpha,
-                **kwargs)
