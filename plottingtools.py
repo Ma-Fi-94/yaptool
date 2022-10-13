@@ -325,7 +325,8 @@ def rectangle(ax: plt.Axes,
     
     Returns:
         None
-    """    try:
+    """
+    try:
         x1 = float(x1)
         y1 = float(y1)
         x2 = float(x2)
