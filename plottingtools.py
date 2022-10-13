@@ -361,55 +361,6 @@ def star(ax: plt.Axes,
 
     ax.annotate("*", (x, y), c=colour, fontsize=fontsize)
 
-
-def lines(ax: plt.Axes,
-          which: str,
-          pos: List[float],
-          colour: str = "black",
-          alpha: float = 0.3,
-          linestyle: str = "-",
-          linewidth: float = 2,
-          zorder: float = -100) -> None:
-    try:
-        colour = str(colour)
-        alpha = float(alpha)
-        linewidth = float(linewidth)
-        zorder = int(zorder)
-        pos = [float(p) for p in pos]
-    except:
-        raise AssertionError
-
-    assert which in ["x", "y", "v", "h"]
-    assert linestyle in LINESTYLES
-    assert alpha > 0
-    assert alpha <= 1
-    assert linewidth > 0
-    assert len(pos) > 0
-    assert hasattr(ax, 'plot')
-
-    if which == "x" or which == "v":
-        ymin, ymax = ax.get_ylim()
-        for x in pos:
-            ax.vlines([x],
-                      ymin,
-                      ymax,
-                      color=colour,
-                      alpha=alpha,
-                      linestyle=linestyle,
-                      linewidth=linewidth,
-                      zorder=zorder)
-    elif which == "y" or which == "h":
-        xmin, xmax = ax.get_xlim()
-        for y in pos:
-            ax.hlines([y],
-                      xmin,
-                      xmax,
-                      color=colour,
-                      alpha=alpha,
-                      linestyle=linestyle,
-                      linewidth=linewidth,
-                      zorder=zorder)
-
 def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
     ''' Add a legend to a plot. '''
 
@@ -444,7 +395,8 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
 #############################
 
 
-def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
+def despine(ax: plt.Axes,
+            which: Optional[List[str]] = ['top', 'right']) -> None:
     ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
     try:
         which = list(which)
@@ -460,7 +412,9 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         ax.spines[spine].set_visible(False)
 
 
-def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
+def ticklabelsize(ax: plt.Axes,
+                  which: Optional[str] = "both",
+                  size: Optional[float] = 30) -> None:
     ''' Change ticklabelsize of an ax object. '''
     try:
         size = float(size)
@@ -474,10 +428,11 @@ def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
 
 
 def limits(ax: plt.Axes,
-           xlimits: Tuple[float, float] = None,
-           ylimits: Tuple[float, float] = None) -> None:
-    assert hasattr(ax, 'plot')
+           xlimits: Optional[Tuple[float, float]] = None,
+           ylimits: Optional[Tuple[float, float]] = None) -> None:
     ''' Set axes limits of ax object. '''
+
+    assert hasattr(ax, 'plot')
     if xlimits is not None:
         try:
             lo, hi = xlimits
@@ -502,7 +457,7 @@ def limits(ax: plt.Axes,
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
-                     labels=None) -> None:
+                     labels: Optional[List[str]] = None) -> None:
     try:
         ticks = list(ticks)
         ticks = [float(t) for t in ticks]
@@ -548,8 +503,8 @@ def rotate_ticklabels(ax: plt.Axes,
 
 def align_ticklabels(ax: plt.Axes,
                      which: str,
-                     horizontal: str,
-                     vertical: str) -> None:
+                     horizontal: Optional[str] = None,
+                     vertical: Optional[str] = None) -> None:
     assert which in ["x", "y"]
     assert hasattr(ax, 'plot')
 
@@ -580,7 +535,7 @@ def align_ticklabels(ax: plt.Axes,
 
 
 def save_png(filename: str,
-             dpi: float = 300) -> None:
+             dpi: Optional[float] = 300) -> None:
     ''' Save current figure as png file. DPI can be specified. '''
     try:
         filename = str(filename)
@@ -640,18 +595,14 @@ def heatmap_annot_kws():
 def majorline(ax, x, y, linewidth=3, linestyle="-", **kwargs):
     ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
 
-
-def midiline(ax, x, y, linewidth=2, linestyle="--", **kwargs):
-    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
-
-
 def minorline(ax, x, y, linewidth=1, linestyle=":", **kwargs):
     ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
-
 
 def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
     ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
 
+def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
+    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
 
 def oligoscatter_errorbar(ax,
                           x,
@@ -669,9 +620,6 @@ def oligoscatter_errorbar(ax,
                 alpha=alpha,
                 **kwargs)
 
-
-def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
-    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
 
 
 def polyscatter_errorbar(ax,
