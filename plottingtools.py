@@ -38,8 +38,8 @@ def _set_fgbg(fg: str, bg: str):
 
 """ General aesthetics """
 
-def darkmode(foreground: Optional[str] = "0.85",
-             background: Optional[str] = "0.15") -> None:
+def darkmode(foreground: str = "0.85",
+             background: str = "0.15") -> None:
     """Switches to dark mode. Foreground and background colours may also be specified explicitly.
     
     Args:
@@ -54,8 +54,8 @@ def darkmode(foreground: Optional[str] = "0.85",
     _set_fgbg(fg=foreground, bg=background)
 
 
-def lightmode(foreground: Optional[str] = "0",
-              background: Optional[str] = "1.0") -> None:
+def lightmode(foreground: str = "0",
+              background: str = "1.0") -> None:
     """Switches to light mode. Foreground and background colours may also be specified explicitly.
     
     Args:
@@ -101,7 +101,7 @@ def texoff() -> None:
 ####################
 
 
-def singleplot(size: Optional[Tuple[float, float]] = (10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+def singleplot(size: Tuple[float, float] = (10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     """Generates a new single-plot figure. The figure size may be defined explicitly.
     
     Args:
@@ -182,8 +182,8 @@ def multiplot(
 
 def title(ax: plt.Axes,
           title: str,
-          fontsize: Optional[float] = 30,
-          pad: Optional[float] = 20) -> None:
+          fontsize: float = 30,
+          pad: float = 20) -> None:
     """Adds a title to an existing plot.
     
     Args:
@@ -216,8 +216,8 @@ def title(ax: plt.Axes,
 def labels(ax: plt.Axes,
            xlabel: Optional[str] = None,
            ylabel: Optional[str] = None,
-           fontsize: Optional[float] = 30,
-           pad: Optional[float] = 15) -> None:
+           fontsize: float = 30,
+           pad: float = 15) -> None:
     """Adds axes labels to an existing plot.
     
     Args:
@@ -259,10 +259,10 @@ def labels(ax: plt.Axes,
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
 
 def diagonal(ax: plt.Axes,
-             colour: Optional[str] = "black",
-             alpha: Optional[float] = 0.3,
-             linestyle: Optional[str] = "-",
-             linewidth: Optional[float] = 2) -> None:
+             colour: str = "black",
+             alpha: float = 0.3,
+             linestyle: str = "-",
+             linewidth: float = 2) -> None:
     """Adds the 45 degrees diagonal to an existing plot.
     
     Args:
@@ -378,7 +378,7 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
 
 
 def despine(ax: plt.Axes,
-            which: Optional[List[str]] = ['top', 'right']) -> None:
+            which: List[str] = ['top', 'right']) -> None:
     ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
     try:
         which = list(which)
@@ -395,8 +395,8 @@ def despine(ax: plt.Axes,
 
 
 def ticklabelsize(ax: plt.Axes,
-                  which: Optional[str] = "both",
-                  size: Optional[float] = 30) -> None:
+                  which: str = "both",
+                  size: float = 30) -> None:
     ''' Change ticklabelsize of an ax object. '''
     try:
         size = float(size)
@@ -516,7 +516,7 @@ def align_ticklabels(ax: plt.Axes,
 
 
 def save_png(filename: str,
-             dpi: Optional[float] = 300) -> None:
+             dpi: float = 300) -> None:
     ''' Save current figure as png file. DPI can be specified. '''
     try:
         filename = str(filename)
