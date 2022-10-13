@@ -301,43 +301,46 @@ def diagonal(ax: plt.Axes,
             linewidth=linewidth,
             alpha=alpha)
 
-######################################## annotations properly done until this line #########################
-
-
 def rectangle(ax: plt.Axes,
               x1: float,
               y1: float,
               x2: float,
               y2: float,
-              colour: Optional[str] = "red",
-              linewidth: Optional[float] = 3,
-              linestyle: Optional[str] = "-",
-              fill: Optional[bool] = False) -> None:
-    ''' Add a rectangle to a plot. '''
-    try:
+              **kwargs) -> None:
+    """Convenience function for addig a rectangle to an existing plot without having to manually call ax.add_patch(). Takes x and y coordinates of two points as arguments, instead of the x and y coordinate of one point and the rectagle width and heigth, like add_patch() would.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        x1:
+            A float, specifying the x coordinate of the first point.
+        y1:
+            A float, specifying the y coordinate of the first point.
+        x2:
+            A float, specifying the x coordinate of the second point.
+        y2:
+            A float, specifying the y coordinate of the second point.
+        **kwargs:
+            Named arguments such as color, fill, linewidth, linestyle. Passed to ax.add_patch().
+    
+    Returns:
+        None
+    """    try:
         x1 = float(x1)
         y1 = float(y1)
         x2 = float(x2)
         y2 = float(y2)
-        colour = str(colour)
-        linewidth = float(linewidth)
     except:
         raise AssertionError
-    assert linewidth >= 0
-    assert linestyle in LINESTYLES
-    assert type(fill) == bool
     assert hasattr(ax, 'plot')
 
     ax.add_patch(
         Rectangle((x1, y1),
                   x2 - x1,
                   y2 - y1,
-                  linewidth=linewidth,
-                  linestyle=linestyle,
-                  edgecolor=colour,
-                  facecolor=colour,
-                  fill=fill))
+                  **kwargs))
 
+######################################## annotations properly done until this line #########################
 
 def star(ax: plt.Axes,
          x: float,
