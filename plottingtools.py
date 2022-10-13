@@ -341,10 +341,29 @@ def rectangle(ax: plt.Axes,
                   y2 - y1,
                   **kwargs))
 
-######################################## annotations properly done until this line #########################
 
-def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
-    ''' Add a legend to a plot. '''
+def legend(ax:  plt.Axes,
+           loc: "str" = "best",
+           fontsize: float = 30,
+           frame: bool = False,
+           **kwargs) -> None:
+    """Adds a legend to an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        loc:
+            A string, specifying the legend position, following matplotlib syntax. Defaults to "best".
+        fontsize:
+            A float, specifying the font size. Defaults to 30.
+        frame:
+            A bool, specifying whether to draw a frame around the legend. Defaults to false, i.e. no.
+        **kwargs:
+            Named arguments such as color, fill, linewidth, linestyle. Passed to ax.legend().
+    
+    Returns:
+        None
+    """ 
 
     try:
         fontsize = float(fontsize)
@@ -353,18 +372,21 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
         raise AssertionError
 
     assert loc in [
-        1, 2, 3, 4, 5, 6, 7, 8, "best", "upper right", "upper left",
-        "lower left", "lower right", "right", "center left", "center right",
-        "lower center", "upper center", "center"
-    ]
+        "upper right", "upper left", "lower left", "lower right",
+        "right", "left", "center left", "center right",
+        "lower center", "upper center", "center",
+        1, 2, 3, 4, 5, 6, 7, 8, "best"]
+    
     l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
-
+    
+    # Automatically try to set correct alpha for legend symbols
     try:
         for lh in l.legendHandles:
             lh._legmarker.set_alpha(1)
     except:
         pass
-
+    
+    # Automatically try to set correct alpha for legend symbols another way
     try:
         for lh in l.legendHandles:
             lh.set_alpha(1)
@@ -376,16 +398,27 @@ def legend(ax, loc="best", fontsize=25, frame=False, **kwargs) -> None:
 # Change elements of a plot #
 #############################
 
-
 def despine(ax: plt.Axes,
             which: List[str] = ['top', 'right']) -> None:
-    ''' Remove spines of ax object. Spines can be specified, default is top and right. '''
+    """Remove spines of an existing plot. Spines can be specified, default is top and right. 
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A list of strings, specifying which spines to remove. Defaults to ["top", "right"]. Also possible are "bottom" and "left".
+    
+    Returns:
+        None
+    """ 
+    
+    assert hasattr(ax, 'plot')
+
     try:
         which = list(which)
     except:
         raise AssertionError
 
-    assert hasattr(ax, 'plot')
 
     for spine in which:
         assert spine in ['top', 'right', 'left', 'bottom']
@@ -393,21 +426,64 @@ def despine(ax: plt.Axes,
     for spine in which:
         ax.spines[spine].set_visible(False)
 
+def respine(ax: plt.Axes,
+            which: List[str] = ['top', 'right']) -> None:
+    """Adds spines to an existing plot. Spines can be specified, default is top and right. 
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A list of strings, specifying which spines to remove. Defaults to ["top", "right"]. Also possible are "bottom" and "left".
+    
+    Returns:
+        None
+    """ 
+    
+    assert hasattr(ax, 'plot')
+
+    try:
+        which = list(which)
+    except:
+        raise AssertionError
+
+
+    for spine in which:
+        assert spine in ['top', 'right', 'left', 'bottom']
+
+    for spine in which:
+        ax.spines[spine].set_visible(True)
+
 
 def ticklabelsize(ax: plt.Axes,
                   which: str = "both",
                   size: float = 30) -> None:
-    ''' Change ticklabelsize of an ax object. '''
+    """Changes ticklabelsize of an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A string, specifying the axes for which tick label size is changed. Possible are "x", "y", and "both". Defaults to "both".
+        size:
+            A float, specifying the desired tick label size. Defaults to 30.
+    
+    Returns:
+        None
+    """ 
+
     try:
         size = float(size)
     except:
         raise AssertionError
-
-    assert which in ["x", "y", "both"]
+    
     assert hasattr(ax, 'plot')
+    assert which in ["x", "y", "both"]
+    assert size >= 0
 
     ax.tick_params(which, labelsize=size)
 
+######################################## annotations properly done until this line #########################
 
 def limits(ax: plt.Axes,
            xlimits: Optional[Tuple[float, float]] = None,
