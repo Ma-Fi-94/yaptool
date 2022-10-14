@@ -483,13 +483,24 @@ def ticklabelsize(ax: plt.Axes,
 
     ax.tick_params(which, labelsize=size)
 
-######################################## annotations properly done until this line #########################
-
 def limits(ax: plt.Axes,
            xlimits: Optional[Tuple[float, float]] = None,
            ylimits: Optional[Tuple[float, float]] = None) -> None:
-    ''' Set axes limits of ax object. '''
-
+    
+    """Set ax limits of an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        xlimits:
+            An optional tuple of two floats, containing the desired limits of the x-axis. Defaults to None.
+        ylimits:
+            An optional tuple of two floats, containing the desired limits of the x-axis. Defaults to None.
+    
+    Returns:
+        None
+    """ 
+        
     assert hasattr(ax, 'plot')
     if xlimits is not None:
         try:
@@ -515,13 +526,29 @@ def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
                      labels: Optional[List[str]] = None) -> None:
+    """Set ticks and corresponding labels of one or both axss of an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A string, specifying the axis. Possible values are "x", "y", "xy", "yx", "both".
+        ticks:
+            A list of floats, containing the desired tick positions.
+        labels:
+            An optional list of strings, containing the desired axis labels corresponding to the specified tick positions. Defaults to None. If no list is provided, tick labels will be set to the numerical values of the provided ticks positions.
+    
+    Returns:
+        None
+    """ 
+    
     try:
         ticks = list(ticks)
         ticks = [float(t) for t in ticks]
     except:
         raise AssertionError
 
-    assert which in ["x", "y", "xy", "yx"]
+    assert which in ["x", "y", "xy", "yx", "both"]
     assert hasattr(ax, 'plot')
 
     if labels is None:
@@ -534,13 +561,14 @@ def ticks_and_labels(ax: plt.Axes,
 
         assert len(ticks) == len(labels)
 
-    if which == "x" or which == "xy" or which == "yx":
+    if which == "x" or which == "xy" or which == "yx" or which == "both":
         ax.set_xticks(ticks)
         ax.set_xticklabels(labels)
-    if which == "y" or which == "xy" or which == "yx":
+    if which == "y" or which == "xy" or which == "yx" or which == "both":
         ax.set_yticks(ticks)
         ax.set_yticklabels(labels)
 
+######################################## annotations properly done until this line #########################
 
 def rotate_ticklabels(ax: plt.Axes,
                       which: str,
