@@ -14,8 +14,6 @@ from matplotlib.patches import Rectangle  # type: ignore
 # Internal helpers #
 ####################
 
-LINESTYLES = ["-", "--", "-.", ":"]
-
 
 def _set_fgbg(fg: str, bg: str):
     ''' Internal helper to change fore- and background colours '''
@@ -116,12 +114,6 @@ def singleplot(size: Tuple[float, float] = (
         ax:
             A pyplot.Axes instance
     """
-    try:
-        w, h = size
-        w = float(w)
-        h = float(h)
-    except:
-        raise AssertionError
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     return fig, ax
@@ -151,25 +143,7 @@ def multiplot(
             An array of pyplot.Axes instances
     """
 
-    assert type(nrows) == int
-    assert type(ncols) == int
-    assert nrows > 0
-    assert ncols > 0
-
-    try:
-        l, h = size_xy
-        l = float(l)
-        h = float(h)
-        if hspace is not None:
-            hspace = float(hspace)
-        if wspace is not None:
-            wspace = float(wspace)
-    except:
-        raise AssertionError
-    assert l > 0
-    assert h > 0
-
-    fig, ax = plt.subplots(nrows, ncols, figsize=(l, h))
+    fig, ax = plt.subplots(nrows, ncols, figsize=size_xy)
     if hspace is not None:
         plt.subplots_adjust(hspace=hspace)
     if wspace is not None:
@@ -202,15 +176,8 @@ def title(ax: plt.Axes,
         None
     """
 
-    try:
-        title = str(title)
-        fontsize = float(fontsize)
-        pad = float(pad)
-    except:
-        raise AssertionError
-    assert fontsize > 0
-    assert pad > 0
-    assert hasattr(ax, 'plot')
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     ax.set_title(title, fontsize=fontsize, pad=pad)
 
@@ -238,26 +205,13 @@ def labels(ax: plt.Axes,
         None
     """
 
-    try:
-        fontsize = float(fontsize)
-        pad = float(pad)
-    except:
-        raise AssertionError
-    assert fontsize > 0
-    assert hasattr(ax, 'plot')
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     if xlabel is not None:
-        try:
-            xlabel = str(xlabel)
-        except:
-            raise AssertionError
         ax.set_xlabel(xlabel, fontsize=fontsize, labelpad=pad)
 
     if ylabel is not None:
-        try:
-            ylabel = str(ylabel)
-        except:
-            raise AssertionError
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
 
 
@@ -284,17 +238,8 @@ def diagonal(ax: plt.Axes,
         None
     """
 
-    try:
-        colour = str(colour)
-        alpha = float(alpha)
-        linewidth = float(linewidth)
-    except:
-        raise AssertionError
-
-    assert (alpha >= 0) and (alpha <= 1)
-    assert linestyle in LINESTYLES
-    assert linewidth > 0
-    assert hasattr(ax, 'plot')
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     minimum = min(ax.get_xlim()[0], ax.get_ylim()[0])
     maximum = max(ax.get_xlim()[1], ax.get_ylim()[1])
@@ -331,9 +276,11 @@ def rectangle(ax: plt.Axes, x1: float, y1: float, x2: float, y2: float,
         y1 = float(y1)
         x2 = float(x2)
         y2 = float(y2)
-    except:
-        raise AssertionError
-    assert hasattr(ax, 'plot')
+    except Exception as ex:
+        raise ValueError("Pass numbers in x1, y1, x2, y2.") from ex
+
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     ax.add_patch(Rectangle((x1, y1), x2 - x1, y2 - y1, **kwargs))
 
@@ -361,17 +308,8 @@ def legend(ax: plt.Axes,
         None
     """
 
-    try:
-        fontsize = float(fontsize)
-        frame = bool(frame)
-    except:
-        raise AssertionError
-
-    assert loc in [
-        "upper right", "upper left", "lower left", "lower right", "right",
-        "left", "center left", "center right", "lower center", "upper center",
-        "center", 1, 2, 3, 4, 5, 6, 7, 8, "best"
-    ]
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
@@ -379,14 +317,14 @@ def legend(ax: plt.Axes,
     try:
         for lh in l.legendHandles:
             lh._legmarker.set_alpha(1)
-    except:
+    except Exception:
         pass
 
     # Automatically try to set correct alpha for legend symbols another way
     try:
         for lh in l.legendHandles:
             lh.set_alpha(1)
-    except:
+    except Exception:
         pass
 
 
@@ -408,15 +346,8 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         None
     """
 
-    assert hasattr(ax, 'plot')
-
-    try:
-        which = list(which)
-    except:
-        raise AssertionError
-
-    for spine in which:
-        assert spine in ['top', 'right', 'left', 'bottom']
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     for spine in which:
         ax.spines[spine].set_visible(False)
@@ -435,15 +366,8 @@ def respine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         None
     """
 
-    assert hasattr(ax, 'plot')
-
-    try:
-        which = list(which)
-    except:
-        raise AssertionError
-
-    for spine in which:
-        assert spine in ['top', 'right', 'left', 'bottom']
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     for spine in which:
         ax.spines[spine].set_visible(True)
@@ -464,14 +388,8 @@ def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
         None
     """
 
-    try:
-        size = float(size)
-    except:
-        raise AssertionError
-
-    assert hasattr(ax, 'plot')
-    assert which in ["x", "y", "both"]
-    assert size >= 0
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     ax.tick_params(which, labelsize=size)
 
@@ -493,25 +411,13 @@ def limits(ax: plt.Axes,
         None
     """
 
-    assert hasattr(ax, 'plot')
-    if xlimits is not None:
-        try:
-            lo, hi = xlimits
-            lo = float(lo)
-            hi = float(hi)
-        except:
-            raise AssertionError
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
+    if xlimits is not None:
         ax.set_xlim(xlimits)
 
     if ylimits is not None:
-        try:
-            lo, hi = ylimits
-            lo = float(lo)
-            hi = float(hi)
-        except:
-            raise AssertionError
-
         ax.set_ylim(ylimits)
 
 
@@ -535,29 +441,21 @@ def ticks_and_labels(ax: plt.Axes,
         None
     """
 
-    try:
-        ticks = list(ticks)
-        ticks = [float(t) for t in ticks]
-    except:
-        raise AssertionError
+    if not which in ["x", "y", "xy", "yx", "both"]:
+        raise ValueError(
+            'Parameter which must be one of "x", "y", "xy", "yx", "both".')
 
-    assert which in ["x", "y", "xy", "yx", "both"]
-    assert hasattr(ax, 'plot')
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     if labels is None:
         labels = list(map(lambda x: str(x), ticks))
-    else:
-        try:
-            labels = list(labels)
-        except:
-            raise AssertionError
 
-        assert len(ticks) == len(labels)
-
-    if which == "x" or which == "xy" or which == "yx" or which == "both":
+    if which in ["x", "xy", "yx", "both"]:
         ax.set_xticks(ticks)
         ax.set_xticklabels(labels)
-    if which == "y" or which == "xy" or which == "yx" or which == "both":
+
+    if which in ["y", "xy", "yx", "both"]:
         ax.set_yticks(ticks)
         ax.set_yticklabels(labels)
 
@@ -577,16 +475,17 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float) -> None:
         None
     """
 
-    assert which in ["x", "y", "xy", "yx", "both"]
-    assert hasattr(ax, 'plot')
-    try:
-        rotation = float(rotation)
-    except:
-        raise AssertionError
+    if not which in ["x", "y", "xy", "yx", "both"]:
+        raise ValueError(
+            'Parameter which must be one of "x", "y", "xy", "yx", "both".')
 
-    if which == "x" or which == "xy" or which == "yx" or which == "both":
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
+
+    if which in ["x", "xy", "yx", "both"]:
         ax.set_xticklabels(ax.get_xticklabels(), rotation=rotation)
-    if which == "y" or which == "xy" or which == "yx" or which == "both":
+
+    if which in ["y", "xy", "yx", "both"]:
         ax.set_yticklabels(ax.get_yticklabels(), rotation=rotation)
 
 
@@ -610,26 +509,25 @@ def align_ticklabels(ax: plt.Axes,
         None
     """
 
-    assert which in ["x", "y"]
-    assert hasattr(ax, 'plot')
+    if not which in ["x", "y"]:
+        raise ValueError('Parameter which must be one of "x", "y".')
+
+    if not hasattr(ax, 'plot'):
+        raise ValueError("Pass a valid plot in parameter ax.")
 
     if which == "x":
         if horizontal is not None:
-            assert horizontal in ['center', 'right', 'left']
             ax.set_xticklabels(ax.get_xticklabels(),
                                horizontalalignment=horizontal)
         if vertical is not None:
-            assert vertical in ['center', 'top', 'bottom', 'baseline']
             ax.set_xticklabels(ax.get_xticklabels(),
                                verticalalignment=vertical)
 
     if which == "y":
         if horizontal is not None:
-            assert horizontal in ['center', 'right', 'left']
             ax.set_yticklabels(ax.get_yticklabels(),
                                horizontalalignment=horizontal)
         if vertical is not None:
-            assert vertical in ['center', 'top', 'bottom', 'baseline']
             ax.set_yticklabels(ax.get_yticklabels(),
                                verticalalignment=vertical)
 
@@ -651,15 +549,6 @@ def save_png(filename: str, dpi: float = 300) -> None:
     Returns:
         None
     """
-
-    try:
-        filename = str(filename)
-        dpi = float(dpi)
-    except:
-        raise AssertionError
-
-    assert filename != ""
-    assert dpi > 0
     plt.savefig(filename, dpi=dpi, bbox_inches="tight",
                 format="png")  # pragma: no cover
 
@@ -675,12 +564,6 @@ def save_svg(filename: str) -> None:
         None
     """
 
-    try:
-        filename = str(filename)
-    except:
-        raise AssertionError
-
-    assert filename != ""
     plt.savefig(filename, bbox_inches="tight",
                 format="svg")  # pragma: no cover
 
@@ -695,12 +578,6 @@ def save_pdf(filename: str) -> None:
     Returns:
         None
     """
-    try:
-        filename = str(filename)
-    except:
-        raise AssertionError
-
-    assert filename != ""
 
     plt.savefig(filename, bbox_inches="tight",
                 format="pdf")  # pragma: no cover
