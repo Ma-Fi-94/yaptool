@@ -178,8 +178,6 @@ def multiplot(
 # Adding elements to a plot #
 #############################
 
-
-
 def title(ax: plt.Axes,
           title: str,
           fontsize: float = 30,
@@ -487,7 +485,7 @@ def limits(ax: plt.Axes,
            xlimits: Optional[Tuple[float, float]] = None,
            ylimits: Optional[Tuple[float, float]] = None) -> None:
     
-    """Set ax limits of an existing plot.
+    """Sets ax limits of an existing plot.
     
     Args:
         ax:
@@ -526,7 +524,7 @@ def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
                      labels: Optional[List[str]] = None) -> None:
-    """Set ticks and corresponding labels of one or both axss of an existing plot.
+    """Sets ticks and corresponding labels of one or both axes of an existing plot.
     
     Args:
         ax:
@@ -568,11 +566,24 @@ def ticks_and_labels(ax: plt.Axes,
         ax.set_yticks(ticks)
         ax.set_yticklabels(labels)
 
-######################################## annotations properly done until this line #########################
 
 def rotate_ticklabels(ax: plt.Axes,
                       which: str,
                       rotation: float) -> None:
+    """Rotates tick labels of one or both axes of an existing plot.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A string, specifying the axis. Possible values are "x", "y", "xy", "yx", "both".
+        rotation:
+            A float, containing the tick label angle.
+    
+    Returns:
+        None
+    """ 
+    
     assert which in ["x", "y", "xy", "yx", "both"]
     assert hasattr(ax, 'plot')
     try:
@@ -590,6 +601,22 @@ def align_ticklabels(ax: plt.Axes,
                      which: str,
                      horizontal: Optional[str] = None,
                      vertical: Optional[str] = None) -> None:
+    """Aligns tick labels of one axis of an existing plot. Both horizontal and vertical alignment may be specified.
+    
+    Args:
+        ax:
+            A pyplot.Axes instance
+        which:
+            A string, specifying the axis. Possible values are "x", "y".
+        horizontal:
+            An optional string, containing the desired horizontal tick label alignment. Possible values are "center", "right", "left". Defaults to None, i.e. no change.
+        vertical:
+            An optional string, containing the desired vertical tick label alignment. Possible values are "center", "top", "bottom", "baseline". Defaults to None, i.e. no change.
+    
+    Returns:
+        None
+    """ 
+    
     assert which in ["x", "y"]
     assert hasattr(ax, 'plot')
 
@@ -613,15 +640,24 @@ def align_ticklabels(ax: plt.Axes,
             ax.set_yticklabels(ax.get_yticklabels(),
                                verticalalignment=vertical)
 
-
 ##################
 # Export figures #
 ##################
 
-
 def save_png(filename: str,
              dpi: float = 300) -> None:
-    ''' Save current figure as png file. DPI can be specified. '''
+    """Exports the currently active figure as PNG file. DPI may be specified.
+    
+    Args:
+        filename:
+            A string, containing the path and filename for exporting.
+        dpi:
+            An optional float, specifying the desired DPI. Defaults to 300.
+    
+    Returns:
+        None
+    """ 
+    
     try:
         filename = str(filename)
         dpi = float(dpi)
@@ -635,7 +671,16 @@ def save_png(filename: str,
 
 
 def save_svg(filename: str) -> None:
-    ''' Save current figure as svg file. '''
+    """Exports the currently active figure as SVG file.
+    
+    Args:
+        filename:
+            A string, containing the path and filename for exporting.
+    
+    Returns:
+        None
+    """
+    
     try:
         filename = str(filename)
     except:
@@ -647,7 +692,15 @@ def save_svg(filename: str) -> None:
 
 
 def save_pdf(filename: str) -> None:
-    ''' Save current figure as pdf file. '''
+    """Exports the currently active figure as PDF file.
+    
+    Args:
+        filename:
+            A string, containing the path and filename for exporting.
+    
+    Returns:
+        None
+    """
     try:
         filename = str(filename)
     except:
@@ -658,6 +711,7 @@ def save_pdf(filename: str) -> None:
     plt.savefig(filename, bbox_inches="tight",
                 format="pdf")  # pragma: no cover
 
+######################################## annotations properly done until this line #########################
 
 ######################
 # Default parameters #
