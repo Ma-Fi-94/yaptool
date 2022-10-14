@@ -35,7 +35,6 @@ def _set_fgbg(fg: str, bg: str):
 ######################
 # General Aesthetics #
 ######################
-""" General aesthetics """
 
 
 def darkmode(foreground: str = "0.85", background: str = "0.15") -> None:
