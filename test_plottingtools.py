@@ -52,7 +52,11 @@ def test_singleplot_pathological():
 
 
 def test_multiplot():
-    fig, ax = pt.multiplot(nrows=3, ncols=2, size_xy=(20, 12))
+    fig, ax = pt.multiplot(nrows=3,
+                           ncols=2,
+                           size_xy=(20, 12),
+                           hspace=1,
+                           wspace=1)
     plt.close()
 
 
@@ -78,6 +82,14 @@ def test_multiplot_pathological():
 #############################
 # Adding elements to a plot #
 #############################
+def test_legend():
+    fig, ax = pt.singleplot()
+    pt.legend(ax, loc="upper left", fontsize=20, frame=True)
+    plt.close()
+
+
+def test_legend_pathological():
+    pass  # TODO
 
 
 def test_title():
@@ -168,12 +180,6 @@ def test_rectangle_pathological():
     with pytest.raises(AssertionError) as exception_info:
         pt.rectangle(ax, x1=1, x2=2, y1=1, y2="abc")
     with pytest.raises(AssertionError) as exception_info:
-        pt.rectangle(ax, x1=1, x2=2, y1=1, y2=2, linewidth=-1234)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.rectangle(ax, x1=1, x2=2, y1=1, y2=2, linestyle=-1234)
-    with pytest.raises(AssertionError) as exception_info:
-        pt.rectangle(ax, x1=1, x2=2, y1=1, y2=2, fill="abcde")
-    with pytest.raises(AssertionError) as exception_info:
         pt.rectangle(ax=123, x1=1, x2=2, y1=1, y2=2)
     plt.close()
 
@@ -197,6 +203,23 @@ def test_despine_pathological():
         pt.despine(ax, which=123)
     with pytest.raises(AssertionError) as exception_info:
         pt.despine(ax="abc", which=["left"])
+    plt.close()
+
+
+def test_respine():
+    fig, ax = pt.singleplot()
+    pt.respine(ax, ['top', 'left', 'bottom', 'right'])
+    plt.close()
+
+
+def test_respine_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(AssertionError) as exception_info:
+        pt.respine(ax, which=['bla'])
+    with pytest.raises(AssertionError) as exception_info:
+        pt.respine(ax, which=123)
+    with pytest.raises(AssertionError) as exception_info:
+        pt.respine(ax="abc", which=["left"])
     plt.close()
 
 
@@ -357,16 +380,3 @@ def test_save_pdf_pathological():
     with pytest.raises(AssertionError) as exception_info:
         pt.save_pdf(filename="")
     plt.close()
-
-
-######################
-# Default parameters #
-######################
-
-
-def test_heatmap_cbar_kws():
-    assert type(pt.heatmap_cbar_kws()) == dict
-
-
-def test_heatmap_annot_kws():
-    assert type(pt.heatmap_annot_kws()) == dict

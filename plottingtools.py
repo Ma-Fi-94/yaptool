@@ -5,7 +5,7 @@ from matplotlib.patches import Rectangle  # type: ignore
 from matplotlib import rc  # type: ignore
 import types
 
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, Union
 
 ####################
 # Internal helpers #
@@ -32,14 +32,14 @@ def _set_fgbg(fg: str, bg: str):
         "savefig.edgecolor": bg
     })
 
+
 ######################
 # General Aesthetics #
 ######################
-
 """ General aesthetics """
 
-def darkmode(foreground: str = "0.85",
-             background: str = "0.15") -> None:
+
+def darkmode(foreground: str = "0.85", background: str = "0.15") -> None:
     """Switches to dark mode. Foreground and background colours may also be specified explicitly.
     
     Args:
@@ -54,8 +54,7 @@ def darkmode(foreground: str = "0.85",
     _set_fgbg(fg=foreground, bg=background)
 
 
-def lightmode(foreground: str = "0",
-              background: str = "1.0") -> None:
+def lightmode(foreground: str = "0", background: str = "1.0") -> None:
     """Switches to light mode. Foreground and background colours may also be specified explicitly.
     
     Args:
@@ -101,7 +100,8 @@ def texoff() -> None:
 ####################
 
 
-def singleplot(size: Tuple[float, float] = (10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+def singleplot(size: Tuple[float, float] = (
+    10, 7)) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     """Generates a new single-plot figure. The figure size may be defined explicitly.
     
     Args:
@@ -126,11 +126,12 @@ def singleplot(size: Tuple[float, float] = (10, 7)) -> Tuple[matplotlib.figure.F
 
 
 def multiplot(
-        nrows: int,
-        ncols: int,
-        size_xy: Tuple[float, float],
-        wspace: Optional[float] = None,
-        hspace: Optional[float] = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+    nrows: int,
+    ncols: int,
+    size_xy: Tuple[float, float],
+    wspace: Optional[float] = None,
+    hspace: Optional[float] = None
+) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     """Generates a new figure consisting of nrows rows and ncols columns of plots with overall figure size size_xy. Horizontal and vertical distance between plots may be defined explicitly.
     
     Args:
@@ -146,8 +147,8 @@ def multiplot(
             A matplotlib.figure.Figure instance
         ax:
             An array of pyplot.Axes instances
-    """    
-    
+    """
+
     assert type(nrows) == int
     assert type(ncols) == int
     assert nrows > 0
@@ -178,6 +179,7 @@ def multiplot(
 # Adding elements to a plot #
 #############################
 
+
 def title(ax: plt.Axes,
           title: str,
           fontsize: float = 30,
@@ -196,8 +198,8 @@ def title(ax: plt.Axes,
     
     Returns:
         None
-    """    
-    
+    """
+
     try:
         title = str(title)
         fontsize = float(fontsize)
@@ -233,7 +235,7 @@ def labels(ax: plt.Axes,
     Returns:
         None
     """
-    
+
     try:
         fontsize = float(fontsize)
         pad = float(pad)
@@ -255,6 +257,7 @@ def labels(ax: plt.Axes,
         except:
             raise AssertionError
         ax.set_ylabel(ylabel, fontsize=fontsize, labelpad=pad)
+
 
 def diagonal(ax: plt.Axes,
              colour: str = "black",
@@ -299,11 +302,8 @@ def diagonal(ax: plt.Axes,
             linewidth=linewidth,
             alpha=alpha)
 
-def rectangle(ax: plt.Axes,
-              x1: float,
-              y1: float,
-              x2: float,
-              y2: float,
+
+def rectangle(ax: plt.Axes, x1: float, y1: float, x2: float, y2: float,
               **kwargs) -> None:
     """Convenience function for addig a rectangle to an existing plot without having to manually call ax.add_patch(). Takes x and y coordinates of two points as arguments, instead of the x and y coordinate of one point and the rectagle width and heigth, like add_patch() would.
     
@@ -333,15 +333,11 @@ def rectangle(ax: plt.Axes,
         raise AssertionError
     assert hasattr(ax, 'plot')
 
-    ax.add_patch(
-        Rectangle((x1, y1),
-                  x2 - x1,
-                  y2 - y1,
-                  **kwargs))
+    ax.add_patch(Rectangle((x1, y1), x2 - x1, y2 - y1, **kwargs))
 
 
-def legend(ax:  plt.Axes,
-           loc: "str" = "best",
+def legend(ax: plt.Axes,
+           loc: Union["str", int] = "best",
            fontsize: float = 30,
            frame: bool = False,
            **kwargs) -> None:
@@ -361,7 +357,7 @@ def legend(ax:  plt.Axes,
     
     Returns:
         None
-    """ 
+    """
 
     try:
         fontsize = float(fontsize)
@@ -370,20 +366,20 @@ def legend(ax:  plt.Axes,
         raise AssertionError
 
     assert loc in [
-        "upper right", "upper left", "lower left", "lower right",
-        "right", "left", "center left", "center right",
-        "lower center", "upper center", "center",
-        1, 2, 3, 4, 5, 6, 7, 8, "best"]
-    
+        "upper right", "upper left", "lower left", "lower right", "right",
+        "left", "center left", "center right", "lower center", "upper center",
+        "center", 1, 2, 3, 4, 5, 6, 7, 8, "best"
+    ]
+
     l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
-    
+
     # Automatically try to set correct alpha for legend symbols
     try:
         for lh in l.legendHandles:
             lh._legmarker.set_alpha(1)
     except:
         pass
-    
+
     # Automatically try to set correct alpha for legend symbols another way
     try:
         for lh in l.legendHandles:
@@ -396,8 +392,8 @@ def legend(ax:  plt.Axes,
 # Change elements of a plot #
 #############################
 
-def despine(ax: plt.Axes,
-            which: List[str] = ['top', 'right']) -> None:
+
+def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
     """Remove spines of an existing plot. Spines can be specified, default is top and right. 
     
     Args:
@@ -408,8 +404,8 @@ def despine(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-    
+    """
+
     assert hasattr(ax, 'plot')
 
     try:
@@ -417,15 +413,14 @@ def despine(ax: plt.Axes,
     except:
         raise AssertionError
 
-
     for spine in which:
         assert spine in ['top', 'right', 'left', 'bottom']
 
     for spine in which:
         ax.spines[spine].set_visible(False)
 
-def respine(ax: plt.Axes,
-            which: List[str] = ['top', 'right']) -> None:
+
+def respine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
     """Adds spines to an existing plot. Spines can be specified, default is top and right. 
     
     Args:
@@ -436,15 +431,14 @@ def respine(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-    
+    """
+
     assert hasattr(ax, 'plot')
 
     try:
         which = list(which)
     except:
         raise AssertionError
-
 
     for spine in which:
         assert spine in ['top', 'right', 'left', 'bottom']
@@ -453,9 +447,7 @@ def respine(ax: plt.Axes,
         ax.spines[spine].set_visible(True)
 
 
-def ticklabelsize(ax: plt.Axes,
-                  which: str = "both",
-                  size: float = 30) -> None:
+def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
     """Changes ticklabelsize of an existing plot.
     
     Args:
@@ -468,23 +460,23 @@ def ticklabelsize(ax: plt.Axes,
     
     Returns:
         None
-    """ 
+    """
 
     try:
         size = float(size)
     except:
         raise AssertionError
-    
+
     assert hasattr(ax, 'plot')
     assert which in ["x", "y", "both"]
     assert size >= 0
 
     ax.tick_params(which, labelsize=size)
 
+
 def limits(ax: plt.Axes,
            xlimits: Optional[Tuple[float, float]] = None,
            ylimits: Optional[Tuple[float, float]] = None) -> None:
-    
     """Sets ax limits of an existing plot.
     
     Args:
@@ -497,8 +489,8 @@ def limits(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-        
+    """
+
     assert hasattr(ax, 'plot')
     if xlimits is not None:
         try:
@@ -520,6 +512,7 @@ def limits(ax: plt.Axes,
 
         ax.set_ylim(ylimits)
 
+
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
@@ -538,8 +531,8 @@ def ticks_and_labels(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-    
+    """
+
     try:
         ticks = list(ticks)
         ticks = [float(t) for t in ticks]
@@ -567,9 +560,7 @@ def ticks_and_labels(ax: plt.Axes,
         ax.set_yticklabels(labels)
 
 
-def rotate_ticklabels(ax: plt.Axes,
-                      which: str,
-                      rotation: float) -> None:
+def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float) -> None:
     """Rotates tick labels of one or both axes of an existing plot.
     
     Args:
@@ -582,8 +573,8 @@ def rotate_ticklabels(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-    
+    """
+
     assert which in ["x", "y", "xy", "yx", "both"]
     assert hasattr(ax, 'plot')
     try:
@@ -615,8 +606,8 @@ def align_ticklabels(ax: plt.Axes,
     
     Returns:
         None
-    """ 
-    
+    """
+
     assert which in ["x", "y"]
     assert hasattr(ax, 'plot')
 
@@ -640,12 +631,13 @@ def align_ticklabels(ax: plt.Axes,
             ax.set_yticklabels(ax.get_yticklabels(),
                                verticalalignment=vertical)
 
+
 ##################
 # Export figures #
 ##################
 
-def save_png(filename: str,
-             dpi: float = 300) -> None:
+
+def save_png(filename: str, dpi: float = 300) -> None:
     """Exports the currently active figure as PNG file. DPI may be specified.
     
     Args:
@@ -656,8 +648,8 @@ def save_png(filename: str,
     
     Returns:
         None
-    """ 
-    
+    """
+
     try:
         filename = str(filename)
         dpi = float(dpi)
@@ -680,7 +672,7 @@ def save_svg(filename: str) -> None:
     Returns:
         None
     """
-    
+
     try:
         filename = str(filename)
     except:
@@ -711,20 +703,8 @@ def save_pdf(filename: str) -> None:
     plt.savefig(filename, bbox_inches="tight",
                 format="pdf")  # pragma: no cover
 
+
 ######################################## annotations properly done until this line #########################
-
-######################
-# Default parameters #
-######################
-
-
-def heatmap_cbar_kws():
-    return {'fraction': 0.1, 'shrink': 0.4, 'aspect': 7, 'pad': 0.05}
-
-
-def heatmap_annot_kws():
-    return {'fontsize': 20}
-
 
 ##########################
 # Some ideas, TBD nicely #
@@ -734,11 +714,14 @@ def heatmap_annot_kws():
 def majorline(ax, x, y, linewidth=3, linestyle="-", **kwargs):
     ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
 
+
 def minorline(ax, x, y, linewidth=1, linestyle=":", **kwargs):
     ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
 
+
 def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):
     ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
+
 
 def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):
     ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
