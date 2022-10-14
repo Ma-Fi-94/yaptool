@@ -1,4 +1,4 @@
-all: lint test docs
+all: lint test docs build
 
 lint:
 	importchecker *.py
@@ -12,3 +12,6 @@ test:
 
 docs:
 	pdoc plottingtools.py -d google -o ./docs
+
+build:
+	python -m build
