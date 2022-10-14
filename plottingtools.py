@@ -124,7 +124,13 @@ def singleplot(size: Tuple[float, float] = (
     return fig, ax
 
 
-def multiplot(nrows: int, ncols: int, size_xy: Tuple[float, float], wspace: Optional[float] = None, hspace: Optional[float] = None) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
+def multiplot(
+    nrows: int,
+    ncols: int,
+    size_xy: Tuple[float, float],
+    wspace: Optional[float] = None,
+    hspace: Optional[float] = None
+) -> Tuple[matplotlib.figure.Figure, plt.Axes]:
     """Generates a new figure consisting of nrows rows and ncols columns of plots with overall figure size size_xy. Horizontal and vertical distance between plots may be defined explicitly.
     
     Args:
