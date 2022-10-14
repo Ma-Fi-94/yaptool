@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: pip install yapf mypy pytest importchecker isort coverage matplotlib numpy
+        run: pip install yapf toml mypy pytest importchecker isort coverage matplotlib numpy
       - name: Check for unused imports
         run: importchecker .
       - name: Coding style
