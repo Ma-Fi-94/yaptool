@@ -194,7 +194,7 @@ def test_ticks_and_labels():
     plt.close()
 
 
-def test_ticks_and_labelspathological():
+def test_ticks_and_labels_pathological():
     fig, ax = pt.singleplot()
     with pytest.raises(ValueError) as exception_info:
         pt.ticks_and_labels(ax,
@@ -222,6 +222,17 @@ def test_rotate_ticklabels():
 
 
 @pytest.mark.filterwarnings('ignore::UserWarning')
+def test_rotate_ticklabels_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(ValueError) as exception_info:
+        pt.rotate_ticklabels(ax, which="aaaaaaaaaaaaaaaa", rotation=10.5)
+    plt.close()
+
+    with pytest.raises(ValueError) as exception_info:
+        pt.rotate_ticklabels("not an ax obj", which="x", rotation=10.5)
+
+
+@pytest.mark.filterwarnings('ignore::UserWarning')
 def test_align_ticklabels():
     fig, ax = pt.singleplot()
     pt.align_ticklabels(ax, which="x", horizontal=None, vertical="center")
@@ -229,3 +240,20 @@ def test_align_ticklabels():
     pt.align_ticklabels(ax, which="x", horizontal="right", vertical=None)
     pt.align_ticklabels(ax, which="y", horizontal="left", vertical=None)
     plt.close()
+
+
+@pytest.mark.filterwarnings('ignore::UserWarning')
+def test_align_ticklabels_pathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(ValueError) as exception_info:
+        pt.align_ticklabels(ax,
+                            which="aaaaaaaaaaaaaaaa",
+                            horizontal=None,
+                            vertical="center")
+    plt.close()
+
+    with pytest.raises(ValueError) as exception_info:
+        pt.align_ticklabels("not an ax obj",
+                            which="x",
+                            horizontal=None,
+                            vertical="center")
