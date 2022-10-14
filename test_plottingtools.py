@@ -27,7 +27,7 @@ def test_light_and_darkmode():
 
 def test_singleplot():
     fig, ax = pt.singleplot(size=(7, 5))
-    assert type(fig) == matplotlib.figure.Figure
+    assert isinstance(fig, matplotlib.figure.Figure)
     plt.close()
 
 
