@@ -15,3 +15,4 @@ docs:
 
 build:
 	python -m build
+	rm -r ./dist
