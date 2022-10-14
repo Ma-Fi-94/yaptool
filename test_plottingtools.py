@@ -1,11 +1,7 @@
-import matplotlib.pyplot as plt  # type: ignore
 import matplotlib.figure  # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
 import numpy as np
-from scipy import stats  # type: ignore
-
 import pytest
-import sys
-import io
 
 import plottingtools as pt
 

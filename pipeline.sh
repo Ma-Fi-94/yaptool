@@ -1,4 +1,8 @@
-# Coding style 
+# Checking for unused imports
+importchecker .
+
+# Coding style
+isort .
 yapf -i plottingtools.py
 yapf -i test_plottingtools.py
 

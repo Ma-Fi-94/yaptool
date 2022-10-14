@@ -1,11 +1,10 @@
-import matplotlib  # type: ignore
-import matplotlib.pyplot as plt  # type: ignore
-import matplotlib.figure  # type: ignore
-from matplotlib.patches import Rectangle  # type: ignore
-from matplotlib import rc  # type: ignore
-import types
+from typing import List, Optional, Tuple, Union
 
-from typing import Tuple, List, Optional, Union
+import matplotlib  # type: ignore
+import matplotlib.figure  # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
+from matplotlib import rc  # type: ignore
+from matplotlib.patches import Rectangle  # type: ignore
 
 ####################
 # Internal helpers #
