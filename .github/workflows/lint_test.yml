@@ -1,4 +1,4 @@
-name: Coding Style, Checking, and Testing
+name: Lint and Test
 
 on: [push]
 
@@ -22,7 +22,7 @@ jobs:
       - name: Check for unused imports
         run: importchecker .
       - name: Coding style
-        run: isort . && yapf -i plottingtools.py test_plottingtools.py
+        run: isort . && yapf -i -diff plottingtools.py test_plottingtools.py
       - name: Type checking
         run: mypy plottingtools.py test_plottingtools.py
       - name: Test suite incl. coverage report
