@@ -1,3 +1,7 @@
+"""A collection of handy functions to avoid boilerplate code while using matplotlib."""
+
+__version__ = "0.1"
+
 from typing import List, Optional, Tuple, Union
 
 import matplotlib  # type: ignore
