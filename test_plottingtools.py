@@ -51,11 +51,21 @@ def test_legend():
     plt.close()
 
 
+def test_legend_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.legend("not an ax object")
+
+
 def test_title():
     fig, ax = pt.singleplot()
     pt.title(ax, "abcdef", fontsize=25, pad=10)
     assert ax.get_title() == "abcdef"
     plt.close()
+
+
+def test_title_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.title("not an ax object", "abcdef", fontsize=25, pad=10)
 
 
 def test_labels():
@@ -66,10 +76,24 @@ def test_labels():
     plt.close()
 
 
+def test_labels_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.labels("not an ax object",
+                  xlabel="xlabel",
+                  ylabel="ylabel",
+                  fontsize=10,
+                  pad=5)
+
+
 def test_diagonal():
     fig, ax = pt.singleplot()
     pt.diagonal(ax)
     plt.close()
+
+
+def test_diagonal_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.diagonal("not an ax object")
 
 
 def test_rectangle():
@@ -85,6 +109,30 @@ def test_rectangle():
     plt.close()
 
 
+def test_rectangle_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.rectangle("not an ax object",
+                     x1=1,
+                     x2=2,
+                     y1=1,
+                     y2=2,
+                     linewidth=3,
+                     linestyle=":",
+                     fill=True)
+
+    fig, ax = pt.singleplot()
+    with pytest.raises(ValueError) as exception_info:
+        pt.rectangle(ax,
+                     x1="not a number",
+                     x2=2,
+                     y1=1,
+                     y2=2,
+                     linewidth=3,
+                     linestyle=":",
+                     fill=True)
+    plt.close()
+
+
 #############################
 # Change elements of a plot #
 #############################
@@ -96,16 +144,31 @@ def test_despine():
     plt.close()
 
 
+def test_despine_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.despine("not an ax object")
+
+
 def test_respine():
     fig, ax = pt.singleplot()
     pt.respine(ax, ['top', 'left', 'bottom', 'right'])
     plt.close()
 
 
+def test_respine_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.respine("not an ax object")
+
+
 def test_ticklabelsize():
     fig, ax = pt.singleplot()
     pt.ticklabelsize(ax, size=25)
     plt.close()
+
+
+def test_ticklabelsize_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.ticklabelsize("not an ax object")
 
 
 def test_limits():
@@ -117,12 +180,34 @@ def test_limits():
     plt.close()
 
 
+def test_limits_pathological():
+    with pytest.raises(ValueError) as exception_info:
+        pt.limits("not an ax object", xlimits=(3, 5), ylimits=None)
+
+
 def test_ticks_and_labels():
     fig, ax = pt.singleplot()
     pt.ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], labels=None)
     pt.ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], labels=None)
     pt.ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], labels=None)
     pt.ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], labels=None)
+    plt.close()
+
+
+def test_ticks_and_labelspathological():
+    fig, ax = pt.singleplot()
+    with pytest.raises(ValueError) as exception_info:
+        pt.ticks_and_labels(ax,
+                            which="aaaaaaaaaaaaaaa",
+                            ticks=[-0.14, 1, 2],
+                            labels=None)
+    plt.close()
+
+    with pytest.raises(ValueError) as exception_info:
+        pt.ticks_and_labels("not an ax object",
+                            which="yx",
+                            ticks=[-0.14, 1, 2],
+                            labels=None)
 
 
 @pytest.mark.filterwarnings('ignore::UserWarning')
