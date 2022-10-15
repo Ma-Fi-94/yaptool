@@ -4,6 +4,7 @@ lint:
 	importchecker *.py
 	isort *.py
 	yapf -i *.py
+	pylint *.py
 
 test:
 	mypy *.py
