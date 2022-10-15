@@ -631,34 +631,3 @@ def save_pdf(filename: str) -> None:
 
     plt.savefig(filename, bbox_inches="tight",
                 format="pdf")  # pragma: no cover
-
-
-##########################
-# Some ideas, TBD nicely #
-##########################
-
-
-def majorline(ax,
-              x,
-              y,
-              linewidth=3,
-              linestyle="-",
-              **kwargs):  # pragma: no cover
-    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
-
-
-def minorline(ax,
-              x,
-              y,
-              linewidth=1,
-              linestyle=":",
-              **kwargs):  # pragma: no cover
-    ax.plot(x, y, lw=linewidth, ls=linestyle, **kwargs)
-
-
-def oligoscatter(ax, x, y, marker="o", alpha=1, **kwargs):  # pragma: no cover
-    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
-
-
-def polyscatter(ax, x, y, marker=".", alpha=0.5, **kwargs):  # pragma: no cover
-    ax.scatter(x, y, marker=marker, alpha=alpha, **kwargs)
