@@ -3,6 +3,11 @@
 ## What is it?
 plottingtools is a library of plotting functions which I have been developing for some time now. The library is mostly a collection of wrapper functions around the matplotlib library for Python. Its main purpose is the reduction of boilerplate code required for day-to-day tasks, as well as providing some aesthetically pleasing default parameter choices. Hence, the library is not a plotting library on its own, but a collection of functions intended to make data visualisation (such as for exploratory analysis and the communication of results) just a little bit easier :).
 
+## An Example
+Here's a little animation consisting of a series of plots which have been generated with the help of this library:
+
+![](https://github.com/Ma-Fi-94/plottingtools/blob/main/docs/animation.gif)
+
 ## Quickstart
 Just download the plottingtools.py file and paste it either into the folder of your project, or into your Python libraries folder.
 
