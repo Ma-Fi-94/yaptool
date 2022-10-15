@@ -2,7 +2,7 @@
 
 __version__ = "0.1"
 
-from typing import List, Optional, Tuple, Union
+from typing import List, Literal, Optional, Tuple, Union
 
 import matplotlib  # type: ignore
 import matplotlib.figure  # type: ignore
@@ -14,23 +14,26 @@ from matplotlib.patches import Rectangle  # type: ignore
 # Internal helpers #
 ####################
 
+SPINES = Tuple[Union[Literal["top"], Literal["bottom"], Literal["left"],
+                     Literal["right"]], ...]
 
-def _set_fgbg(fg: str, bg: str):
+
+def _set_fgbg(fg_col: str, bg_col: str):
     ''' Internal helper to change fore- and background colours '''
     plt.rcParams.update({
-        "lines.color": fg,
-        "patch.edgecolor": fg,
-        "text.color": fg,
-        "axes.facecolor": bg,
-        "axes.edgecolor": fg,
-        "axes.labelcolor": fg,
-        "xtick.color": fg,
-        "ytick.color": fg,
-        "grid.color": fg,
-        "figure.facecolor": bg,
-        "figure.edgecolor": bg,
-        "savefig.facecolor": bg,
-        "savefig.edgecolor": bg
+        "lines.color": fg_col,
+        "patch.edgecolor": fg_col,
+        "text.color": fg_col,
+        "axes.facecolor": bg_col,
+        "axes.edgecolor": fg_col,
+        "axes.labelcolor": fg_col,
+        "xtick.color": fg_col,
+        "ytick.color": fg_col,
+        "grid.color": fg_col,
+        "figure.facecolor": bg_col,
+        "figure.edgecolor": bg_col,
+        "savefig.facecolor": bg_col,
+        "savefig.edgecolor": bg_col
     })
 
 
@@ -54,7 +57,7 @@ def darkmode(foreground: str = "0.85", background: str = "0.15") -> None:
     Returns:
         None
     """
-    _set_fgbg(fg=foreground, bg=background)
+    _set_fgbg(fg_col=foreground, bg_col=background)
 
 
 def lightmode(foreground: str = "0", background: str = "1.0") -> None:
@@ -72,7 +75,7 @@ def lightmode(foreground: str = "0", background: str = "1.0") -> None:
     Returns:
         None
     """
-    _set_fgbg(fg=foreground, bg=background)
+    _set_fgbg(fg_col=foreground, bg_col=background)
 
 
 def texon() -> None:
@@ -345,19 +348,9 @@ def legend(ax: plt.Axes,
 
     leg = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
-    # Automatically try to set correct alpha for legend symbols
-    try:
-        for legend_handle in leg.legendHandles:
-            legend_handle._legmarker.set_alpha(1)
-    except Exception:
-        pass
-
-    # Automatically try to set correct alpha for legend symbols another way
-    try:
-        for legend_handle in leg.legendHandles:
-            legend_handle.set_alpha(1)
-    except Exception:
-        pass
+    # Automatically set correct alpha for legend symbols
+    for legend_handle in leg.legendHandles:
+        legend_handle.set_alpha(1)
 
 
 #############################
@@ -365,7 +358,7 @@ def legend(ax: plt.Axes,
 #############################
 
 
-def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
+def despine(ax: plt.Axes, which: SPINES = ('top', 'right')) -> None:
     """Remove spines of an existing plot.
     Spines can be specified, default is top and right.
 
@@ -373,7 +366,7 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         ax:
             A pyplot.Axes instance
         which:
-            A list of strings, specifying which spines to remove.
+            A tuple of strings, specifying which spines to remove.
             Defaults to ["top", "right"].
             Also possible are "bottom" and "left".
 
@@ -388,7 +381,7 @@ def despine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         ax.spines[spine].set_visible(False)
 
 
-def respine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
+def respine(ax: plt.Axes, which: SPINES = ('top', 'right')) -> None:
     """Adds spines to an existing plot.
     Spines can be specified, default is top and right.
 
@@ -396,7 +389,7 @@ def respine(ax: plt.Axes, which: List[str] = ['top', 'right']) -> None:
         ax:
             A pyplot.Axes instance
         which:
-            A list of strings, specifying which spines to add.
+            A tuple of strings, specifying which spines to add.
             Defaults to ["top", "right"].
             Also possible are "bottom" and "left".
 
