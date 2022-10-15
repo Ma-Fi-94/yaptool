@@ -187,10 +187,10 @@ def test_limits_pathological():
 
 def test_ticks_and_labels():
     fig, ax = pt.singleplot()
-    pt.ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], labels=None)
-    pt.ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], labels=None)
-    pt.ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], labels=None)
-    pt.ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], labels=None)
+    pt.ticks_and_labels(ax, which="x", ticks=[-0.14, 1, 2], ticklabels=None)
+    pt.ticks_and_labels(ax, which="y", ticks=[-0.14, 1, 2], ticklabels=None)
+    pt.ticks_and_labels(ax, which="xy", ticks=[-0.14, 1, 2], ticklabels=None)
+    pt.ticks_and_labels(ax, which="yx", ticks=[-0.14, 1, 2], ticklabels=None)
     plt.close()
 
 
@@ -200,14 +200,14 @@ def test_ticks_and_labels_pathological():
         pt.ticks_and_labels(ax,
                             which="aaaaaaaaaaaaaaa",
                             ticks=[-0.14, 1, 2],
-                            labels=None)
+                            ticklabels=None)
     plt.close()
 
     with pytest.raises(ValueError) as exception_info:
         pt.ticks_and_labels("not an ax object",
                             which="yx",
                             ticks=[-0.14, 1, 2],
-                            labels=None)
+                            ticklabels=None)
 
 
 @pytest.mark.filterwarnings('ignore::UserWarning')

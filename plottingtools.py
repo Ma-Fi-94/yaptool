@@ -171,7 +171,7 @@ def multiplot(
 
 
 def title(ax: plt.Axes,
-          title: str,
+          plottitle: str,
           fontsize: float = 30,
           pad: float = 20) -> None:
     """Adds a title to an existing plot.
@@ -179,7 +179,7 @@ def title(ax: plt.Axes,
     Args:
         ax:
             A pyplot.Axes instance
-        title:
+        plottitle:
             A string containing the title to add.
         fontsize:
             An optional float, specifying the font
@@ -195,7 +195,7 @@ def title(ax: plt.Axes,
     if not hasattr(ax, 'plot'):
         raise ValueError("Pass a valid plot in parameter ax.")
 
-    ax.set_title(title, fontsize=fontsize, pad=pad)
+    ax.set_title(plottitle, fontsize=fontsize, pad=pad)
 
 
 def labels(ax: plt.Axes,
@@ -343,19 +343,19 @@ def legend(ax: plt.Axes,
     if not hasattr(ax, 'plot'):
         raise ValueError("Pass a valid plot in parameter ax.")
 
-    l = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
+    leg = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
     # Automatically try to set correct alpha for legend symbols
     try:
-        for lh in l.legendHandles:
-            lh._legmarker.set_alpha(1)
+        for legend_handle in leg.legendHandles:
+            legend_handle._legmarker.set_alpha(1)
     except Exception:
         pass
 
     # Automatically try to set correct alpha for legend symbols another way
     try:
-        for lh in l.legendHandles:
-            lh.set_alpha(1)
+        for legend_handle in leg.legendHandles:
+            legend_handle.set_alpha(1)
     except Exception:
         pass
 
@@ -465,7 +465,7 @@ def limits(ax: plt.Axes,
 def ticks_and_labels(ax: plt.Axes,
                      which: str,
                      ticks: List[float],
-                     labels: Optional[List[str]] = None) -> None:
+                     ticklabels: Optional[List[str]] = None) -> None:
     """Sets ticks and corresponding labels of one or both axes of an existing plot.
 
     Args:
@@ -476,7 +476,7 @@ def ticks_and_labels(ax: plt.Axes,
             Possible values are "x", "y", "xy", "yx", "both".
         ticks:
             A list of floats, containing the desired tick positions.
-        labels:
+        ticklabels:
             An optional list of strings, containing the desired
             axis labels corresponding to the specified tick positions.
             Defaults to None. If no list is provided, tick labels will
@@ -493,16 +493,16 @@ def ticks_and_labels(ax: plt.Axes,
     if not hasattr(ax, 'plot'):
         raise ValueError("Pass a valid plot in parameter ax.")
 
-    if labels is None:
-        labels = list(map(lambda x: str(x), ticks))
+    if ticklabels is None:
+        ticklabels = [str(tick) for tick in ticks]
 
     if which in ["x", "xy", "yx", "both"]:
         ax.set_xticks(ticks)
-        ax.set_xticklabels(labels)
+        ax.set_xticklabels(ticklabels)
 
     if which in ["y", "xy", "yx", "both"]:
         ax.set_yticks(ticks)
-        ax.set_yticklabels(labels)
+        ax.set_yticklabels(ticklabels)
 
 
 def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float) -> None:
