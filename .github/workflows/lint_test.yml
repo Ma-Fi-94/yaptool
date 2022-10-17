@@ -24,6 +24,6 @@ jobs:
       - name: Coding style
         run: isort . && yapf --diff yaptool.py test_yaptool.py
       - name: Type checking
-        run: mypy *.py
+        run: mypy yaptool.py test_yaptool.py
       - name: Test suite incl. coverage report
         run: coverage run -m pytest && coverage report -m
