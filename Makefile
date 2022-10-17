@@ -12,7 +12,7 @@ test:
 	coverage report -m
 
 docs:
-	pdoc plottingtools.py -d google -o ./docs
+	pdoc yaptool.py -d google -o ./docs
 
 build:
 	python -m build
