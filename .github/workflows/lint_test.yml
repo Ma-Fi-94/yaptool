@@ -22,8 +22,8 @@ jobs:
       - name: Check for unused imports
         run: importchecker .
       - name: Coding style
-        run: isort . && yapf --diff plottingtools.py test_plottingtools.py
+        run: isort . && yapf --diff *.py
       - name: Type checking
-        run: mypy plottingtools.py test_plottingtools.py
+        run: mypy *.py
       - name: Test suite incl. coverage report
         run: coverage run -m pytest && coverage report -m
