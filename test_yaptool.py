@@ -53,6 +53,7 @@ def test_multiplot():
 def test_legend():
     """Test adding a legend."""
     _, ax = yap.singleplot()
+    ax.scatter([1,2,3], [1,2,3], label="my label")
     yap.legend(ax, loc="upper left", fontsize=20, frame=True)
     plt.close()
 
