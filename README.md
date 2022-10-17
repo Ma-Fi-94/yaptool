@@ -23,8 +23,7 @@ yap.texon()
 # Make a new plot
 fig, ax = yap.singleplot()
 
-# Plot some data
-# (Dedicated library functions for this are currently being written, too)
+# Plot some data using matplotlib
 ax.scatter([1,2,3,4], [6,9,13,21])
 ax.plot([0,6], [0,30], c="C1", ls=":")
 
