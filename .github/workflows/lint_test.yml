@@ -18,11 +18,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: pip install yapf toml mypy pytest importchecker isort coverage matplotlib numpy
+        run: pip install yapf toml pylint mypy pytest importchecker isort coverage matplotlib numpy
       - name: Check for unused imports
         run: importchecker .
       - name: Coding style
         run: isort . && yapf --diff yaptool.py test_yaptool.py
+      - name: Linting
+        run: pylint yaptool.py test_yaptool.py
       - name: Type checking
         run: mypy yaptool.py test_yaptool.py
       - name: Test suite incl. coverage report
