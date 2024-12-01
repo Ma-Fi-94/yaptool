@@ -348,10 +348,6 @@ def legend(ax: plt.Axes,
 
     leg = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
-    # Automatically set correct alpha for legend symbols
-    for legend_handle in leg.legend_handles:
-        legend_handle.set_alpha(1)
-
 
 #############################
 # Change elements of a plot #
