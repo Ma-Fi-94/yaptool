@@ -349,7 +349,7 @@ def legend(ax: plt.Axes,
     leg = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
     # Automatically set correct alpha for legend symbols
-    for legend_handle in leg.legendHandles:
+    for legend_handle in leg.legend_handles:
         legend_handle.set_alpha(1)
 
 
@@ -426,7 +426,10 @@ def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
     if not hasattr(ax, 'plot'):
         raise ValueError("Pass a valid plot in parameter ax.")
 
-    ax.tick_params(which, labelsize=size)
+    if which in ["x", "xy", "yx", "both"]:
+        ax.tick_params("x", labelsize=size)
+    if which in ["y", "xy", "yx", "both"]:
+        ax.tick_params("y", labelsize=size)
 
 
 def limits(ax: plt.Axes,
