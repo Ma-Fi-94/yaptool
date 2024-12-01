@@ -346,7 +346,7 @@ def legend(ax: plt.Axes,
     if not hasattr(ax, 'plot'):
         raise ValueError("Pass a valid plot in parameter ax.")
 
-    leg = ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
+    ax.legend(loc=loc, fontsize=fontsize, frameon=frame, **kwargs)
 
 
 #############################
