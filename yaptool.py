@@ -419,7 +419,7 @@ def ticklabelsize(ax: plt.Axes, which: str = "both", size: float = 30) -> None:
     Returns:
         None
     """
-    if not which in ["x", "y", "xy", "yx", "both"]:
+    if which not in ["x", "y", "xy", "yx", "both"]:
         raise ValueError(
             'Parameter which must be one of "x", "y", "xy", "yx", "both".')
 
@@ -482,7 +482,7 @@ def ticks_and_labels(ax: plt.Axes,
         None
     """
 
-    if not which in ["x", "y", "xy", "yx", "both"]:
+    if which not in ["x", "y", "xy", "yx", "both"]:
         raise ValueError(
             'Parameter which must be one of "x", "y", "xy", "yx", "both".')
 
@@ -516,7 +516,7 @@ def rotate_ticklabels(ax: plt.Axes, which: str, rotation: float) -> None:
         None
     """
 
-    if not which in ["x", "y", "xy", "yx", "both"]:
+    if which not in ["x", "y", "xy", "yx", "both"]:
         raise ValueError(
             'Parameter which must be one of "x", "y", "xy", "yx", "both".')
 
